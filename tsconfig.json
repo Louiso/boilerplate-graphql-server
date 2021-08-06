@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "dist",
+    "paths": {
+      "actuators/*": ["src/datalayer/actuators/*"],
+      "models/*": ["src/datalayer/models/*"],
+      "controllers/*": ["src/datalayer/controllers/*"],
+      "config/*": ["src/config/*"],
+      "interfaces/*": ["src/service/interfaces/*"],
+      "utils/*": ["src/utils/*"]
+    },
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2017",
+      "dom"
+    ],
+    "module": "commonjs",
+    "rootDirs": [
+      "src"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "emitDecoratorMetadata": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": false,
+    "removeComments": true,
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2018",
+    "moduleResolution": "node",
+    "resolveJsonModule": true, // Required for JSON files
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "jest.config.js",
+    ".eslintplugin.js"
+  ]
+}
