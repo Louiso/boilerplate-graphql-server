@@ -1,0 +1,98 @@
+dev docker build:
+  image: docker:18
+  stage: build
+  tags:
+    - buildS1
+  services:
+    - docker:dind
+  before_script:
+    - "which python || apk add --no-cache curl python"
+    - "which bash || apk add --no-cache curl bash"
+    - "which pip || apk add --no-cache curl py-pip"
+    - "which aws || pip install awscli"
+  script:
+    - echo "Recovering .env"
+    - echo "PORT=${PORT}" >> .env
+    - echo "MONGO_CONNECTION=${DEV_MONGO_CONNECTION}" >> .env
+    - echo "ATS_RESTIFY_BASE=${DEV_ATS_RESTIFY_BASE}" >> .env
+    - echo "ACCOUNTS_API=${DEV_ACCOUNTS_API}" >> .env
+    - echo "RESPONSABLES_API=${DEV_RESPONSABLES_API}" >> .env
+    - echo "Recovering build version"
+    - export BUILD_VERSION=${CI_COMMIT_TAG}
+    - echo "Login to aws ecr"
+    - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
+    - echo "Building image"
+    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-dev
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-dev
+  only:
+    - /^[0-9]+(?:.[0-9]+)+-dev$/
+
+prebuild docker build:
+  image: docker:18
+  stage: build
+  tags:
+    - buildS1
+  services:
+    - docker:dind
+  tags:
+    - buildS1
+  before_script:
+    - "which python || apk add --no-cache curl python"
+    - "which bash || apk add --no-cache curl bash"
+    - "which pip || apk add --no-cache curl py-pip"
+    - "which aws || pip install awscli"
+  script:
+    - echo "Recovering .env"
+    - echo "PORT=${PORT}" >> .env
+    - echo "MONGO_CONNECTION=${PREBUILD_MONGO_CONNECTION}" >> .env
+    - echo "ATS_RESTIFY_BASE=${PREBUILD_ATS_RESTIFY_BASE}" >> .env
+    - echo "ACCOUNTS_API=${PREBUILD_ACCOUNTS_API}" >> .env
+    - echo "RESPONSABLES_API=${PREBUILD_RESPONSABLES_API}" >> .env
+    - echo "Recovering build version"
+    - export BUILD_VERSION=${CI_COMMIT_TAG}
+    - echo "Login to aws ecr"
+    - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
+    - echo "Building image"
+    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-prebuild
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-prebuild
+  only:
+    - /^[0-9]+(?:.[0-9]+)+-prebuild$/
+
+build docker build:
+  image: docker:18
+  stage: build
+  tags:
+    - buildS1
+  services:
+    - docker:dind
+  tags:
+    - buildS1
+  before_script:
+    - "which python || apk add --no-cache curl python"
+    - "which bash || apk add --no-cache curl bash"
+    - "which pip || apk add --no-cache curl py-pip"
+    - "which aws || pip install awscli"
+  script:
+    - echo "Recovering .env"
+    - echo "PORT=${PORT}" >> .env
+    - echo "MONGO_CONNECTION=${BUILD_MONGO_CONNECTION}" >> .env
+    - echo "ATS_RESTIFY_BASE=${BUILD_ATS_RESTIFY_BASE}" >> .env
+    - echo "ACCOUNTS_API=${BUILD_ACCOUNTS_API}" >> .env
+    - echo "RESPONSABLES_API=${BUILD_RESPONSABLES_API}" >> .env
+    - echo "Recovering build version"
+    - export BUILD_VERSION=${CI_COMMIT_TAG}
+    - echo "Login to aws ecr"
+    - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
+    - echo "Building image"
+    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-build
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
+    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-build
+  only:
+    - /^[0-9]+(?:.[0-9]+)+-build$/
+    
+

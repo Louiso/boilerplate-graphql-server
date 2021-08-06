@@ -1,0 +1,24 @@
+{
+  "target": "es6",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "actuators": ["./datalayer/actuators"],
+      "actuators/*": ["./datalayer/actuators/*"],
+      "models": ["./datalayer/models"],
+      "models/*": ["./datalayer/models/*"],
+      "controllers": ["./datalayer/controllers"],
+      "controllers/*": ["./datalayer/controllers/*"],
+      "config": ["./config"],
+      "config/*": ["./config/*"],
+      "interfaces": ["./service/interfaces"],
+      "interfaces/*": ["./service/interfaces/*"],
+      "utils": ["./utils"],
+      "utils/*": ["./utils/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

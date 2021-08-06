@@ -1,0 +1,128 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "blockBindings": true,
+      "defaultParams": true,
+      "destructuring": true,
+      "forOf": true,
+      "generators": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "experimentalObjectRestSpread": true,
+      "restParams": true,
+      "spread": true,
+      "templateStrings": true,
+      "modules": true,
+      "classes": true
+    }
+  },
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-spacing": "error",
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "no-empty": ["error",{"allowEmptyCatch": true}],
+    "no-with": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    "padded-blocks": ["error", "never"],
+    "no-multi-str": "error",
+    "dot-location": ["error", "property"],
+    "operator-linebreak": ["error", "after"],
+    "quote-props": ["error","as-needed",{"keywords": true}],
+    "space-unary-ops": ["error",{"words": false,"nonwords": false}],
+    "space-before-function-paren": ["error",{"anonymous": "ignore","named": "never"}],
+    "object-curly-spacing": ["error", "always"],
+    "no-spaced-func": "error",
+    "space-in-parens": ["error", "never"],
+    "semi": ["error", "never"],
+    "comma-dangle": ["error", "never"],
+    "no-trailing-spaces": "error",
+    "yoda": ["error", "never"],
+    "comma-style": ["error", "last"],
+    "comma-spacing": ["error", {"before": false, "after": true}],
+    "curly": ["error", "multi", "consistent"],
+    "eol-last": "error",
+    "eqeqeq": ["error", "always"],
+    "wrap-iife": "error",
+    "space-infix-ops": "error",
+    "spaced-comment": ["error", "always"],
+    "space-before-blocks": ["error", "always"],
+    "key-spacing": ["error",{"align": "colon"}],
+    "array-bracket-spacing": ["error", "always"],
+    "indent": ["error",2,{"SwitchCase": 1}],
+    "quotes": ["error","single",{"avoidEscape": true}],
+    "no-unused-vars": [
+      "error",
+      { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
+      }
+    ],
+    "keyword-spacing": [
+      "error",
+      {
+        "overrides": {
+          "if": {
+            "after": false
+          },
+          "while": {
+            "before": true
+          },
+          "catch": {
+            "before": true
+          }
+        }
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name=/^(log|warn|error|info|trace)$/]",
+        "message": "Unexpected property on console object was called"
+      }
+    ],
+    "prefer-destructuring": [
+      "error", {
+        "array": true,
+        "object": true
+      }, {
+        "enforceForRenamedProperties": false
+      }
+    ],
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "multiline": {
+        "delimiter": "semi",
+        "requireLast": true
+      },
+      "singleline": {
+          "delimiter": "semi",
+          "requireLast": true
+      }
+    }]
+  }
+}

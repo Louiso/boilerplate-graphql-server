@@ -1,0 +1,28 @@
+{
+  "test": ".*.ts$",
+  "module": {
+    "type": "commonjs",
+    "strict": false,
+    "strictMode": false,
+    "lazy": false,
+    "noInterop": false
+  },
+  "jsc": {
+    "target": "es2018",
+    "loose": true,
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": false,
+      "dynamicImport": false
+    }
+  },
+  "exclude": [
+    "dist",
+    "jest.config.js",
+    "node_modules",
+    ".eslintplugin.js",
+    ".*.js$",
+    ".*.map$"
+  ]
+}

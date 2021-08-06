@@ -1,0 +1,8 @@
+node_modules
+.env
+yarn-error.log
+dist
+public
+src/service/interfaces/graphql.ts
+src/service/interfaces/graphql.schema.json
+.DS_Store
