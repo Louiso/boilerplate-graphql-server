@@ -1,0 +1,21 @@
+type Response {
+  success: Boolean!
+  data: JSON
+}
+
+type Example @entity {
+  _id: ID! @id
+}
+
+type Curriculum {
+  fileName: String
+  url: String
+  updatedAt: String
+  type: String
+}
+
+type EmailsPhonesResponse {
+  _id: ID
+  type: String
+  value: String
+}

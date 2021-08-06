@@ -1,0 +1,61 @@
+type Candidate {
+  _id: ID!
+  curriculum: Curriculum
+  education: [Education!]!
+  email: String
+  experience: [Experience!]!
+  knowledge: [Knowledge!]!
+  especialization: [Especialization!]!
+  firstName: String
+  lastName: String
+  fullName: String
+  jobId: ID!
+  linkedin: String
+  phone: String
+  photo: String
+  websites: [EmailsPhonesResponse!]!
+}
+
+type Knowledge {
+  _id: ID!
+  knowledgeName: String
+  level: String
+}
+
+type Especialization {
+  _id: ID!
+  studyingHere: Boolean
+  description: String
+  especializationName: String
+  especializationPlace: String
+  startDate: String
+  endDate: String
+}
+
+type Education {
+  _id: ID!
+  institutionName: String
+  degree: String
+  condition: String
+  career: String
+  academicArea: String
+  startDate: String
+  endDate: String
+  description: String
+  imgUrl: String
+  studyingHere: Boolean
+}
+
+type Experience {
+  _id: ID!
+  jobPosition: String 
+  companyName: String
+  hierarchy: String
+  area: String
+  location: String 
+  startDate: String 
+  endDate: String 
+  description: String 
+  imgUrl: String
+  workHere: Boolean
+}
