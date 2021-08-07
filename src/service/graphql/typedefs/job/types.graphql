@@ -1,0 +1,19 @@
+type Profile {
+  _id: ID!
+  logo: String
+}
+
+type Company {
+  _id: ID
+  name: String
+  photo: String
+  slug: String
+  profile: Profile
+}
+
+type Job {
+  _id: ID!
+  stages: [ Stage! ]!
+  title: String!
+  companyPublished: Company
+}

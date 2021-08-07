@@ -3,47 +3,22 @@ import { ApolloError } from 'apollo-server-errors'
 
 import getDataSources from './dataSources'
 
-const PUBLIC_OPERATION_NAMES = [
-  'authorization',
-  'IntrospectionQuery'
-]
-
 // https://www.apollographql.com/docs/apollo-server/security/authentication/#putting-user-info-on-the-context
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 async function Context({ req }: ExpressContext) {
   try {
-    const { body } = req
-
     const { headers: { authorization, refreshtoken } } = req
 
     const dataSources = getDataSources(authorization as string)
 
-    const operationNames = Array.isArray(body) ? body.map(({ operationName }) => operationName) : [ body.operationName ]
-
-    const context = {
-      authorization,
-      refreshToken: refreshtoken,
-      dataSources
-    }
-
-    if(!Array.isArray(body) && body.query.includes('__schema'))
-      return {
-        ...context,
-        userId: ''
-      }
-
-    if(operationNames.every((operationName) => PUBLIC_OPERATION_NAMES.includes(operationName)))
-      return {
-        ...context,
-        userId: ''
-      }
-
     const { success, userId } = await dataSources.accountAPI.authorization()
-
-    if(!success) throw new Error('Error al autenticar')
+      .catch(() => ({ userId: null, success: false }))
 
     return {
-      ...context,
+      authorization,
+      refreshToken: refreshtoken,
+      dataSources,
+      authorized  : success,
       userId
     }
   } catch (error) {

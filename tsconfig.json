@@ -8,7 +8,7 @@
       "controllers/*": ["src/datalayer/controllers/*"],
       "config/*": ["src/config/*"],
       "interfaces/*": ["src/service/interfaces/*"],
-      "utils/*": ["src/utils/*"]
+      "utils/*": ["src/utils/*"],
     },
     "lib": [
       "es5",

@@ -1,0 +1,15 @@
+type CategoryTask {
+  _id: ID!
+  codeTask: String!
+  title: String
+  urlExec: String
+  urlApi: String
+  urlIcon: String
+  urlImage: String
+}
+
+
+type Task {
+  _id: ID!
+  categoryTask: CategoryTask!
+}

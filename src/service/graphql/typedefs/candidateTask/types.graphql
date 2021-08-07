@@ -1,0 +1,25 @@
+enum CandidateTaskStatus {
+  pending
+  doing
+  executed
+  reviewed
+}
+
+type TimezoneType {
+  candidate: String
+  responsable: String
+}
+
+type CandidateTask {
+  _id: ID!
+  taskId: ID!
+  candidateId: ID!
+  jobId: ID!
+  stageId: ID!
+  status: CandidateTaskStatus!
+  executedAt: Date
+  resultTaskId: String
+  timezone: TimezoneType
+  updateContentTask: Boolean
+  taskDate: Date
+}

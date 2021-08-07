@@ -1,0 +1,32 @@
+type ThemePaletteConfig {
+  default: String
+  main: String
+  medium: String
+  primary: String
+  secondary: String
+  tertiary: String
+}
+
+type ThemePalette {
+  background: ThemePaletteConfig!
+  primary: ThemePaletteConfig!
+  secondary: ThemePaletteConfig!
+  text: ThemePaletteConfig!
+}
+
+type ThemeTypography {
+  fontFamily: String!
+}
+
+type Overrides {
+  MuiCardContent: JSON
+  MuiDivider: JSON
+  MuiOutlinedInput: JSON
+}
+
+type Theme {
+  palette: ThemePalette!
+  typography: ThemeTypography!
+  overrides: Overrides!
+  cssTextFamily: String
+}
