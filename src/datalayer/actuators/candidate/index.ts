@@ -1,11 +1,11 @@
 import { Candidate, QueryGetCandidateArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 
-const getCandidate = async ({ candidateId }: QueryGetCandidateArgs, { dataSources: { gatsAPI } }: IContext): Promise<Candidate> => {
+const getCandidateByJob = async ({ jobId }: QueryGetCandidateArgs, { dataSources: { gatsAPI } }: IContext): Promise<Candidate> => {
   try {
-    const { success, data: candidate } = await gatsAPI.getCandidate(candidateId)
+    const { success, data: candidate } = await gatsAPI.getCandidate({ jobId })
 
-    if(!success) throw new Error(`BackgroundCheck NotFound ${candidateId}`)
+    if(!success) throw new Error(`Candidate NotFound JobId ${jobId}`)
 
     return candidate
   } catch (error) {
@@ -14,5 +14,5 @@ const getCandidate = async ({ candidateId }: QueryGetCandidateArgs, { dataSource
 }
 
 export default {
-  getCandidate
+  getCandidateByJob
 }

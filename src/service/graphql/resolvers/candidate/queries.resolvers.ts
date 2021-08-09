@@ -5,7 +5,7 @@ import { QueryResolvers } from 'interfaces/graphql'
 
 export const Query: QueryResolvers<IContext> = {
   getCandidate: async (_, args, context) =>
-    CandidateActuator.getCandidate(args, context)
+    CandidateActuator.getCandidateByJob(args, context)
       .catch((error) => {
         throw new ApolloError(error)
       })

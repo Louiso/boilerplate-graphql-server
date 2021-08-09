@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server-errors'
+import { ApolloError } from 'apollo-server'
 import { IContext } from 'interfaces/general'
 import { QueryResolvers } from 'interfaces/graphql'
 
