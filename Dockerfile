@@ -1,4 +1,4 @@
-FROM node:14.17
+FROM node:12
 
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
@@ -28,7 +28,7 @@ RUN mkdir /opt/node_app
 RUN chown node:node /opt/node_app
 WORKDIR /opt/node_app
 
-COPY package.json package-lock.json* ./
+COPY package.json ./
 
 RUN npm install --no-optional --ignore-scripts && npm cache clean --force --ignore-scripts
 
@@ -40,6 +40,10 @@ COPY codegen.yml codegen.yml
 COPY .env .env
 
 RUN npm run postinstall
+
+RUN npm run build
+
+
 RUN rm -rf /opt/node_app/node_modules
 
 USER node
