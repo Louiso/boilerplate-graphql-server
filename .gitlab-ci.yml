@@ -22,10 +22,10 @@ dev docker build:
     - echo "Login to aws ecr"
     - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
     - echo "Building image"
-    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
-    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-dev
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-dev
+    - docker build -t registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/applying:latest-dev
+    - docker push registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION}
+    # - docker push registry.krowdy.com/krowdy/ats/applying:latest-dev
   only:
     - /^[0-9]+(?:.[0-9]+)+-dev$/
 
@@ -55,10 +55,10 @@ prebuild docker build:
     - echo "Login to aws ecr"
     - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
     - echo "Building image"
-    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
-    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-prebuild
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-prebuild
+    - docker build -t registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/applying:latest-prebuild
+    - docker push registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION}
+    # - docker push registry.krowdy.com/krowdy/ats/applying:latest-prebuild
   only:
     - /^[0-9]+(?:.[0-9]+)+-prebuild$/
 
@@ -88,10 +88,10 @@ build docker build:
     - echo "Login to aws ecr"
     - "$(aws ecr get-login --no-include-email --region us-east-1 | sed 's/785451739310.dkr.ecr.us-east-1.amazonaws.com/registry.krowdy.com/g')" 
     - echo "Building image"
-    - docker build -t registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} .
-    - docker tag registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/backgroundcheck:latest-build
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:${BUILD_VERSION}
-    - docker push registry.krowdy.com/krowdy/ats/backgroundcheck:latest-build
+    - docker build -t registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} .
+    - docker tag registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION} registry.krowdy.com/krowdy/ats/applying:latest-build
+    - docker push registry.krowdy.com/krowdy/ats/applying:${BUILD_VERSION}
+    # - docker push registry.krowdy.com/krowdy/ats/applying:latest-build
   only:
     - /^[0-9]+(?:.[0-9]+)+-build$/
     
