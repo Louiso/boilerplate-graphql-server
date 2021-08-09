@@ -1,0 +1,106 @@
+input SalaryExpectationInput {
+  _id: String
+  currency: String
+  amount: String
+}
+
+input EspecializationInput {
+  _id: ID!
+  especializationName: String
+  especializationtype: String
+  especializationPlace: String
+  startDate: Date
+  endDate: Date
+  description: String
+  imgUrl: String
+  studyingHere: Boolean
+}
+
+input ExperienceInput {
+  _id: ID!
+  jobPosition: String
+  companyName: String
+  hierarchy: String
+  area: String
+  location: String
+  startDate: Date
+  endDate: Date
+  description: String
+  imgUrl: String
+  workHere: Boolean
+  idExperienceLaborum: String
+}
+
+input CurriculumInput {
+  fileName: String
+  filenameOriginal: String
+  url: String
+  updatedAt: String
+}
+
+input EducationInput {
+  _id: ID!
+  institutionName: String!
+  degree: String
+  condition: String
+  career: String!
+  academicArea: String
+  startDate: Date
+  endDate: Date
+  studyingHere: Boolean
+  description: String
+  imgUrl: String
+  idEducationLaborum: String
+}
+
+input EmailsPhonesResponseInput {
+  _id: ID!
+  type: String
+  value: String
+  title: String
+  url: String
+  socialNetwork: String
+}
+
+input KnowledgeInput {
+  _id: ID!
+  knowledgeName: String
+  level: String
+}
+
+input ProfileInput {
+  _id: ID!
+  userIdLaborum: ID
+  firstJob: Boolean
+  photo: String
+  firstName: String
+  lastName: String
+  sex: String
+  salaryExpectation: SalaryExpectationInput
+  civilState: String
+  birthDate: String
+  actualPosition: String
+  aboutMe: String
+  especialization: [EspecializationInput]
+  headline: String
+  jobPosition: String
+  emails: [EmailsPhonesResponseInput!]
+  phones: [EmailsPhonesResponseInput!]
+  phone: String
+  email: String
+  websites: [EmailsPhonesResponseInput!]
+  location: String
+  curriculum: CurriculumInput
+  socialNetworks: [EmailsPhonesResponseInput!]
+  latlon: String
+  education: [EducationInput]
+  competencies: String
+  knowledge: [KnowledgeInput]
+  experience: [ExperienceInput]
+  nationality: String
+  status: String
+  docNumber: String
+  video: String
+  idExperienceLaborumDeleted: String
+  idEducationLaborumDeleted: String
+}
