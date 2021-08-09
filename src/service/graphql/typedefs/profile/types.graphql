@@ -1,0 +1,119 @@
+type Profile {
+  _id: ID!
+  userIdLaborum: ID
+  firstJob: Boolean
+  photo: String
+  nationality: String
+  docNumber: String
+  firstName: String!
+  lastName: String!
+  sex: String
+  salaryExpectation: SalaryExpectation
+  civilState: String
+  birthDate: String
+  actualPosition: String
+  aboutMe: String
+  headline: String
+  jobPosition: String
+  emails: [ EmailsPhonesResponse! ]!
+  phones: [ EmailsPhonesResponse! ]!
+  websites: [ EmailsPhonesResponse! ]!
+  location: String
+  curriculum: Curriculum
+  socialNetworks: [ SocialNetwork! ]!
+  latlon: LatLon
+  deparment: String
+  province: String
+  district: String
+  education: [ Education! ]!
+  especialization: [ Especialization! ]!
+  competencies: [ String! ]!
+  knowledge: [ Knowledge! ]!
+  experience: [ Experience! ]!
+  createdAt: String!
+  status: String
+  updatedAt: String!
+  video: String
+  # logical delete
+  deleted: Boolean!
+}
+
+type EmailsPhonesResponse {
+  _id: ID!
+  type: String
+  value: String
+  title: String
+}
+
+type SocialNetwork {
+  _id: ID!
+  socialNetwork: String
+  url: String
+}
+
+type Education {
+  _id: ID!
+  institutionName: String
+  degree: String
+  condition: String
+  career: String
+  academicArea: String
+  startDate: Date
+  endDate: Date
+  studyingHere: Boolean
+  description: String
+  imgUrl: String
+  idEducationLaborum: String
+}
+
+type Curriculum {
+  fileName: String
+  filenameOriginal: String
+  url: String
+  updatedAt: String
+}
+
+type Experience {
+  _id: ID!
+  jobPosition: String
+  companyName: String
+  hierarchy: String
+  area: String
+  location: String
+  startDate: Date
+  endDate: Date
+  description: String
+  imgUrl: String
+  workHere: Boolean
+  idExperienceLaborum: String
+}
+
+type Especialization {
+  _id: ID!
+  especializationName: String
+  especializationtype: String
+  especializationPlace: String
+  startDate: Date
+  endDate: Date
+  description: String
+  imgUrl: String
+  studyingHere: Boolean
+}
+
+type Knowledge {
+  _id: ID!
+  knowledgeName: String
+  level: String
+}
+
+type LatLon {
+  lat: String
+  lng: String
+}
+
+type SalaryExpectation {
+  _id: String
+  currency: String
+  amount: String
+}
+

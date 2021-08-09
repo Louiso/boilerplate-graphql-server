@@ -1,4 +1,4 @@
 type Query {
   authorization: Response!
-  getUser: User
+  getUser: User @auth
 }
