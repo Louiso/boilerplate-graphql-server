@@ -21,13 +21,14 @@
     "rootDirs": [
       "src"
     ],
+    "noUnusedLocals": false,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "importHelpers": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -49,13 +50,13 @@
       "node_modules/@types"
     ]
   },
-  "include": [
-    "**/*.ts"
-  ],
   "exclude": [
     "dist",
     "node_modules",
     "jest.config.js",
     ".eslintplugin.js"
+  ],
+  "include": [
+    "**/*.ts"
   ]
 }
