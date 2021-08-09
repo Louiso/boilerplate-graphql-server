@@ -1,5 +1,5 @@
-import { ExpressContext } from 'apollo-server-express/dist/ApolloServer'
-import { ApolloError } from 'apollo-server-errors'
+import { ExpressContext } from 'apollo-server-express'
+import { ApolloError } from 'apollo-server'
 
 import getDataSources from './dataSources'
 
