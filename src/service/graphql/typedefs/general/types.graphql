@@ -3,10 +3,6 @@ type Response {
   data: JSON
 }
 
-type Example @entity {
-  _id: ID! @id
-}
-
 type Curriculum {
   fileName: String
   url: String
