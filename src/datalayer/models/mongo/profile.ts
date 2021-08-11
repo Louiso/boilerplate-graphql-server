@@ -1,4 +1,9 @@
-import mongoose, { Schema } from 'mongoose'
+import { Schema } from 'mongoose'
+import { ProfileDbObject } from 'interfaces/graphql'
+import { connection } from '../../../config/connections'
+import { NormalizeId } from 'interfaces/general'
+
+export type ProfileDb = Document & NormalizeId<ProfileDbObject>
 
 const socialNetworkSchema = new Schema({
   socialNetwork: { type: String },
@@ -65,7 +70,7 @@ const salarySchema = new Schema({
   currency: { type: String }
 })
 
-const profileSchema = new Schema({
+const ProfileSchema = new Schema<ProfileDb>({
   birthDate        : { type: Date },
   civilState       : { type: String },
   curriculum       : fileSchema,
@@ -101,7 +106,7 @@ const profileSchema = new Schema({
   websites     : [ emailsPhonesSchema ]
 }, { timestamps: true })
 
-profileSchema.index({
+ProfileSchema.index({
   'emails.value': 'text',
   firstName     : 'text',
   lastName      : 'text',
@@ -109,6 +114,6 @@ profileSchema.index({
   'phones.value': 'text'
 })
 
-const Profile = mongoose.model('Profile', profileSchema)
+const ProfileModel = connection.model<ProfileDb>('Profile', ProfileSchema)
 
-export default Profile
+export default ProfileModel
