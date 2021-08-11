@@ -1,4 +1,7 @@
 import mongoose from 'mongoose'
+import aws from 'aws-sdk'
+
+const { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY } = process.env
 
 export const connection = process.env.MONGO_CONNECTION ? mongoose.createConnection(
   process.env.MONGO_CONNECTION as string, {
@@ -7,3 +10,11 @@ export const connection = process.env.MONGO_CONNECTION ? mongoose.createConnecti
     keepAlive         : true
   }
 ) : null
+
+aws.config.update({
+  accessKeyId    : AWS_ACCESS_KEY_ID,
+  region         : AWS_REGION,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY
+})
+
+export const s3 = new aws.S3({ signatureVersion: 'v4' })
