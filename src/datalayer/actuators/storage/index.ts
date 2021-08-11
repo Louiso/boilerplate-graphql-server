@@ -1,4 +1,3 @@
-import path from 'path'
 import { s3 } from 'config/connections'
 import ProfileModel from 'models/mongo/profile'
 
@@ -29,13 +28,13 @@ const generateTokenPut = (params: Params): string => {
 const getKeyDir = (profileId: string, assetType: AssetType) => {
   switch (assetType) {
     case AssetType.Avatar: {
-      return `/assets/profile/${profileId}/avatar`
+      return `assets/profile/${profileId}/avatar`
     }
     case AssetType.Avatar: {
-      return `/assets/profile/${profileId}/docs`
+      return `assets/profile/${profileId}/docs`
     }
     default: {
-      return `/assets/profile/${profileId}/`
+      return `assets/profile/${profileId}/`
     }
   }
 }
@@ -57,7 +56,7 @@ const getStorageToken = async ({ contentType, fileName, assetType }: QueryGetSto
 
     const fileNameFinal = timestamp + fileName.replace(/ /g, '_')
 
-    const key = path.resolve(getKeyDir(profile._id, assetType), fileNameFinal)
+    const key =  `${getKeyDir(profile._id, assetType)}/${fileNameFinal}`.replace(new RegExp('/+', 'g'), '/')
 
     const url = s3.getSignedUrl('putObject', {
       ContentType: contentType,
