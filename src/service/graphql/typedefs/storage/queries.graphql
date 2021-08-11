@@ -1,0 +1,19 @@
+enum AssetType {
+  avatar
+  docs
+}
+
+type TokenObject {
+  token: String!
+  originalFileName: String!
+  fileName: String!
+  key: String!
+}
+
+type Query {
+  getStorageToken(
+    contentType: String!
+    fileName: String!
+    assetType: AssetType!
+  ): TokenObject! @auth
+}
