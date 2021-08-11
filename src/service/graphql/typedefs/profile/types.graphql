@@ -1,41 +1,41 @@
-type Profile {
-  _id: ID!
-  userIdLaborum: ID
-  firstJob: Boolean
-  photo: String
-  nationality: String
-  docNumber: String
-  firstName: String!
-  lastName: String!
-  sex: String
-  salaryExpectation: SalaryExpectation
-  civilState: String
-  birthDate: String
-  actualPosition: String
-  aboutMe: String
-  headline: String
-  jobPosition: String
-  emails: [ EmailsPhonesResponse! ]!
-  phones: [ EmailsPhonesResponse! ]!
-  websites: [ EmailsPhonesResponse! ]!
-  location: String
-  curriculum: Curriculum
-  socialNetworks: [ SocialNetwork! ]!
-  latlon: LatLon
-  deparment: String
-  province: String
-  district: String
-  education: [ Education! ]!
-  especialization: [ Especialization! ]!
-  competencies: [ String! ]!
-  knowledge: [ Knowledge! ]!
-  experience: [ Experience! ]!
-  createdAt: String!
-  status: String
-  updatedAt: String!
-  video: String
+type Profile @entity {
+  _id: ID! @id
+  userIdLaborum: ID @column
+  firstJob: Boolean @column
+  photo: String @column
+  nationality: String @column
+  docNumber: String @column
+  firstName: String! @column
+  lastName: String! @column
+  sex: String @column
+  salaryExpectation: SalaryExpectation @column
+  civilState: String @column
+  birthDate: String @column
+  actualPosition: String @column
+  aboutMe: String @column
+  headline: String @column
+  jobPosition: String @column
+  emails: [ EmailsPhonesResponse! ]! @column
+  phones: [ EmailsPhonesResponse! ]! @column
+  websites: [ EmailsPhonesResponse! ]! @column
+  location: String @column
+  curriculum: Curriculum @column
+  socialNetworks: [ SocialNetwork! ]! @column
+  latlon: LatLon @column
+  deparment: String @column
+  province: String @column
+  district: String @column
+  education: [ Education! ]! @column
+  especialization: [ Especialization! ]! @column
+  competencies: [ String! ]! @column
+  knowledge: [ Knowledge! ]! @column
+  experience: [ Experience! ]! @column
+  createdAt: String! @column
+  status: String @column
+  updatedAt: String! @column
+  video: String @column
   # logical delete
-  deleted: Boolean!
+  deleted: Boolean! @column
 }
 
 type EmailsPhonesResponse {
@@ -116,4 +116,3 @@ type SalaryExpectation {
   currency: String
   amount: String
 }
-

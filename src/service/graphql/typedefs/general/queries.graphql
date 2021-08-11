@@ -1,3 +1,5 @@
 type Query {
   holaMundo(name: String!): String
+
+  getCountryCode(ip: String!): KrowdyGeoCountryCode @auth
 }
