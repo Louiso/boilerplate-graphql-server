@@ -86,6 +86,10 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
       update['docType' in input ? input.docType! : profile.docType!] = input.docNumber!
     }
 
+    if('phone' in input) {
+      update['phones.0.value'] = input.phone
+    }
+
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         {

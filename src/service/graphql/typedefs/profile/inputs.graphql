@@ -107,6 +107,7 @@ input ProfileInput {
 
 input UpdateProfileBasicInformationInput {
   docNumber: String
+  photo: String
   birthDate: Date
   docType: String
   sex: String
