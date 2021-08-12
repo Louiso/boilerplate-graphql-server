@@ -72,23 +72,25 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
     const update: any = {}
 
     // genera un objeto q permite actualizar los datos hasta segunda capa, no admite array puede generar error
-    for(let key in input) {
-      if(typeof input[key] !== 'object') update[key] = input[key] 
-      else if(input[key] instanceof Date)  update[key] = input[key] 
-      else if(!Array.isArray(input[key])){
-        for(let subKey in input[key]) {
-          if(typeof input[key][subKey]  !== 'object') update[`${key}.${subKey}`] = input[key][subKey] 
-        }
-      }
-    }
+    for (const key in input)
+      if(typeof input[key] !== 'object') update[key] = input[key]
+      else if(input[key] instanceof Date)  update[key] = input[key]
+      else if(!Array.isArray(input[key]))
+        for (const subKey in input[key])
+          if(typeof input[key][subKey]  !== 'object') update[`${key}.${subKey}`] = input[key][subKey]
 
-    if('docNumber' in input) {
-      update['docType' in input ? input.docType! : profile.docType!] = input.docNumber!
-    }
+    if('docNumber' in input && !('docType' in input))
+      update[profile.docType!] = input.docNumber!
+    else if(!('docNumber' in input) && 'docType' in input)
+      update[input.docType!] = profile.docNumber
+    else if('docNumber' in input && 'docType' in input)
+      update[input.docType!] = input.docNumber!
 
-    if('phone' in input) {
+    // if('docType' in input && !())
+    // update['docType' in input ? input.docType! : profile.docType!] = input.docNumber!
+
+    if('phone' in input)
       update['phones.0.value'] = input.phone
-    }
 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
@@ -99,7 +101,7 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
           $set: update
         },
         {
-          new: true
+          'new': true
         }
       )
       .lean()
