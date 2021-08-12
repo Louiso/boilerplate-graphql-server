@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 import StorageActuator from '../storage'
 import ProfileModel from '../../models/mongo/profile'
 import { IContext } from 'interfaces/general'
-import { Profile, QueryUploadCvArgs, QueryGetProfileExhaustiveArgs } from 'interfaces/graphql'
+import { Profile, QueryUploadCvArgs, QueryGetProfileExhaustiveArgs, MutationUpdateProfileBasicInformationArgs } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
 const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArgs, context: IContext): Promise<string> => {
@@ -61,7 +61,53 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
   }
 }
 
+const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBasicInformationArgs, context: IContext): Promise<Profile> => {
+  try {
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId })
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const update: any = {}
+
+    // genera un objeto q permite actualizar los datos hasta segunda capa, no admite array puede generar error
+    for(let key in input) {
+      if(typeof input[key] !== 'object') update[key] = input[key] 
+      else if(input[key] instanceof Date)  update[key] = input[key] 
+      else if(!Array.isArray(input[key])){
+        for(let subKey in input[key]) {
+          if(typeof input[key][subKey]  !== 'object') update[`${key}.${subKey}`] = input[key][subKey] 
+        }
+      }
+    }
+
+    if('docNumber' in input) {
+      update['docType' in input ? input.docType! : profile.docType!] = input.docNumber!
+    }
+
+    const profileDb = await ProfileModel
+      .findOneAndUpdate(
+        {
+          idUser: context.userId
+        },
+        {
+          $set: update
+        },
+        {
+          new: true
+        }
+      )
+      .lean()
+
+    return profileDb!
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   uploadCV,
-  getProfileExhaustive
+  getProfileExhaustive,
+  updateProfileBasicInformation
 }
