@@ -26,9 +26,24 @@ const uploadCV = async ({ contentType: ContentType, filename }: GenerateTokenPar
   }
 }
 
-const getHierarchies = (): never[] => {
+interface Elements {
+  testing: boolean;
+}
+
+const timerBetweenOperations = async (ms) => {
   try {
-    return []
+    return new Promise(res => setTimeout(res, ms))
+  } catch (error) {
+    throw error
+  }
+}
+
+const getHierarchies = async (): Promise<Array<Elements>> => {
+  try {
+    await timerBetweenOperations(200)
+    const elements: Array<Elements> = [ { testing: true } ]
+
+    return elements
   } catch (error) {
     throw error
   }
