@@ -1,14 +1,9 @@
 import StorageActuator from '../storage'
 import ProfileModel from '../../models/mongo/profile'
 import { IContext } from 'interfaces/general'
+import { QueryUploadCvArgs } from 'interfaces/graphql'
 
-interface GenerateTokenParams {
-    filename: string;
-    contentType: string;
-    userId: string;
-}
-
-const uploadCV = async ({ contentType: ContentType, filename }: GenerateTokenParams, context: IContext): Promise<string> => {
+const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArgs, context: IContext): Promise<string> => {
   try {
     const { userId } = context
     const profile = await ProfileModel.findOne({ idUser: userId }, {})
