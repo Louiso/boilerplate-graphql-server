@@ -8,5 +8,9 @@ export const Query: QueryResolvers<IContext> = {
   uploadCV: (_, args, context) => ProfileActuator.uploadCV(args, context)
     .catch((error) => {
       throw new ApolloError(error)
+    }),
+  getHierarchies: () => ProfileActuator.getHierarchies()
+    .catch((error) => {
+      throw new ApolloError(error)
     })
 }

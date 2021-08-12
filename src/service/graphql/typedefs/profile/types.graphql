@@ -116,3 +116,8 @@ type SalaryExpectation {
   currency: String
   amount: String
 }
+
+type Hierarchy {
+  id: String
+  name: String
+}

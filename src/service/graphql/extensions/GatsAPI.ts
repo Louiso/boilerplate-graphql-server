@@ -27,6 +27,12 @@ interface GetStagesWithTasksResponse {
   data: Stage[];
   success: boolean;
 }
+
+interface GetHierarchiesResponse {
+  data: [];
+  success: boolean;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -53,6 +59,16 @@ class GatsAPI extends DataSource {
   async getStagesWithTasks({ jobId }: GetStagesWithTasksArgs): Promise<GetStagesWithTasksResponse> {
     try {
       return this.get<GetStagesWithTasksResponse>(`/api/v1/stages/${jobId}/withTasks`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getHierarchies(): Promise<GetHierarchiesResponse> {
+    try {
+      console.log('sdfldsklfnjsdlfn')
+
+      return { data: [], success: true }
     } catch (error) {
       throw error
     }

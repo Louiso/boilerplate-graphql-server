@@ -26,6 +26,15 @@ const uploadCV = async ({ contentType: ContentType, filename }: GenerateTokenPar
   }
 }
 
+const getHierarchies = (): never[] => {
+  try {
+    return []
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
-  uploadCV
+  uploadCV,
+  getHierarchies
 }
