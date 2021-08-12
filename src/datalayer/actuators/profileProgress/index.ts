@@ -9,6 +9,7 @@ const getProgressExhaustive = async ({ jobId }: QueryGetProgressExhaustiveArgs, 
       .findOne({
         idUser: context.userId
       })
+      .select('_id')
       .lean()
 
     if(!profile) throw new Error(`Profile para este userId ${context.userId} NotFound`)

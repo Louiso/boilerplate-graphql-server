@@ -1,3 +1,5 @@
 type Query {
   uploadCV(contentType: String! filename: String!): String!
+
+  getProfileExhaustive(jobId: ID): Profile! @auth
 }

@@ -5,10 +5,20 @@ interface getUserResponse {
   success: boolean;
   user: {
     _id: string;
+    emails: {
+      _id: string;
+      email: string;
+      status: boolean;
+    }[];
     email: string;
     firstName: string;
     lastName: string;
     phone: string;
+    phones: {
+      _id: string;
+      phone: string;
+      status: boolean;
+    }[];
     photo: string;
   };
 }

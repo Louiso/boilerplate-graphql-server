@@ -5,7 +5,12 @@ import { QueryResolvers } from 'interfaces/graphql'
 import ProfileActuator from 'actuators/profile'
 
 export const Query: QueryResolvers<IContext> = {
-  uploadCV: (_, args, context) => ProfileActuator.uploadCV(args, context)
+  uploadCV: (_, args, context) =>
+    ProfileActuator.uploadCV(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
+      }),
+  getProfileExhaustive: (_, args, context) => ProfileActuator.getProfileExhaustive(args, context)
     .catch((error) => {
       throw new ApolloError(error)
     })

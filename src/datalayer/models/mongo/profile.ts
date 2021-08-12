@@ -102,8 +102,12 @@ const ProfileSchema = new Schema<ProfileDb>({
     'default': true,
     type     : Boolean
   },
-  userIdLaborum: { type: String },
-  websites     : [ emailsPhonesSchema ]
+  userIdLaborum  : { type: String },
+  websites       : [ emailsPhonesSchema ],
+  dni            : { type: String },
+  passport       : { type: String },
+  immigrationCard: { type: String },
+  docType        : { type: String, 'default': 'dni' }
 }, { timestamps: true })
 
 ProfileSchema.index({
