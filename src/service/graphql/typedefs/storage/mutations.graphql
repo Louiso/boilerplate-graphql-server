@@ -10,7 +10,7 @@ type TokenObject {
   key: String!
 }
 
-type Query {
+type Mutation {
   getStorageToken(
     contentType: String!
     fileName: String!

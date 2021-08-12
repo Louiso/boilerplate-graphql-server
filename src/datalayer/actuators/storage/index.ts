@@ -2,7 +2,7 @@ import { s3 } from 'config/connections'
 import ProfileModel from 'models/mongo/profile'
 
 import { IContext } from 'interfaces/general'
-import { QueryGetStorageTokenArgs, AssetType, TokenObject } from 'interfaces/graphql'
+import { MutationGetStorageTokenArgs, AssetType, TokenObject } from 'interfaces/graphql'
 
 interface Params {
   ContentType: string;
@@ -39,7 +39,7 @@ const getKeyDir = (profileId: string, assetType: AssetType) => {
   }
 }
 
-const getStorageToken = async ({ contentType, fileName, assetType }: QueryGetStorageTokenArgs, context: IContext): Promise<TokenObject> => {
+const getStorageToken = async ({ contentType, fileName, assetType }: MutationGetStorageTokenArgs, context: IContext): Promise<TokenObject> => {
   try {
     const profile = await ProfileModel
       .findOne({
@@ -61,6 +61,8 @@ const getStorageToken = async ({ contentType, fileName, assetType }: QueryGetSto
     const url = s3.getSignedUrl('putObject', {
       ContentType: contentType,
       Key        : key,
+      ACL        : 'public-read',
+      Expires    : 3600,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       Bucket     : BUCKET_DIR!
     })
