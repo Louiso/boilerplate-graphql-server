@@ -1,4 +1,4 @@
 type Query {
   uploadCV(contentType: String! filename: String!): String!
-  getHierarchies: [ Hierarchy ]
+  getAreas: [ Area ]
 }

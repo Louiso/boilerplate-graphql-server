@@ -9,7 +9,7 @@ export const Query: QueryResolvers<IContext> = {
     .catch((error) => {
       throw new ApolloError(error)
     }),
-  getHierarchies: () => ProfileActuator.getHierarchies()
+  getAreas: (_, args, context) => ProfileActuator.getAreas(args, context)
     .catch((error) => {
       throw new ApolloError(error)
     })

@@ -1,4 +1,4 @@
-import { Candidate, Job, Stage  } from 'interfaces/graphql'
+import { Area, Candidate, Job, Stage  } from 'interfaces/graphql'
 import DataSource from './DataSource'
 
 interface GetCandidateArgs {
@@ -28,8 +28,8 @@ interface GetStagesWithTasksResponse {
   success: boolean;
 }
 
-interface GetHierarchiesResponse {
-  data: [];
+interface GetAreasResponse {
+  data: Area[];
   success: boolean;
 }
 
@@ -64,11 +64,9 @@ class GatsAPI extends DataSource {
     }
   }
 
-  async getHierarchies(): Promise<GetHierarchiesResponse> {
+  async getAreas(): Promise<GetAreasResponse> {
     try {
-      console.log('sdfldsklfnjsdlfn')
-
-      return { data: [], success: true }
+      return this.get<GetAreasResponse>('/autocomplete/areas')
     } catch (error) {
       throw error
     }

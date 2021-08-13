@@ -121,3 +121,8 @@ type Hierarchy {
   id: String
   name: String
 }
+
+type Area {
+  id: String
+  name: String
+}

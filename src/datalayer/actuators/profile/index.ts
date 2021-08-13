@@ -44,7 +44,20 @@ const getHierarchies = async (): Promise<Array<Elements>> => {
   }
 }
 
+const getAreas = async (args : { limit?: number; text?: string; skip?: number; }, context: IContext): Promise<Array<Elements>> => {
+  try {
+    const res =  await context.dataSources.gatsAPI.getAreas()
+    console.log('🚀 ~ file: index.ts ~ line 51 ~ getAreas ~ res', res)
+    const elements: Array<Elements> = [ { testing: true } ]
+
+    return elements
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   uploadCV,
-  getHierarchies
+  getHierarchies,
+  getAreas
 }
