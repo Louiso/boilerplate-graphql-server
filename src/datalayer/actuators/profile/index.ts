@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 import StorageActuator from '../storage'
 import ProfileModel from '../../models/mongo/profile'
 import { IContext } from 'interfaces/general'
-import { Profile, QueryUploadCvArgs, QueryGetProfileExhaustiveArgs, MutationUpdateProfileBasicInformationArgs } from 'interfaces/graphql'
+import { Profile, QueryUploadCvArgs, QueryGetProfileExhaustiveArgs, MutationUpdateProfileBasicInformationArgs, QueryGetAreasArgs } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
 const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArgs, context: IContext): Promise<string> => {
@@ -21,6 +21,10 @@ const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArg
   } catch (error) {
     throw error
   }
+}
+
+interface Elements {
+  testing: boolean;
 }
 
 const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, context: IContext): Promise<Profile> => {
@@ -56,6 +60,17 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
     })
 
     return profile
+  } catch (error) {
+    throw error
+  }
+}
+
+const getAreas = async (args : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
+  try {
+    const { success, data } =  await context.dataSources.gatsAPI.getAreas(args) || {}
+    if(!success) return []
+
+    return data
   } catch (error) {
     throw error
   }
@@ -115,5 +130,6 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
 export default {
   uploadCV,
   getProfileExhaustive,
-  updateProfileBasicInformation
+  updateProfileBasicInformation,
+  getAreas
 }
