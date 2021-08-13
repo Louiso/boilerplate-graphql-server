@@ -1,5 +1,5 @@
 type Query {
   uploadCV(contentType: String! filename: String!): String!
   getProfileExhaustive(jobId: ID): Profile! @auth
-  getAreas(input: PaginationInput): [ Area ]
+  getAreas(input: PaginationInput): [ Area ] @auth
 }
