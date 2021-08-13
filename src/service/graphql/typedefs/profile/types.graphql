@@ -10,7 +10,7 @@ type Profile @entity {
   sex: String @column
   salaryExpectation: SalaryExpectation @column
   civilState: String @column
-  birthDate: String @column
+  birthDate: Date @column
   actualPosition: String @column
   aboutMe: String @column
   headline: String @column
@@ -27,15 +27,19 @@ type Profile @entity {
   district: String @column
   education: [ Education! ]! @column
   especialization: [ Especialization! ]! @column
-  competencies: [ String! ]! @column
+  competencies: [ String! ] @column
   knowledge: [ Knowledge! ]! @column
   experience: [ Experience! ]! @column
-  createdAt: String! @column
+  createdAt: Date! @column
   status: String @column
-  updatedAt: String! @column
+  updatedAt: Date! @column
   video: String @column
   # logical delete
   deleted: Boolean! @column
+  dni: String @column
+  passport: String @column
+  immigrationCard: String @column
+  docType: String! @column
 }
 
 type EmailsPhonesResponse {

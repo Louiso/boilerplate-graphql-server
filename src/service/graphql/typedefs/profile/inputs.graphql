@@ -104,3 +104,19 @@ input ProfileInput {
   idExperienceLaborumDeleted: String
   idEducationLaborumDeleted: String
 }
+
+input UpdateProfileBasicInformationInput {
+  docNumber: String
+  photo: String
+  birthDate: Date
+  docType: String
+  sex: String
+  phone: String
+  salaryExpectation: SalaryExpectationInput
+}
+
+input PaginationInput {
+  limit: Int
+  text: String
+  skip: Int
+} 

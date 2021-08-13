@@ -28,6 +28,12 @@ interface GetStagesWithTasksResponse {
   success: boolean;
 }
 
+interface GetAreasArgs {
+  limit?: number;
+  skip?: number;
+  text?: string;
+}
+
 interface GetAreasResponse {
   data: Area[];
   success: boolean;
@@ -64,9 +70,9 @@ class GatsAPI extends DataSource {
     }
   }
 
-  async getAreas(): Promise<GetAreasResponse> {
+  async getAreas(args: GetAreasArgs): Promise<GetAreasResponse> {
     try {
-      return this.get<GetAreasResponse>('/autocomplete/areas')
+      return this.get<GetAreasResponse>('/autocomplete/areas', args)
     } catch (error) {
       throw error
     }

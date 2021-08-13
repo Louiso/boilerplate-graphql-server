@@ -45,6 +45,7 @@ const getStorageToken = async ({ contentType, fileName, assetType }: MutationGet
       .findOne({
         idUser: context.userId
       })
+      .select('_id')
       .lean()
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
