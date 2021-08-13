@@ -22,7 +22,7 @@ async function Context({ req }: ExpressContext) {
       userId
     }
   } catch (error) {
-    console.log('if -> error', error)
+    console.log('if -> error', error.message)
     if(error.name === 'SyntaxError') throw new ApolloError(error.message)
     throw new ApolloError(`Service generate this error: [${error.message}]`)
   }
