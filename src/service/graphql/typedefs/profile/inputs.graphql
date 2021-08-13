@@ -114,3 +114,9 @@ input UpdateProfileBasicInformationInput {
   phone: String
   salaryExpectation: SalaryExpectationInput
 }
+
+input PaginationInput {
+  limit: Int
+  text: String
+  skip: Int
+} 
