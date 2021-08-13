@@ -1,3 +1,15 @@
+enum CandidateStatus {
+  new
+  rejected
+  postulant
+  leave
+  deleted
+  apply
+  linkedin
+  invited
+  winner 
+}
+
 type Candidate {
   _id: ID!
   curriculum: Curriculum
@@ -10,9 +22,11 @@ type Candidate {
   lastName: String
   fullName: String
   jobId: ID!
+  stageId: ID
   linkedin: String
   phone: String
   photo: String
   websites: [EmailsPhonesResponse!]!
   candidateTasks: [ CandidateTask! ]!
+  status: CandidateStatus!
 }

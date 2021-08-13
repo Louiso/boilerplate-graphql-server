@@ -1,4 +1,4 @@
-import { Candidate, Job, Stage  } from 'interfaces/graphql'
+import { Candidate, CandidateTask, Job, Stage  } from 'interfaces/graphql'
 import DataSource from './DataSource'
 
 interface GetCandidateArgs {
@@ -27,6 +27,16 @@ interface GetStagesWithTasksResponse {
   data: Stage[];
   success: boolean;
 }
+
+interface GetCandidateTasksArgs {
+  candidateId: string;
+}
+
+interface GetCandidateTasksResponse {
+  data: CandidateTask[];
+  success: boolean;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -53,6 +63,14 @@ class GatsAPI extends DataSource {
   async getStagesWithTasks({ jobId }: GetStagesWithTasksArgs): Promise<GetStagesWithTasksResponse> {
     try {
       return this.get<GetStagesWithTasksResponse>(`/api/v1/stages/${jobId}/withTasks`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getCandidateTasks({ candidateId }: GetCandidateTasksArgs): Promise<GetCandidateTasksResponse> {
+    try {
+      return this.get<GetCandidateTasksResponse>(`/candidateTasks/${candidateId}/byCandidate`)
     } catch (error) {
       throw error
     }
