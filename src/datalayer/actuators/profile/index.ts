@@ -13,7 +13,7 @@ const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArg
     if(!profile) throw new Error('Profile not found')
 
     const Key = `assets/profile/${profile._id}/cv/${filename}`
-    const Bucket = process.env.AWS_BUCKET || ''
+    const Bucket = process.env.BUCKET_DIR || ''
 
     const token = StorageActuator.generateTokenPut({ ContentType, Key, Bucket })
 

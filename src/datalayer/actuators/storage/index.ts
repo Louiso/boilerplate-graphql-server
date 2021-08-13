@@ -33,6 +33,9 @@ const getKeyDir = (profileId: string, assetType: AssetType) => {
     case AssetType.Avatar: {
       return `assets/profile/${profileId}/docs`
     }
+    case AssetType.Cv: {
+      return `assets/profile/${profileId}/cv`
+    }
     default: {
       return `assets/profile/${profileId}/`
     }
