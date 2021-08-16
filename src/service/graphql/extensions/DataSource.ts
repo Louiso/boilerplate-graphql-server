@@ -17,7 +17,6 @@ class DataSource {
 
       return data
     } catch (error) {
-      console.log('DataSource -> error', error)
       throw error
     }
   }
@@ -29,7 +28,6 @@ class DataSource {
 
       return  data
     } catch (error) {
-      console.log('DataSource -> get -> error', error)
       throw error
     }
   }
