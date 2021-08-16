@@ -1,4 +1,5 @@
-import { Area, Candidate, Job, Stage, CandidateTask  } from 'interfaces/graphql'
+import { Maybe } from 'graphql/jsutils/Maybe'
+import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput  } from 'interfaces/graphql'
 import DataSource from './DataSource'
 
 interface GetCandidateArgs {
@@ -34,11 +35,6 @@ interface GetCandidateTasksArgs {
 
 interface GetCandidateTasksResponse {
   data: CandidateTask[];
-}
-interface GetAreasArgs {
-  limit?: number;
-  skip?: number;
-  text?: string;
 }
 
 interface GetAreasResponse {
@@ -84,9 +80,11 @@ class GatsAPI extends DataSource {
       throw error
     }
   }
-  async getAreas(args: GetAreasArgs): Promise<GetAreasResponse> {
+  async getAreas(args: Maybe<PaginationInput>): Promise<GetAreasResponse> {
     try {
-      return this.get<GetAreasResponse>('/autocomplete/areas', args)
+      const { text, limit, skip } = args || {}
+
+      return this.get<GetAreasResponse>(`/autocomplete/areas?text=${text || ''}&limit=${limit || 15}&skip=${skip || 0}`)
     } catch (error) {
       throw error
     }

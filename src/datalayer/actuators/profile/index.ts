@@ -52,9 +52,9 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
   }
 }
 
-const getAreas = async (args : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
+const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
   try {
-    const { success, data } =  await context.dataSources.gatsAPI.getAreas(args) || {}
+    const { success, data } =  await context.dataSources.gatsAPI.getAreas(input) || {}
     if(!success) return []
 
     return data
