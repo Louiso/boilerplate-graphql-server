@@ -17,7 +17,6 @@ ENV BABEL_DISABLE_CACHE $BABEL_DISABLE_CACHE
 RUN npm install npm@latest -g
 RUN npm install typescript@4.1.3 -g
 RUN npm install nodemon@2.0.6 -g
-RUN npm install @graphql-codegen/cli@latest -g
 RUN npm install @swc/core@1.2.40 -g
 RUN npm install @swc/core-linux@1.2.40 -g
 RUN npm install @swc/core-linux-musl@1.2.40 -g
