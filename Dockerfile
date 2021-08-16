@@ -39,7 +39,6 @@ COPY codegen.yml codegen.yml
 COPY .env .env
 
 RUN npm run postinstall
-RUN rm -rf /opt/node_app/node_modules
 
 USER node
 
