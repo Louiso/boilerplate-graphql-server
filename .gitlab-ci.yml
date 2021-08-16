@@ -1,5 +1,5 @@
 dev docker build:
-  image: docker:18
+  image: docker:20.10.7
   stage: build
   tags:
     - buildS1
@@ -30,7 +30,7 @@ dev docker build:
     - /^[0-9]+(?:.[0-9]+)+-dev$/
 
 prebuild docker build:
-  image: docker:18
+  image: docker:20.10.7
   stage: build
   tags:
     - buildS1
@@ -63,7 +63,7 @@ prebuild docker build:
     - /^[0-9]+(?:.[0-9]+)+-prebuild$/
 
 build docker build:
-  image: docker:18
+  image: docker:20.10.7
   stage: build
   tags:
     - buildS1
