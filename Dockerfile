@@ -29,7 +29,7 @@ WORKDIR /opt/node_app
 
 COPY package.json package-lock.json* ./
 
-RUN npm install --no-optional --ignore-scripts && npm cache clean --force --ignore-scripts
+RUN npm install --no-optional --dotenv-extended --ignore-scripts && npm cache clean --force --ignore-scripts 
 
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
