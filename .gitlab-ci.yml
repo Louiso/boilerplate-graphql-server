@@ -6,9 +6,8 @@ dev docker build:
   services:
     - docker:dind
   before_script:
-    - "which python || apk add --no-cache curl python"
+    - apk add --update --no-cache curl jq py3-configobj py3-pip py3-setuptools python3 python3-dev
     - "which bash || apk add --no-cache curl bash"
-    - "which pip || apk add --no-cache curl py-pip"
     - "which aws || pip install awscli"
   script:
     - echo "Recovering .env"
