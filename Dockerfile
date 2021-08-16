@@ -1,4 +1,4 @@
-FROM node:16.6.2
+FROM node:14
 
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
@@ -16,6 +16,7 @@ ENV BABEL_DISABLE_CACHE $BABEL_DISABLE_CACHE
 RUN npm install npm@latest -g
 RUN npm install typescript@4.1.3 -g
 RUN npm install nodemon@2.0.6 -g
+RUN npm install @graphql-codegen/cli@1.19.4 -g
 RUN npm install @swc/core@1.2.40 -g
 RUN npm install @swc/core-linux@1.2.40 -g
 RUN npm install @swc/core-linux-musl@1.2.40 -g
@@ -26,7 +27,7 @@ RUN mkdir /opt/node_app
 RUN chown node:node /opt/node_app
 WORKDIR /opt/node_app
 
-COPY package.json ./
+COPY package.json package-lock.json* ./
 
 RUN npm install --no-optional --ignore-scripts && npm cache clean --force --ignore-scripts
 
@@ -38,9 +39,6 @@ COPY codegen.yml codegen.yml
 COPY .env .env
 
 RUN npm run postinstall
-
-RUN npm run build
-
 RUN rm -rf /opt/node_app/node_modules
 
 USER node

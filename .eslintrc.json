@@ -30,7 +30,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/no-non-null-assertion": "off",
     "arrow-body-style": ["error", "as-needed"],
     "arrow-spacing": "error",
     "@typescript-eslint/no-var-requires": 0,
