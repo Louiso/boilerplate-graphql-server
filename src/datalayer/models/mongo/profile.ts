@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import { Schema, Document } from 'mongoose'
 import { ProfileDbObject } from 'interfaces/graphql'
 import { connection } from '../../../config/connections'
 import { NormalizeId } from 'interfaces/general'

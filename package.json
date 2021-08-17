@@ -22,8 +22,7 @@
   "lint-staged": {
     "{handler,src}/**/*.{js,ts}": [
       "graphql-codegen --config codegen.yml",
-      "eslint --ignore-path .gitignore --ext .js,.ts --fix",
-      "bash -c tsc --noEmit true"
+      "eslint --ignore-path .gitignore --ext .js,.ts --fix"
     ]
   },
   "dependencies": {

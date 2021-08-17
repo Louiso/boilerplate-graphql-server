@@ -46,7 +46,7 @@ const getStorageToken = async ({ contentType, fileName, assetType }: MutationGet
   try {
     const profile = await ProfileModel
       .findOne({
-        idUser: context.userId
+        idUser: context.userId!
       })
       .select('_id')
       .lean()
