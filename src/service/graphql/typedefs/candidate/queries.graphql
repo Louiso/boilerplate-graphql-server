@@ -1,3 +1,7 @@
 type Query {
-  getCandidate(jobId: ID!): Candidate! @auth
+  getCandidate(
+    jobId: ID! 
+    publicationIndex: Int
+    slug: String
+  ): Candidate! @auth
 }

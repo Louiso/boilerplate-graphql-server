@@ -1,11 +1,28 @@
 import { Candidate, QueryGetCandidateArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 
-const getCandidateByJob = async ({ jobId }: QueryGetCandidateArgs, { dataSources: { gatsAPI } }: IContext): Promise<Candidate> => {
+const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCandidateArgs, context: IContext): Promise<Candidate> => {
   try {
-    const { success, data: candidate } = await gatsAPI.getCandidate({ jobId })
+    const { dataSources: { gatsAPI, portalesAPI } } = context
+    let candidate: Candidate
+    const { success, data } = await gatsAPI.getCandidate({ jobId }).catch(() => ({ success: false, data: null }))
 
-    if(!success) throw new Error(`Candidate NotFound JobId ${jobId}`)
+    if(!success) {
+      let laborExchange
+      if(slug) {
+        const { data } = await portalesAPI.getLaborExchangeBySlug({ slug: slug })
+        laborExchange = data
+      }
+      await gatsAPI.applyToJob({ jobId, publicationIndex: publicationIndex ?? 0, sourceApply: laborExchange?.name.toLowerCase() ?? 'landing' })
+
+      const { success, data } = await gatsAPI.getCandidate({ jobId })
+
+      if(!success) throw new Error(`Candidate for jobId:${jobId} userId:${context.userId} NotFound`)
+
+      candidate = data
+    } else {
+      candidate = data!
+    }
 
     return candidate
   } catch (error) {
