@@ -7,7 +7,8 @@ import {
   MutationUpdateProfileBasicInformationArgs,
   QueryGetAreasArgs,
   MutationUpdateCvArgs,
-  Area
+  Area,
+  MutationSendProfileArgs
 } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
@@ -145,9 +146,175 @@ const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Pro
   }
 }
 
+const checkProfile = async (context: IContext): Promise<{ errors: string[]; profile: Profile; }> => {
+  const errors: string[] = []
+
+  const profile = await ProfileModel
+    .findOne({ idUser: context.userId! })
+    .lean()
+
+  if(!profile) throw new Error(`Profile userId: ${context.userId} NotFound`)
+
+  try {
+    const [ firstPhone ] = profile.phones
+    if(firstPhone && firstPhone.value && /[a-z]/gi.test(firstPhone.value!)) errors.push('Numero telefónico invalido')
+
+    if(!profile.birthDate) errors.push('Fecha de nacimiento requerido')
+
+    if(profile.salaryExpectation?.amount === null || profile.salaryExpectation?.amount === undefined) errors.push('Expectativa salarial requerida')
+
+    if(!Object.values(profile.curriculum ?? {}).length) errors.push('Curriculum invalido')
+
+    if(!profile.curriculum?.url) errors.push('Curriculum requerido')
+
+    if(profile.curriculum?.url && profile.curriculum?.url.indexOf(profile._id) === -1) errors.push('Curriculum requerido')
+
+    const incompleteExperiences = (profile.experience || [])
+      .filter((exp) =>
+        !exp.jobPosition ||
+        !exp.hierarchy ||
+        !exp.companyName ||
+        !exp.area ||
+        (exp.workHere && !exp.startDate) ||
+        (!exp.workHere && !exp.startDate && !exp.endDate)
+      )
+
+    if(incompleteExperiences.length) errors.push('Experiencias incompletas')
+
+    const incompleteEducations = (profile.education || [])
+      .filter((edu) =>
+        !edu.institutionName ||
+        !edu.degree ||
+        !edu.condition ||
+        !edu.career ||
+        (edu.studyingHere && !edu.startDate) ||
+        (!edu.studyingHere && !edu.startDate && !edu.endDate)
+      )
+
+    if(incompleteEducations.length) errors.push('Estudios incompletos')
+
+    /* en el frontend ya no hay especializaciones */
+    // const incompleteEspecializations = (profile.especialization || [])
+    //   .filter((esp) =>
+    //     !esp.especializationName ||
+    //     !esp.especializationtype ||
+    //     !esp.especializationPlace ||
+    //     (esp.studyingHere && !esp.startDate) ||
+    //     (!esp.studyingHere && !esp.startDate && !esp.endDate)
+    //   )
+
+    // if(incompleteEspecializations.length) errors.push('Especializaciones incompletos')
+  } catch (err) {
+    errors.push(err.message)
+  } finally {
+    return {
+      errors,
+      profile: profile
+    }
+  }
+}
+
+const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext): Promise<Profile> => {
+  try {
+    const { errors, profile } = await checkProfile(context)
+
+    if(errors.length) throw new Error(JSON.stringify(errors))
+
+    if(!profile) throw new Error(`Profile userId: ${context.userId} NotFound`)
+
+    const candidateInput: any = {
+      birthDate : profile.birthDate,
+      civilState: profile.civilState,
+      curriculum: {
+        fileName : profile.curriculum?.fileName,
+        updatedAt: profile.curriculum?.updatedAt,
+        url      : profile.curriculum?.url
+      },
+      docNumber: profile.docNumber,
+      education: profile.education.map((edu) => ({
+        academicArea   : edu.academicArea,
+        career         : edu.career,
+        condition      : edu.condition,
+        degree         : edu.degree,
+        description    : edu.description,
+        endDate        : edu.endDate,
+        imgUrl         : edu.imgUrl,
+        institutionName: edu.institutionName,
+        startDate      : edu.startDate,
+        studyingHere   : edu.studyingHere
+      })),
+      emails: profile.emails.map((email) => ({
+        type : email.type,
+        value: email.value
+      })),
+      especialization: profile.especialization.map((esp) => ({
+        description         : esp.description,
+        endDate             : esp.endDate,
+        especializationName : esp.especializationName,
+        especializationPlace: esp.especializationPlace,
+        especializationtype : esp.especializationtype,
+        imgUrl              : esp.imgUrl,
+        startDate           : esp.startDate,
+        studyingHere        : esp.studyingHere
+      })),
+      experience: profile.experience.map((exp) => ({
+        area       : exp.area,
+        companyName: exp.companyName,
+        description: exp.description,
+        endDate    : exp.endDate,
+        hierarchy  : exp.hierarchy,
+        imgUrl     : exp.imgUrl,
+        jobPosition: exp.jobPosition,
+        location   : exp.location,
+        startDate  : exp.startDate,
+        workHere   : exp.workHere
+      })),
+      firstJob : profile.firstJob,
+      firstName: profile.firstName,
+      knowledge: profile.knowledge.map((know) => ({
+        knowledgeName: know.knowledgeName,
+        level        : know.level
+      })),
+      lastName   : profile.lastName,
+      location   : profile.location,
+      nationality: profile.nationality,
+      phones     : profile.phones.map((phone) => ({
+        type : phone.type,
+        value: phone.value
+      })),
+      photo            : profile.photo,
+      salaryExpectation: {
+        amount  : profile.salaryExpectation?.amount ?? 0,
+        currency: profile.salaryExpectation?.currency || 'S/'
+      },
+      socialNetworks: profile.socialNetworks.map((socialNetwork) => ({
+        socialNetwork: socialNetwork.socialNetwork,
+        url          : socialNetwork.url
+      })),
+      websites: profile.websites.map((website) => ({
+        type : website.type,
+        value: website.value
+      })),
+      gender : profile.sex,
+      docType: profile.docType
+    }
+
+    console.log('candidateInput')
+
+    await context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput })
+
+    console.log('candidateInput2222')
+
+    return profile
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateCV,
   getProfileExhaustive,
   updateProfileBasicInformation,
-  getAreas
+  getAreas,
+  sendProfile
 }

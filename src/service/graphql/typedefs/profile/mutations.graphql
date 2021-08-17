@@ -2,7 +2,10 @@ type Mutation {
   updateProfileBasicInformation(
     input: UpdateProfileBasicInformationInput!
   ): Profile! @auth
+
   updateCV(
     input: UpdateCVInput!
   ): Profile! @auth
+  
+  sendProfile(jobId: ID!): Profile! @auth
 }
