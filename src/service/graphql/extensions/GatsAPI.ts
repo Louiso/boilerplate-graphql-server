@@ -34,6 +34,7 @@ interface GetCandidateTasksArgs {
 }
 
 interface GetCandidateTasksResponse {
+  success: boolean;
   data: CandidateTask[];
 }
 

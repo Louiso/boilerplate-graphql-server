@@ -6,18 +6,19 @@ import {
   QueryGetProfileExhaustiveArgs,
   MutationUpdateProfileBasicInformationArgs,
   QueryGetAreasArgs,
-  MutationUpdateCVArgs
+  MutationUpdateCvArgs,
+  Area
 } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
-interface Elements {
-  testing: boolean;
-}
+// interface Elements {
+//   testing: boolean;
+// }
 
 const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, context: IContext): Promise<Profile> => {
   try {
     let profile = await ProfileModel
-      .findOne({ idUser: context.userId })
+      .findOne({ idUser: context.userId! })
       .lean()
 
     if(jobId)
@@ -44,7 +45,7 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
         value: user.phone
       } ],
       photo: user.photo
-    })
+    } as any)
 
     return profile
   } catch (error) {
@@ -52,7 +53,7 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
   }
 }
 
-const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
+const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Area>> => {
   try {
     const { success, data } =  await context.dataSources.gatsAPI.getAreas(input) || {}
     if(!success) return []
@@ -66,7 +67,7 @@ const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promi
 const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBasicInformationArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
-      .findOne({ idUser: context.userId })
+      .findOne({ idUser: context.userId! })
       .lean()
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
@@ -97,7 +98,7 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         {
-          idUser: context.userId
+          idUser: context.userId!
         },
         {
           $set: update
@@ -114,10 +115,10 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
   }
 }
 
-const updateCV = async ({ input }: MutationUpdateCVArgs, context: IContext): Promise<Profile> => {
+const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
-      .findOne({ idUser: context.userId })
+      .findOne({ idUser: context.userId! })
       .lean()
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
@@ -125,7 +126,7 @@ const updateCV = async ({ input }: MutationUpdateCVArgs, context: IContext): Pro
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         {
-          idUser: context.userId
+          idUser: context.userId!
         },
         {
           $set: {

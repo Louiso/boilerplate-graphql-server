@@ -7,7 +7,7 @@ const getProgressExhaustive = async ({ jobId }: QueryGetProgressExhaustiveArgs, 
   try {
     const profile = await ProfileModel
       .findOne({
-        idUser: context.userId
+        idUser: context.userId!
       })
       .select('_id')
       .lean()
@@ -46,11 +46,11 @@ const getProgressExhaustive = async ({ jobId }: QueryGetProgressExhaustiveArgs, 
         code       : SectionCode.AdditionalInformation,
         isCompleted: false
       } ]
-    })
+    } as any)
 
     if(!progress) throw new Error('Error al crear progreso')
 
-    return ProfileProgressModel
+    const progressDb = await ProfileProgressModel
       .findByIdAndUpdate(
         progress._id,
         {
@@ -63,6 +63,8 @@ const getProgressExhaustive = async ({ jobId }: QueryGetProgressExhaustiveArgs, 
         }
       )
       .lean()
+
+    return progressDb!
   } catch (error) {
     throw error
   }
