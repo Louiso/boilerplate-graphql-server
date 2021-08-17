@@ -156,18 +156,31 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
   if(!profile) throw new Error(`Profile userId: ${context.userId} NotFound`)
 
   try {
-    const [ firstPhone ] = profile.phones
-    if(firstPhone && firstPhone.value && /[a-z]/gi.test(firstPhone.value!)) errors.push('Numero telefónico invalido')
+    // const [ firstPhone ] = profile.phones
+    /*
+      basic information
+    */
+
+    // if(firstPhone && firstPhone.value && /[a-z]/gi.test(firstPhone.value!)) errors.push('Numero telefónico invalido')
 
     if(!profile.birthDate) errors.push('Fecha de nacimiento requerido')
+    if(profile.birthDate && new Date(String(profile.birthDate)).getTime() >= new Date().getTime()) errors.push('Fecha de nacimiento invalida')
+
+    if(!profile.sex) errors.push('Género requerido')
+
+    if(!profile.docNumber) errors.push('Documento de identidad requerido')
 
     if(profile.salaryExpectation?.amount === null || profile.salaryExpectation?.amount === undefined) errors.push('Expectativa salarial requerida')
 
-    if(!Object.values(profile.curriculum ?? {}).length) errors.push('Curriculum invalido')
+    /* cv */
 
-    if(!profile.curriculum?.url) errors.push('Curriculum requerido')
+    // if(!Object.values(profile.curriculum ?? {}).length) errors.push('Curriculum invalido')
 
-    if(profile.curriculum?.url && profile.curriculum?.url.indexOf(profile._id) === -1) errors.push('Curriculum requerido')
+    // if(!profile.curriculum?.url) errors.push('Curriculum requerido')
+
+    // if(profile.curriculum?.url && profile.curriculum?.url.indexOf(profile._id) === -1) errors.push('Curriculum requerido')
+
+    /* experiencias */
 
     const incompleteExperiences = (profile.experience || [])
       .filter((exp) =>
@@ -181,6 +194,7 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
 
     if(incompleteExperiences.length) errors.push('Experiencias incompletas')
 
+    /* estudios */
     const incompleteEducations = (profile.education || [])
       .filter((edu) =>
         !edu.institutionName ||
@@ -192,6 +206,10 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
       )
 
     if(incompleteEducations.length) errors.push('Estudios incompletos')
+
+    /* referentes */
+
+    /* secciones adicionales */
 
     /* en el frontend ya no hay especializaciones */
     // const incompleteEspecializations = (profile.especialization || [])
