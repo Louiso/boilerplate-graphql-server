@@ -299,11 +299,7 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
       docType: profile.docType
     }
 
-    console.log('candidateInput')
-
     await context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput })
-
-    console.log('candidateInput2222')
 
     return profile
   } catch (error) {
