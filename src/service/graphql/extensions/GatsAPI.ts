@@ -1,5 +1,6 @@
 import { Maybe } from 'graphql/jsutils/Maybe'
 import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput  } from 'interfaces/graphql'
+import { ProfileDb } from 'models/mongo/profile'
 import DataSource from './DataSource'
 
 interface GetCandidateArgs {
@@ -43,6 +44,16 @@ interface GetAreasResponse {
   success: boolean;
 }
 
+interface SendProfileArgs {
+  jobId: string;
+  userInfo: ProfileDb & { genre: string; };
+}
+
+interface SendProfileResponse {
+  success: boolean;
+  data: any;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -81,12 +92,22 @@ class GatsAPI extends DataSource {
       throw error
     }
   }
+
   async getAreas(args: Maybe<PaginationInput>): Promise<GetAreasResponse> {
     try {
       const { text, limit, skip } = args || {}
 
       return this.get<GetAreasResponse>(`/autocomplete/areas?text=${text || ''}&limit=${limit || 15}&skip=${skip || 0}`)
     } catch (error) {
+      throw error
+    }
+  }
+
+  async sendProfile(args: SendProfileArgs): Promise<SendProfileResponse> {
+    try {
+      return this.post<SendProfileResponse>('/candidates/sendProfile', args)
+    } catch (error) {
+      console.log('error', error)
       throw error
     }
   }
