@@ -9,5 +9,10 @@ export const Mutation: MutationResolvers<IContext> = {
     ProfileActuator.updateProfileBasicInformation(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  updateCV: (_, args, context) =>
+    ProfileActuator.updateCV(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }

@@ -13,7 +13,6 @@ EXPOSE $PORT
 ARG BABEL_DISABLE_CACHE=1
 ENV BABEL_DISABLE_CACHE $BABEL_DISABLE_CACHE
 
-
 RUN npm install npm@latest -g
 RUN npm install typescript@4.1.3 -g
 RUN npm install nodemon@2.0.6 -g
@@ -28,9 +27,9 @@ RUN mkdir /opt/node_app
 RUN chown node:node /opt/node_app
 WORKDIR /opt/node_app
 
-COPY package.json ./
+COPY package.json package-lock.json* ./
 
-RUN npm install --no-optional --ignore-scripts && npm cache clean --force --ignore-scripts
+RUN npm install --no-optional --dotenv-extended --ignore-scripts && npm cache clean --force --ignore-scripts 
 
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
@@ -40,11 +39,6 @@ COPY codegen.yml codegen.yml
 COPY .env .env
 
 RUN npm run postinstall
-
-RUN npm run build
-
-
-RUN rm -rf /opt/node_app/node_modules
 
 USER node
 

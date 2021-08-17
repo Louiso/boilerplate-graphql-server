@@ -1,6 +1,7 @@
 enum AssetType {
   avatar
   docs
+  cv
 }
 
 type TokenObject {

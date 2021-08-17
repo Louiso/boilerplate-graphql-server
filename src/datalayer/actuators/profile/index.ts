@@ -1,27 +1,14 @@
 import { Types } from 'mongoose'
-import StorageActuator from '../storage'
 import ProfileModel from '../../models/mongo/profile'
 import { IContext } from 'interfaces/general'
-import { Profile, QueryUploadCvArgs, QueryGetProfileExhaustiveArgs, MutationUpdateProfileBasicInformationArgs, QueryGetAreasArgs } from 'interfaces/graphql'
+import {
+  Profile,
+  QueryGetProfileExhaustiveArgs,
+  MutationUpdateProfileBasicInformationArgs,
+  QueryGetAreasArgs,
+  MutationUpdateCVArgs
+} from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
-
-const uploadCV = async ({ contentType: ContentType, filename }: QueryUploadCvArgs, context: IContext): Promise<string> => {
-  try {
-    const { userId } = context
-    const profile = await ProfileModel.findOne({ idUser: userId }, {})
-
-    if(!profile) throw new Error('Profile not found')
-
-    const Key = `assets/profile/${profile._id}/cv/${filename}`
-    const Bucket = process.env.AWS_BUCKET || ''
-
-    const token = StorageActuator.generateTokenPut({ ContentType, Key, Bucket })
-
-    return token
-  } catch (error) {
-    throw error
-  }
-}
 
 interface Elements {
   testing: boolean;
@@ -65,9 +52,9 @@ const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, co
   }
 }
 
-const getAreas = async (args : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
+const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Elements>> => {
   try {
-    const { success, data } =  await context.dataSources.gatsAPI.getAreas(args) || {}
+    const { success, data } =  await context.dataSources.gatsAPI.getAreas(input) || {}
     if(!success) return []
 
     return data
@@ -127,8 +114,38 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
   }
 }
 
+const updateCV = async ({ input }: MutationUpdateCVArgs, context: IContext): Promise<Profile> => {
+  try {
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId })
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const profileDb = await ProfileModel
+      .findOneAndUpdate(
+        {
+          idUser: context.userId
+        },
+        {
+          $set: {
+            curriculum: input
+          }
+        },
+        {
+          'new': true
+        }
+      )
+      .lean()
+
+    return profileDb!
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
-  uploadCV,
+  updateCV,
   getProfileExhaustive,
   updateProfileBasicInformation,
   getAreas
