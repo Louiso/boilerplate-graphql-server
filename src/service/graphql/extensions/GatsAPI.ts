@@ -54,6 +54,17 @@ interface SendProfileResponse {
   data: any;
 }
 
+interface ApplyToJobArgs {
+  jobId: string;
+  publicationIndex: number;
+  sourceApply: string;
+}
+
+interface ApplyToJobResponse {
+  success: boolean;
+  data: any;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -107,7 +118,14 @@ class GatsAPI extends DataSource {
     try {
       return this.post<SendProfileResponse>('/candidates/sendProfile', args)
     } catch (error) {
-      console.log('error', error)
+      throw error
+    }
+  }
+
+  async applyToJob(args: ApplyToJobArgs): Promise<ApplyToJobResponse> {
+    try {
+      return this.post<ApplyToJobResponse>('/candidates/getInfoUserOrApplyStatus', args)
+    } catch (error) {
       throw error
     }
   }
