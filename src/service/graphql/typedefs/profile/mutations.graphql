@@ -11,5 +11,5 @@ type Mutation {
   
   updateExperience(
     input: [ExperienceInput]
-  ): Experience @auth
+  ): Profile @auth
 }

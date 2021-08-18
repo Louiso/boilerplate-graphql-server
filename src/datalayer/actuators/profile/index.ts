@@ -148,7 +148,7 @@ const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Pro
   }
 }
 
-const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Experience> =>  {
+const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Profile> =>  {
   try {
     const profile = await ProfileModel
       .findOne({ idUser: context.userId })
