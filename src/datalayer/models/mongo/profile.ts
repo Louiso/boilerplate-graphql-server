@@ -24,6 +24,13 @@ const experienceSchema = new Schema({
   workHere           : { 'default': false, type: Boolean }
 })
 
+const referentSchema = new Schema({
+  companyName : { trim: true, type: String },
+  name        : { trim: true, type: String },
+  phoneNumber : { trim: true, type: String },
+  experienceId: { trim: true, type: String }
+})
+
 const educationSchema = new Schema({
   academicArea      : { trim: true, type: String },
   career            : { trim: true, type: String },
@@ -71,6 +78,7 @@ const salarySchema = new Schema({
 })
 
 const ProfileSchema = new Schema<ProfileDb>({
+  referents        : [ referentSchema ],
   birthDate        : { type: Date },
   civilState       : { type: String },
   curriculum       : fileSchema,

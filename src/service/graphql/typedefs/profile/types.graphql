@@ -41,6 +41,14 @@ type Profile @entity {
   immigrationCard: String @column
   docType: String! @column
   idUser: String! @column
+  referents: [Referents!] @column
+}
+
+type Referents {
+  companyName: String
+  name: String
+  phoneNumber: String
+  experienceId: String
 }
 
 type EmailsPhonesResponse {
