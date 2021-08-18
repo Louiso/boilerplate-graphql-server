@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import ProfileModel from '../../models/mongo/profile'
-import { IContext } from 'interfaces/general'
+import { IContext, NormalizeId } from 'interfaces/general'
 import {
   Profile,
   QueryGetProfileExhaustiveArgs,
@@ -8,7 +8,9 @@ import {
   QueryGetAreasArgs,
   MutationUpdateCvArgs,
   Area,
-  MutationSendProfileArgs
+  MutationSendProfileArgs,
+  MutationUpdateExperienceArgs,
+  Experience
 } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
@@ -132,6 +134,36 @@ const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Pro
         {
           $set: {
             curriculum: input
+          }
+        },
+        {
+          'new': true
+        }
+      )
+      .lean()
+
+    return profileDb!
+  } catch (error) {
+    throw error
+  }
+}
+
+const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Profile> =>  {
+  try {
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId })
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const profileDb = await ProfileModel
+      .findOneAndUpdate(
+        {
+          idUser: context.userId
+        },
+        {
+          $set: {
+            experience: (input as NormalizeId<Experience>[] | [])
           }
         },
         {
@@ -330,5 +362,6 @@ export default {
   getProfileExhaustive,
   updateProfileBasicInformation,
   getAreas,
-  sendProfile
+  sendProfile,
+  updateExperience
 }
