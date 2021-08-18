@@ -8,4 +8,8 @@ type Mutation {
   ): Profile! @auth
   
   sendProfile(jobId: ID!): Profile! @auth
+  
+  updateExperience(
+    input: [ExperienceInput]
+  ): Experience @auth
 }

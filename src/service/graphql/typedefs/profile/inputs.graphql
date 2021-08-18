@@ -113,6 +113,7 @@ input UpdateProfileBasicInformationInput {
   sex: String
   phone: String
   salaryExpectation: SalaryExpectationInput
+  firstJob: Boolean
 }
 
 input PaginationInput {
