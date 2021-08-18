@@ -10,6 +10,7 @@ import {
   Area,
   MutationSendProfileArgs,
   MutationUpdateExperienceArgs,
+  MutationUpdateReferentsArgs,
   Experience
 } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
@@ -357,11 +358,33 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
   }
 }
 
+const updateReferents = async ({ input }: MutationUpdateReferentsArgs, context: IContext): Promise<Profile> => {
+  try {
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const profileDb = await ProfileModel
+      .findOneAndUpdate(
+        { idUser: context.userId! },
+        { $set: { referents: input } },
+        { 'new': true })
+      .lean()
+
+    return profileDb!
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateCV,
   getProfileExhaustive,
   updateProfileBasicInformation,
   getAreas,
   sendProfile,
-  updateExperience
+  updateExperience,
+  updateReferents
 }

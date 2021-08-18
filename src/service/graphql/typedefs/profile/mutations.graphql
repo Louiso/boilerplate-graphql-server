@@ -12,4 +12,8 @@ type Mutation {
   updateExperience(
     input: [ExperienceInput]
   ): Profile @auth
+
+  updateReferents(
+    input: [ReferentInput]
+  ): Profile @auth
 }
