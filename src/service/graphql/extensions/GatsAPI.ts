@@ -56,8 +56,10 @@ interface SendProfileResponse {
 
 interface ApplyToJobArgs {
   jobId: string;
-  publicationIndex: number;
+  laborExchangeId?: string;
+  publicationId: string;
   sourceApply: string;
+  candidateIdTrack?: string;
 }
 
 interface ApplyToJobResponse {
@@ -124,7 +126,7 @@ class GatsAPI extends DataSource {
 
   async applyToJob(args: ApplyToJobArgs): Promise<ApplyToJobResponse> {
     try {
-      return this.post<ApplyToJobResponse>('/candidates/getInfoUserOrApplyStatus', args)
+      return this.post<ApplyToJobResponse>('/candidates/apply', args)
     } catch (error) {
       throw error
     }
