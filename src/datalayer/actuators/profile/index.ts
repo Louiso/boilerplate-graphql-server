@@ -11,7 +11,8 @@ import {
   MutationSendProfileArgs,
   MutationUpdateExperienceArgs,
   MutationUpdateReferentsArgs,
-  Experience
+  Experience,
+  MutationUpdateEducationArgs
 } from 'interfaces/graphql'
 import ProfileProgressActuator from '../profileProgress'
 
@@ -379,6 +380,27 @@ const updateReferents = async ({ input }: MutationUpdateReferentsArgs, context: 
   }
 }
 
+const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: IContext): Promise<Profile> => {
+  try {
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const profileDb = await ProfileModel
+      .findOneAndUpdate(
+        { idUser: context.userId! },
+        { $set: { education: input } },
+        { 'new': true })
+      .lean()
+
+    return profileDb!
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateCV,
   getProfileExhaustive,
@@ -386,5 +408,6 @@ export default {
   getAreas,
   sendProfile,
   updateExperience,
-  updateReferents
+  updateReferents,
+  updateEducation
 }

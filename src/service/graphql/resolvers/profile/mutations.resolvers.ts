@@ -29,5 +29,10 @@ export const Mutation: MutationResolvers<IContext> = {
     ProfileActuator.updateReferents(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  updateEducation: (_, args, context) =>
+    ProfileActuator.updateEducation(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
