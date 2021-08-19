@@ -1,5 +1,6 @@
 import { Candidate, QueryGetCandidateArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
+import JobActuator from '../job'
 
 const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCandidateArgs, context: IContext): Promise<Candidate> => {
   try {
@@ -13,7 +14,16 @@ const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCand
         const { data } = await portalesAPI.getLaborExchangeBySlug({ slug: slug })
         laborExchange = data
       }
-      await gatsAPI.applyToJob({ jobId, publicationIndex: publicationIndex ?? 0, sourceApply: laborExchange?.name.toLowerCase() ?? 'landing' })
+
+      const job = await JobActuator.getJob({ jobId, publicationIndex: publicationIndex ?? 0 }, context)
+      const [ publication ] = job.publications!
+
+      await gatsAPI.applyToJob({
+        jobId,
+        publicationId  : publication._id,
+        sourceApply    : laborExchange?.name.toLowerCase() ?? 'landing',
+        laborExchangeId: laborExchange?._id
+      })
 
       const { success, data } = await gatsAPI.getCandidate({ jobId })
 

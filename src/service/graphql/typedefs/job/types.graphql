@@ -16,4 +16,10 @@ type Job {
   stages: [ Stage! ]!
   title: String!
   companyPublished: Company
+  publications: [Publication!]
+}
+
+type Publication {
+  _id: ID!
+  title: String
 }
