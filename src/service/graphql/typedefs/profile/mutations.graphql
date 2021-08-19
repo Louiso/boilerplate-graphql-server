@@ -16,4 +16,9 @@ type Mutation {
   updateReferents(
     input: [ReferentInput]
   ): Profile @auth
+
+   updateEducation(
+    input: [EducationInput]
+  ): Profile @auth
+
 }
