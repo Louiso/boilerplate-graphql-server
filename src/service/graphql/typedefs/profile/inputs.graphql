@@ -127,3 +127,10 @@ input UpdateCVInput {
   filenameOriginal: String
   url: String
 }
+
+input ReferentInput {
+  companyName: String
+  name: String
+  phoneNumber: String
+  experienceId: String
+}
