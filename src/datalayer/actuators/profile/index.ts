@@ -153,7 +153,7 @@ const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Pro
 const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Profile> =>  {
   try {
     const profile = await ProfileModel
-      .findOne({ idUser: context.userId })
+      .findOne({ idUser: context.userId! })
       .lean()
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
@@ -161,7 +161,7 @@ const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, co
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         {
-          idUser: context.userId
+          idUser: context.userId!
         },
         {
           $set: {
@@ -391,7 +391,7 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: { education: input } },
+        { $set: { education: input! } },
         { 'new': true })
       .lean()
 

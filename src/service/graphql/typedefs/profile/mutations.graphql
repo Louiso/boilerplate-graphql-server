@@ -10,15 +10,15 @@ type Mutation {
   sendProfile(jobId: ID!): Profile! @auth
   
   updateExperience(
-    input: [ExperienceInput]
+    input: [ExperienceInput!]
   ): Profile @auth
 
   updateReferents(
-    input: [ReferentInput]
+    input: [ReferentInput!]
   ): Profile @auth
 
    updateEducation(
-    input: [EducationInput]
+    input: [EducationInput!]
   ): Profile @auth
 
 }
