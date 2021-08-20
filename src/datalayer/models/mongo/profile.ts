@@ -42,7 +42,8 @@ const educationSchema = new Schema({
   imgUrl            : { type: String },
   institutionName   : { trim: true, type: String },
   startDate         : { type: Date },
-  studyingHere      : { 'default': false, type: Boolean }
+  studyingHere      : { 'default': false, type: Boolean },
+  level             : { type: String }
 })
 
 const especializationSchema = new Schema({

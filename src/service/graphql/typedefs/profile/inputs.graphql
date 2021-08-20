@@ -51,6 +51,7 @@ input EducationInput {
   description: String
   imgUrl: String
   idEducationLaborum: String
+  level: String
 }
 
 input EmailsPhonesResponseInput {
