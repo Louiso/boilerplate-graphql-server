@@ -367,18 +367,15 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
 
       return ({
         candidateId : candidate?._id,
-        companyName : experience?.companyName || '',
-        email       : '',
-        fullName    : referent.name || '',
-        jobPosition : experience?.jobPosition || '',
-        phone       : referent.phoneNumber || '',
+        companyName : experience?.companyName,
+        fullName    : referent.name ?? '',
+        jobPosition : experience?.jobPosition,
+        phone       : referent.phoneNumber,
         refId       : referent._id,
         experienceId: experienceId,
         refIdOrigin : 'applying'
       })
     })
-
-    console.log('laborReferentInputs', JSON.stringify(laborReferentInputs, null, 2))
 
     await Promise.all([
       context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput }),

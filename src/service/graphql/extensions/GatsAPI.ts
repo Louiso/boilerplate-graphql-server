@@ -71,10 +71,10 @@ interface LaborReferentToCreateInput {
   candidateId: string;
   experienceId?: string;
   fullName: string;
-  email: string;
-  phone: string;
-  companyName: string;
-  jobPosition: string;
+  email?: string;
+  phone?: Maybe<string>;
+  companyName?: Maybe<string>;
+  jobPosition?: Maybe<string>;
   refId: string;
   refIdOrigin: string;
 }
