@@ -130,6 +130,7 @@ input UpdateCVInput {
 }
 
 input ReferentInput {
+  _id: ID!
   companyName: String
   name: String
   phoneNumber: String
