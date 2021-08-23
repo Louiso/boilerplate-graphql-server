@@ -14,43 +14,43 @@ import {
   Experience,
   MutationUpdateEducationArgs
 } from 'interfaces/graphql'
-import ProfileProgressActuator from '../profileProgress'
+// import ProfileProgressActuator from '../profileProgress'
 
 // interface Elements {
 //   testing: boolean;
 // }
 
-const getProfileExhaustive = async ({ jobId }: QueryGetProfileExhaustiveArgs, context: IContext): Promise<Profile> => {
+const getProfileExhaustive = async (_: QueryGetProfileExhaustiveArgs, context: IContext): Promise<Profile> => {
   try {
     let profile = await ProfileModel
       .findOne({ idUser: context.userId! })
       .lean()
 
-    if(jobId)
-      await ProfileProgressActuator.getProgressExhaustive({ jobId }, context)
+    if(!profile) {
+      const { user, success } = await context.dataSources.accountAPI.getUser(context.userId!)
 
-    if(profile) return profile
+      if(!success) throw new Error('Error al traer data del usuario')
 
-    const { user, success } = await context.dataSources.accountAPI.getUser(context.userId!)
+      profile = await ProfileModel.create({
+        emails: [ {
+          _id  : Types.ObjectId(),
+          type : 'email-principal',
+          value: user.email ?? ''
+        } ],
+        firstName: user.firstName,
+        idUser   : context.userId,
+        lastName : user.lastName,
+        phones   : [ {
+          _id  : Types.ObjectId(),
+          type : 'phone-principal',
+          value: user.phone
+        } ],
+        photo: user.photo
+      } as any)
+    }
 
-    if(!success) throw new Error('Error al traer data del usuario')
-
-    profile = await ProfileModel.create({
-      emails: [ {
-        _id  : Types.ObjectId(),
-        type : 'email-principal',
-        value: user.email ?? ''
-      } ],
-      firstName: user.firstName,
-      idUser   : context.userId,
-      lastName : user.lastName,
-      phones   : [ {
-        _id  : Types.ObjectId(),
-        type : 'phone-principal',
-        value: user.phone
-      } ],
-      photo: user.photo
-    } as any)
+    // if(jobId)
+    //   await ProfileProgressActuator.getProgressExhaustive({ jobId }, context)
 
     return profile
   } catch (error) {
