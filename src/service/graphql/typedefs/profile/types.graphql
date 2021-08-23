@@ -45,6 +45,7 @@ type Profile @entity {
 }
 
 type Referents {
+  _id: ID!
   companyName: String
   name: String
   phoneNumber: String

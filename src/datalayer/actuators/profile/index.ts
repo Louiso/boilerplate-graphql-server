@@ -14,6 +14,7 @@ import {
   Experience,
   MutationUpdateEducationArgs
 } from 'interfaces/graphql'
+import { keyBy } from 'utils/by'
 // import ProfileProgressActuator from '../profileProgress'
 
 // interface Elements {
@@ -268,11 +269,17 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
 
 const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext): Promise<Profile> => {
   try {
-    const { errors, profile } = await checkProfile(context)
+    const [ { errors, profile }, { data: getCandidateData, success } ] = await Promise.all([
+      checkProfile(context),
+      context.dataSources.gatsAPI.getCandidate({ jobId }).catch(() => ({ success: false, data: null }))
+    ])
 
+    if(!success) throw new Error('Error al traer candidato')
     if(errors.length) throw new Error(JSON.stringify(errors))
 
     if(!profile) throw new Error(`Profile userId: ${context.userId} NotFound`)
+
+    const candidate = getCandidateData!
 
     const candidateInput: any = {
       birthDate : profile.birthDate,
@@ -351,7 +358,29 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
       docType: profile.docType
     }
 
-    await context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput })
+    const experienceBy = keyBy(profile.experience || [], '_id')
+
+    const laborReferentInputs = (profile.referents || []).map((referent) => {
+      const experienceId = referent.experienceId!
+
+      const experience = experienceId ?  experienceBy[experienceId] : null
+
+      return ({
+        candidateId : candidate?._id,
+        companyName : experience?.companyName,
+        fullName    : referent.name ?? '',
+        jobPosition : experience?.jobPosition,
+        phone       : referent.phoneNumber,
+        refId       : referent._id,
+        experienceId: experienceId,
+        refIdOrigin : 'applying'
+      })
+    })
+
+    await Promise.all([
+      context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput }),
+      context.dataSources.gatsAPI.createLaborReferents(candidate!._id, laborReferentInputs)
+    ])
 
     return profile
   } catch (error) {

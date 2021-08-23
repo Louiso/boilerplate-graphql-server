@@ -67,6 +67,23 @@ interface ApplyToJobResponse {
   data: any;
 }
 
+interface LaborReferentToCreateInput {
+  candidateId: string;
+  experienceId?: string;
+  fullName: string;
+  email?: string;
+  phone?: Maybe<string>;
+  companyName?: Maybe<string>;
+  jobPosition?: Maybe<string>;
+  refId: string;
+  refIdOrigin: string;
+}
+
+interface CreateLaborReferentsResponse {
+  success: boolean;
+  data: any[];
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -127,6 +144,17 @@ class GatsAPI extends DataSource {
   async applyToJob(args: ApplyToJobArgs): Promise<ApplyToJobResponse> {
     try {
       return this.post<ApplyToJobResponse>('/candidates/apply', args)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async createLaborReferents(candidateId:string, laborReferentInputs: LaborReferentToCreateInput[]): Promise<CreateLaborReferentsResponse> {
+    try {
+      return this.post('/api/v1/labor-referents/create', {
+        candidateId,
+        laborReferentInputs
+      })
     } catch (error) {
       throw error
     }
