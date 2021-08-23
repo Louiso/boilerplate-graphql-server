@@ -34,5 +34,10 @@ export const Mutation: MutationResolvers<IContext> = {
     ProfileActuator.updateEducation(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  updateAdditionalInformation: (_, args, context) =>
+    ProfileActuator.updateAdditionalInformation(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }

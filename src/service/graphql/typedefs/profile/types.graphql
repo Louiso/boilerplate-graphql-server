@@ -140,3 +140,21 @@ type Area {
   id: String
   name: String
 }
+
+input KnowledgeInput {
+  _id: ID!
+  knowledgeName: String
+  level: String
+}
+
+input WebsitesInput {
+  _id: ID!
+  type: String
+  value: String
+  title: String
+}
+
+input AdditionalInformationInput {
+  websites: [ WebsitesInput! ]
+  knowledge: [ KnowledgeInput! ]
+}

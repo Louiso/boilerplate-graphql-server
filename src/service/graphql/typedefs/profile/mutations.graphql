@@ -21,4 +21,7 @@ type Mutation {
     input: [EducationInput!]
   ): Profile @auth
 
+  updateAdditionalInformation(
+    input: AdditionalInformationInput!
+  ): Profile @auth
 }
