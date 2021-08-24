@@ -13,7 +13,7 @@ import {
   MutationUpdateReferentsArgs,
   Experience,
   MutationUpdateEducationArgs,
-  MutationUpdateAdditionalInformation
+  MutationUpdateAdditionalInformationArgs
 } from 'interfaces/graphql'
 import { keyBy } from 'utils/by'
 // import ProfileProgressActuator from '../profileProgress'
@@ -318,6 +318,7 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
         studyingHere        : esp.studyingHere
       })),
       experience: profile.experience.map((exp) => ({
+        _id        : exp._id, // se enviá el _id para q siempre este referenciado con la experiencia del profile
         area       : exp.area,
         companyName: exp.companyName,
         description: exp.description,
@@ -431,7 +432,7 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
   }
 }
 
-const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalInformation, context: IContext): Promise<Profile> => {
+const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalInformationArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
@@ -447,8 +448,9 @@ const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalIn
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: { websites, knowledge } },
-        { 'new': true })
+        { $set: { websites: websites!, knowledge: knowledge! } },
+        { 'new': true }
+      )
       .lean()
 
     return profileDb!
