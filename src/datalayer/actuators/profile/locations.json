@@ -1,0 +1,1979 @@
+[
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.964507850118296,
+        "lng": -77.75893361195118
+      }
+    },
+    "formatted_address": "Amazonas, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.53015235157666,
+        "lng": -77.31748636153681
+      }
+    },
+    "formatted_address": "Ancash, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.661398857286095,
+        "lng": -72.47177123201166
+      }
+    },
+    "formatted_address": "Apurimac, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.442941608014523,
+        "lng": -75.07332610944235
+      }
+    },
+    "formatted_address": "Arequipa, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.173736729970017,
+        "lng": -74.34594560876494
+      }
+    },
+    "formatted_address": "Ayacucho, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.025683600163807,
+        "lng": -79.32258598834301
+      }
+    },
+    "formatted_address": "Cajamarca, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.828361354648262,
+        "lng": -77.18709761141463
+      }
+    },
+    "formatted_address": "Callao, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.661398857286095,
+        "lng": -72.47177123201166
+      }
+    },
+    "formatted_address": "Cusco, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.129619981791498,
+        "lng": -75.05904998442908
+      }
+    },
+    "formatted_address": "Huancavelica, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.53015235157666,
+        "lng": -77.31748636153681
+      }
+    },
+    "formatted_address": "Huanuco, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.09805485769335,
+        "lng": -74.76229860915272
+      }
+    },
+    "formatted_address": "Ica, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.91260197879554,
+        "lng": -74.5729951089764
+      }
+    },
+    "formatted_address": "Junin, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.969228476981794,
+        "lng": -78.64492386278206
+      }
+    },
+    "formatted_address": "La Libertad, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.372080099480027,
+        "lng": -80.62713286365211
+      }
+    },
+    "formatted_address": "Lambayeque, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.274185603200953,
+        "lng": -76.90624611115133
+      }
+    },
+    "formatted_address": "Lima, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.534361350649385,
+        "lng": -73.98303323342684
+      }
+    },
+    "formatted_address": "Loreto, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.19238873088278,
+        "lng": -70.38846685500734
+      }
+    },
+    "formatted_address": "Madre De Dios, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.82148236021195,
+        "lng": -71.13944335569145
+      }
+    },
+    "formatted_address": "Moquegua, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.92345135380565,
+        "lng": -76.2788592355654
+      }
+    },
+    "formatted_address": "Pasco, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.965242223249656,
+        "lng": -79.21007036323203
+      }
+    },
+    "formatted_address": "Piura, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": [
+          -68.9183991032421,
+          -16.23329710839452
+        ],
+        "lng": [
+          -68.91838872820082,
+          -16.403720733548646
+        ]
+      }
+    },
+    "formatted_address": "Puno, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.322150351383064,
+        "lng": -75.98496286029147
+      }
+    },
+    "formatted_address": "San Martin, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.2874499845745,
+        "lng": -69.64131997894788
+      }
+    },
+    "formatted_address": "Tacna, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.0831288473876,
+        "lng": -80.48733198855084
+      }
+    },
+    "formatted_address": "Tumbes, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.916855477850127,
+        "lng": -70.61388473029926
+      }
+    },
+    "formatted_address": "Ucayali, Perú"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.39312,
+        "lng": -78.0111
+      }
+    },
+    "formatted_address": "Cabana, Pallasca, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.77369,
+        "lng": -79.83987
+      }
+    },
+    "formatted_address": "Chiclayo, Chiclayo, Lambayeque"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.7025,
+        "lng": -79.90942
+      }
+    },
+    "formatted_address": "Lambayeque, Lambayeque, Lambayeque"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.1519,
+        "lng": -77.15876
+      }
+    },
+    "formatted_address": "Chiquian, Bolognesi, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.40306,
+        "lng": -77.39838
+      }
+    },
+    "formatted_address": "Ocros, Ocros, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.07964,
+        "lng": -76.63314
+      }
+    },
+    "formatted_address": "Jesus, Lauricocha, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.47302,
+        "lng": -76.99528
+      }
+    },
+    "formatted_address": "Cajatambo, Cajatambo, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.49279,
+        "lng": -76.51974
+      }
+    },
+    "formatted_address": "Yanahuanca, Daniel Alcides Carrion, Pasco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.75406,
+        "lng": -77.76298
+      }
+    },
+    "formatted_address": "Barranca, Barranca, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.6692,
+        "lng": -76.77581
+      }
+    },
+    "formatted_address": "Oyon, Oyon, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.06051,
+        "lng": -77.14931
+      }
+    },
+    "formatted_address": "Callao, Callao, Callao"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.06091,
+        "lng": -75.29198
+      }
+    },
+    "formatted_address": "Chupaca, Chupaca, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.84593,
+        "lng": -76.38837
+      }
+    },
+    "formatted_address": "Matucana, Huarochiri, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.07037,
+        "lng": -75.2141
+      }
+    },
+    "formatted_address": "Huancayo, Huancayo, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.08047,
+        "lng": -76.38914
+      }
+    },
+    "formatted_address": "San Vicente De Cañete, Cañete, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.42019,
+        "lng": -76.13568
+      }
+    },
+    "formatted_address": "Chincha Alta, Chincha, Ica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.07021,
+        "lng": -78.15434
+      }
+    },
+    "formatted_address": "Huarmey, Huarmey, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.47696,
+        "lng": -78.30884
+      }
+    },
+    "formatted_address": "Casma, Casma, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.07071,
+        "lng": -75.7282
+      }
+    },
+    "formatted_address": "Ica, Ica, Ica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.71173,
+        "lng": -76.20448
+      }
+    },
+    "formatted_address": "Pisco, Pisco, Ica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.57137,
+        "lng": -77.90071
+      }
+    },
+    "formatted_address": "Corongo, Corongo, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.8663,
+        "lng": -77.36073
+      }
+    },
+    "formatted_address": "Piscobamba, Mariscal Luzuriaga, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.82221,
+        "lng": -77.46245
+      }
+    },
+    "formatted_address": "Pomabamba, Pomabamba, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.55563,
+        "lng": -77.63452
+      }
+    },
+    "formatted_address": "Sihuas, Sihuas, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.60789,
+        "lng": -77.14935
+      }
+    },
+    "formatted_address": "Huacrachuco, Marañon, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.53232,
+        "lng": -77.52971
+      }
+    },
+    "formatted_address": "Huaraz, Huaraz, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.28204,
+        "lng": -77.64711
+      }
+    },
+    "formatted_address": "Carhuaz, Carhuaz, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.04781,
+        "lng": -77.81446
+      }
+    },
+    "formatted_address": "Caraz, Huaylas, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.13764,
+        "lng": -77.74757
+      }
+    },
+    "formatted_address": "Yungay, Yungay, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.78212,
+        "lng": -77.61151
+      }
+    },
+    "formatted_address": "Aija, Aija, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.10077,
+        "lng": -77.01837
+      }
+    },
+    "formatted_address": "Llamellin, Antonio Raymondi, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.16232,
+        "lng": -77.36967
+      }
+    },
+    "formatted_address": "Chacas, Asuncion, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.0934,
+        "lng": -77.33243
+      }
+    },
+    "formatted_address": "San Luis, Carlos F.fitzcarrald, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.349,
+        "lng": -77.17616
+      }
+    },
+    "formatted_address": "Huari, Huari, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.71979,
+        "lng": -77.45911
+      }
+    },
+    "formatted_address": "Recuay, Recuay, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.03828,
+        "lng": -76.95707
+      }
+    },
+    "formatted_address": "Huacaybamba, Huacaybamba, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.54994,
+        "lng": -76.81898
+      }
+    },
+    "formatted_address": "Llata, Huamalies, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.59742,
+        "lng": -69.18762
+      }
+    },
+    "formatted_address": "Tambopata, Tambopata, Madre De Dios"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.85704,
+        "lng": -76.60904
+      }
+    },
+    "formatted_address": "Chavinillo, Yarowilca, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.19522,
+        "lng": -70.93721
+      }
+    },
+    "formatted_address": "Moquegua, Mariscal Nieto, Moquegua"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.64458,
+        "lng": -71.34521
+      }
+    },
+    "formatted_address": "Ilo, Ilo, Moquegua"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.7561,
+        "lng": -78.44291
+      }
+    },
+    "formatted_address": "Bagua Grande, Utcubamba, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.59696,
+        "lng": -77.8742
+      }
+    },
+    "formatted_address": "Nieva, Condorcanqui, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -3.74993,
+        "lng": -73.26218
+      }
+    },
+    "formatted_address": "Iquitos, Maynas, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.50583,
+        "lng": -73.57835
+      }
+    },
+    "formatted_address": "Nauta, Loreto, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.23105,
+        "lng": -77.86351
+      }
+    },
+    "formatted_address": "Chachapoyas, Chachapoyas, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.13681,
+        "lng": -77.95528
+      }
+    },
+    "formatted_address": "Lamud, Luya, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.8946,
+        "lng": -76.10963
+      }
+    },
+    "formatted_address": "Yurimaguas, Alto Amazonas, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.05908,
+        "lng": -73.85275
+      }
+    },
+    "formatted_address": "Requena, Requena, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.03309,
+        "lng": -76.97251
+      }
+    },
+    "formatted_address": "Moyobamba, Moyobamba, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.61796,
+        "lng": -76.6973
+      }
+    },
+    "formatted_address": "San Jose De Sisa, El Dorado, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.93415,
+        "lng": -76.77346
+      }
+    },
+    "formatted_address": "Saposoa, Huallaga, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.42169,
+        "lng": -76.52131
+      }
+    },
+    "formatted_address": "Lamas, Lamas, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.9195,
+        "lng": -76.3317
+      }
+    },
+    "formatted_address": "Picota, Picota, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.06229,
+        "lng": -77.17081
+      }
+    },
+    "formatted_address": "Rioja, Rioja, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.48895,
+        "lng": -76.36512
+      }
+    },
+    "formatted_address": "Tarapoto, San Martin, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.05936,
+        "lng": -76.59079
+      }
+    },
+    "formatted_address": "Bellavista, Bellavista, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.1821,
+        "lng": -76.73192
+      }
+    },
+    "formatted_address": "Juanjui, Mariscal Caceres, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.92783,
+        "lng": -76.24511
+      }
+    },
+    "formatted_address": "Huanuco, Huanuco, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.29569,
+        "lng": -75.99961
+      }
+    },
+    "formatted_address": "Rupa-rupa, Leoncio Prado, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.37714,
+        "lng": -74.96786
+      }
+    },
+    "formatted_address": "Puerto Inca, Puerto Inca, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.89933,
+        "lng": -75.99594
+      }
+    },
+    "formatted_address": "Panao, Pachitea, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.13031,
+        "lng": -76.20709
+      }
+    },
+    "formatted_address": "Ambo, Ambo, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.68122,
+        "lng": -76.26095
+      }
+    },
+    "formatted_address": "Chaupimarca, Pasco, Pasco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.16582,
+        "lng": -75.99829
+      }
+    },
+    "formatted_address": "Junin, Junin, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.57812,
+        "lng": -75.40703
+      }
+    },
+    "formatted_address": "Oxapampa, Oxapampa, Pasco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.91822,
+        "lng": -75.31637
+      }
+    },
+    "formatted_address": "Concepcion, Concepcion, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.05599,
+        "lng": -75.32925
+      }
+    },
+    "formatted_address": "Chanchamayo, Chanchamayo, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.77636,
+        "lng": -75.4994
+      }
+    },
+    "formatted_address": "Jauja, Jauja, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.42073,
+        "lng": -75.69104
+      }
+    },
+    "formatted_address": "Tarma, Tarma, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.52066,
+        "lng": -75.90177
+      }
+    },
+    "formatted_address": "La Oroya, Yauli, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.24928,
+        "lng": -74.6386
+      }
+    },
+    "formatted_address": "Satipo, Satipo, Junin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.53537,
+        "lng": -75.18869
+      }
+    },
+    "formatted_address": "Palpa, Palpa, Ica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.08837,
+        "lng": -81.11657
+      }
+    },
+    "formatted_address": "Paita, Paita, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.82759,
+        "lng": -74.94076
+      }
+    },
+    "formatted_address": "Nazca, Nazca, Ica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.89196,
+        "lng": -80.69103
+      }
+    },
+    "formatted_address": "Sullana, Sullana, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.19598,
+        "lng": -80.62973
+      }
+    },
+    "formatted_address": "Piura, Piura, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.64064,
+        "lng": -79.71853
+      }
+    },
+    "formatted_address": "Ayabaca, Ayabaca, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.09714,
+        "lng": -80.16423
+      }
+    },
+    "formatted_address": "Chulucanas, Morropon, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.24083,
+        "lng": -79.45141
+      }
+    },
+    "formatted_address": "Huancabamba, Huancabamba, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.63842,
+        "lng": -78.53631
+      }
+    },
+    "formatted_address": "La Peca, Bagua, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.1095,
+        "lng": -79.03348
+      }
+    },
+    "formatted_address": "Trujillo, Trujillo, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.04207,
+        "lng": -78.48905
+      }
+    },
+    "formatted_address": "Julcan, Julcan, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.43262,
+        "lng": -79.50711
+      }
+    },
+    "formatted_address": "San Pedro De Lloc, Pacasmayo, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.14574,
+        "lng": -78.17856
+      }
+    },
+    "formatted_address": "Santiago De Chuco, Santiago De Chuco, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.41636,
+        "lng": -78.75449
+      }
+    },
+    "formatted_address": "Viru, Viru, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.27704,
+        "lng": -77.29884
+      }
+    },
+    "formatted_address": "Tayabamba, Pataz, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.71584,
+        "lng": -79.1102
+      }
+    },
+    "formatted_address": "Ascope, Ascope, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.22838,
+        "lng": -79.43186
+      }
+    },
+    "formatted_address": "Chepen, Chepen, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.90234,
+        "lng": -78.56702
+      }
+    },
+    "formatted_address": "Otuzco, Otuzco, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.47893,
+        "lng": -78.82084
+      }
+    },
+    "formatted_address": "Cascas, Gran Chimu, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.15473,
+        "lng": -77.70448
+      }
+    },
+    "formatted_address": "Bolivar, Bolivar, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.81549,
+        "lng": -78.05275
+      }
+    },
+    "formatted_address": "Huamachuco, Sanchez Carrion, La Libertad"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.16055,
+        "lng": -74.22667
+      }
+    },
+    "formatted_address": "Ayacucho, Huamanga, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.93835,
+        "lng": -74.25141
+      }
+    },
+    "formatted_address": "Huanta, Huanta, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.01317,
+        "lng": -73.98315
+      }
+    },
+    "formatted_address": "San Miguel, La Mar, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.6916,
+        "lng": -74.12853
+      }
+    },
+    "formatted_address": "Puquio, Lucanas, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.0163,
+        "lng": -73.78198
+      }
+    },
+    "formatted_address": "Coracora, Parinacochas, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.6543,
+        "lng": -73.95557
+      }
+    },
+    "formatted_address": "Vilcas Huaman, Vilcas Huaman, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.77279,
+        "lng": -73.36824
+      }
+    },
+    "formatted_address": "Caraveli, Caraveli, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.83982,
+        "lng": -72.65426
+      }
+    },
+    "formatted_address": "Chuquibamba, Condesuyos, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.62378,
+        "lng": -72.71141
+      }
+    },
+    "formatted_address": "Camana, Camana, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.02514,
+        "lng": -72.01812
+      }
+    },
+    "formatted_address": "Mollendo, Islay, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.64024,
+        "lng": -71.60361
+      }
+    },
+    "formatted_address": "Chivay, Caylloma, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.40102,
+        "lng": -71.53793
+      }
+    },
+    "formatted_address": "Arequipa, Arequipa, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -3.67303,
+        "lng": -80.66272
+      }
+    },
+    "formatted_address": "Zorritos, Contralmirante Villar, Tumbes"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -3.56473,
+        "lng": -80.45388
+      }
+    },
+    "formatted_address": "Tumbes, Tumbes, Tumbes"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -3.501,
+        "lng": -80.27721
+      }
+    },
+    "formatted_address": "Zarumilla, Zarumilla, Tumbes"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.61437,
+        "lng": -70.76614
+      }
+    },
+    "formatted_address": "Locumba, Jorge Basadre, Tacna"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -18.01447,
+        "lng": -70.25581
+      }
+    },
+    "formatted_address": "Tacna, Tacna, Tacna"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.78842,
+        "lng": -74.97594
+      }
+    },
+    "formatted_address": "Huancavelica, Huancavelica, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.84306,
+        "lng": -74.5719
+      }
+    },
+    "formatted_address": "Acobamba, Acobamba, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.98422,
+        "lng": -74.72047
+      }
+    },
+    "formatted_address": "Lircay, Angaraes, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.28484,
+        "lng": -75.32089
+      }
+    },
+    "formatted_address": "Castrovirreyna, Castrovirreyna, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.60516,
+        "lng": -75.35525
+      }
+    },
+    "formatted_address": "Huaytara, Huaytara, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.74093,
+        "lng": -74.39001
+      }
+    },
+    "formatted_address": "Churcampa, Churcampa, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.7106,
+        "lng": -78.81192
+      }
+    },
+    "formatted_address": "Jaen, Jaen, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.1452,
+        "lng": -79.00179
+      }
+    },
+    "formatted_address": "San Ignacio, San Ignacio, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.56221,
+        "lng": -78.65334
+      }
+    },
+    "formatted_address": "Chota, Chota, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.37964,
+        "lng": -78.82064
+      }
+    },
+    "formatted_address": "Cutervo, Cutervo, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.67876,
+        "lng": -78.52424
+      }
+    },
+    "formatted_address": "Bambamarca, Hualgayoc, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.99998,
+        "lng": -78.85382
+      }
+    },
+    "formatted_address": "San Miguel, San Miguel, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.86815,
+        "lng": -78.14889
+      }
+    },
+    "formatted_address": "Celendin, Celendin, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.15742,
+        "lng": -78.52179
+      }
+    },
+    "formatted_address": "Cajamarca, Cajamarca, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.36542,
+        "lng": -78.80661
+      }
+    },
+    "formatted_address": "Contumaza, Contumaza, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.11932,
+        "lng": -78.82563
+      }
+    },
+    "formatted_address": "San Pablo, San Pablo, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.6225,
+        "lng": -78.04726
+      }
+    },
+    "formatted_address": "Cajabamba, Cajabamba, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.33618,
+        "lng": -78.173
+      }
+    },
+    "formatted_address": "Pedro Galvez, San Marcos, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.62767,
+        "lng": -78.94757
+      }
+    },
+    "formatted_address": "Santa Cruz, Santa Cruz, Cajamarca"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.94526,
+        "lng": -72.17721
+      }
+    },
+    "formatted_address": "Tambobamba, Cotabambas, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.63688,
+        "lng": -72.8793
+      }
+    },
+    "formatted_address": "Abancay, Abancay, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.29538,
+        "lng": -73.24698
+      }
+    },
+    "formatted_address": "Chalhuanca, Aymaraes, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.37911,
+        "lng": -74.53314
+      }
+    },
+    "formatted_address": "Calleria, Coronel Portillo, Ucayali"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.72806,
+        "lng": -73.75898
+      }
+    },
+    "formatted_address": "Raymondi, Atalaya, Ucayali"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.46765,
+        "lng": -76.62665
+      }
+    },
+    "formatted_address": "Canta, Canta, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.91549,
+        "lng": -69.87159
+      }
+    },
+    "formatted_address": "Putina, San Antonio De Putina, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.36076,
+        "lng": -69.50395
+      }
+    },
+    "formatted_address": "Moho, Moho, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.21524,
+        "lng": -69.46202
+      }
+    },
+    "formatted_address": "Juli, Chucuito, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.86444,
+        "lng": -72.69635
+      }
+    },
+    "formatted_address": "Santa Ana, La Convencion, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.30611,
+        "lng": -72.11852
+      }
+    },
+    "formatted_address": "Urubamba, Urubamba, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.32316,
+        "lng": -71.95799
+      }
+    },
+    "formatted_address": "Calca, Calca, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.31917,
+        "lng": -71.59823
+      }
+    },
+    "formatted_address": "Paucartambo, Paucartambo, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.91894,
+        "lng": -71.68523
+      }
+    },
+    "formatted_address": "Acomayo, Acomayo, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.75969,
+        "lng": -71.85382
+      }
+    },
+    "formatted_address": "Paruro, Paruro, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.22011,
+        "lng": -71.43171
+      }
+    },
+    "formatted_address": "Yanaoca, Canas, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.44976,
+        "lng": -72.08528
+      }
+    },
+    "formatted_address": "Santo Tomas, Chumbivilcas, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.79338,
+        "lng": -71.41488
+      }
+    },
+    "formatted_address": "Espinar, Espinar, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.51532,
+        "lng": -71.9801
+      }
+    },
+    "formatted_address": "Cusco, Cusco, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.04668,
+        "lng": -77.0323
+      }
+    },
+    "formatted_address": "Lima, Lima, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.07593,
+        "lng": -78.58431
+      }
+    },
+    "formatted_address": "Chimbote, Santa, Ancash"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.46027,
+        "lng": -75.92096
+      }
+    },
+    "formatted_address": "Yauyos, Yauyos, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -4.58135,
+        "lng": -81.27481
+      }
+    },
+    "formatted_address": "Pariñas, Talara, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -10.94478,
+        "lng": -69.58057
+      }
+    },
+    "formatted_address": "Iñapari, Tahuamanu, Madre De Dios"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.83811,
+        "lng": -71.3634
+      }
+    },
+    "formatted_address": "Manu, Manu, Madre De Dios"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.63968,
+        "lng": -79.79126
+      }
+    },
+    "formatted_address": "Ferreñafe, Ferreñafe, Lambayeque"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.55668,
+        "lng": -80.82583
+      }
+    },
+    "formatted_address": "Sechura, Sechura, Piura"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -8.19448,
+        "lng": -76.50283
+      }
+    },
+    "formatted_address": "Tocache, Tocache, San Martin"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.76979,
+        "lng": -70.71883
+      }
+    },
+    "formatted_address": "Purus, Purus, Ucayali"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.03776,
+        "lng": -75.51285
+      }
+    },
+    "formatted_address": "Padre Abad, Padre Abad, Ucayali"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.27128,
+        "lng": -71.22905
+      }
+    },
+    "formatted_address": "Sicuani, Canchis, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.495,
+        "lng": -77.2147
+      }
+    },
+    "formatted_address": "Huaral, Huaral, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -11.10751,
+        "lng": -77.60803
+      }
+    },
+    "formatted_address": "Huacho, Huaura, Lima"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -3.90974,
+        "lng": -70.51949
+      }
+    },
+    "formatted_address": "Ramon Castilla, Mariscal Ramon Castilla, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -7.32502,
+        "lng": -75.0416
+      }
+    },
+    "formatted_address": "Contamana, Ucayali, Loreto"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -6.39569,
+        "lng": -77.48312
+      }
+    },
+    "formatted_address": "San Nicolas, Rodriguez De Mendoza, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -5.90381,
+        "lng": -77.79687
+      }
+    },
+    "formatted_address": "Jumbilla, Bongara, Amazonas"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -12.39571,
+        "lng": -74.86732
+      }
+    },
+    "formatted_address": "Pampas, Tayacaja, Huancavelica"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -9.82626,
+        "lng": -76.80129
+      }
+    },
+    "formatted_address": "La Union, Dos De Mayo, Huanuco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.27119,
+        "lng": -70.25299
+      }
+    },
+    "formatted_address": "Candarave, Candarave, Tacna"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -17.47508,
+        "lng": -70.03271
+      }
+    },
+    "formatted_address": "Tarata, Tarata, Tacna"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.65638,
+        "lng": -73.38491
+      }
+    },
+    "formatted_address": "Andahuaylas, Andahuaylas, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.51776,
+        "lng": -73.7215
+      }
+    },
+    "formatted_address": "Chincheros, Chincheros, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.75282,
+        "lng": -74.06697
+      }
+    },
+    "formatted_address": "Huancapi, Victor Fajardo, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.01363,
+        "lng": -73.84085
+      }
+    },
+    "formatted_address": "Querobamba, Sucre, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.91752,
+        "lng": -74.33435
+      }
+    },
+    "formatted_address": "Sancos, Huanca Sancos, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.62828,
+        "lng": -74.14432
+      }
+    },
+    "formatted_address": "Cangallo, Cangallo, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.84065,
+        "lng": -70.02803
+      }
+    },
+    "formatted_address": "Puno, Puno, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.49396,
+        "lng": -70.13582
+      }
+    },
+    "formatted_address": "Juliaca, San Roman, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.2019,
+        "lng": -69.76152
+      }
+    },
+    "formatted_address": "Huancane, Huancane, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.36387,
+        "lng": -70.36544
+      }
+    },
+    "formatted_address": "Lampa, Lampa, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.24715,
+        "lng": -69.09521
+      }
+    },
+    "formatted_address": "Yunguyo, Yunguyo, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.08685,
+        "lng": -69.63887
+      }
+    },
+    "formatted_address": "Ilave, El Collao, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.91261,
+        "lng": -70.19903
+      }
+    },
+    "formatted_address": "Azangaro, Azangaro, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.88118,
+        "lng": -70.58984
+      }
+    },
+    "formatted_address": "Ayaviri, Melgar, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.68439,
+        "lng": -71.6243
+      }
+    },
+    "formatted_address": "Urcos, Quispicanchi, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -13.46546,
+        "lng": -72.14502
+      }
+    },
+    "formatted_address": "Anta, Anta, Cusco"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.21134,
+        "lng": -72.89128
+      }
+    },
+    "formatted_address": "Cotahuasi, La Union, Arequipa"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -15.28083,
+        "lng": -73.3435
+      }
+    },
+    "formatted_address": "Pausa, Paucar Del Sara Sara, Ayacucho"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.36533,
+        "lng": -72.87781
+      }
+    },
+    "formatted_address": "Antabamba, Antabamba, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.10441,
+        "lng": -72.70869
+      }
+    },
+    "formatted_address": "Chuquibambilla, Grau, Apurimac"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.67414,
+        "lng": -70.97212
+      }
+    },
+    "formatted_address": "Omate, Gral.sanchez Cerro, Moquegua"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.06877,
+        "lng": -70.43089
+      }
+    },
+    "formatted_address": "Macusani, Carabaya, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -14.32335,
+        "lng": -69.46524
+      }
+    },
+    "formatted_address": "Sandia, Sandia, Puno"
+  },
+  {
+    "geometry": {
+      "location": {
+        "lat": -16.07635,
+        "lng": -72.49259
+      }
+    },
+    "formatted_address": "Aplao, Castilla, Arequipa"
+  }
+]

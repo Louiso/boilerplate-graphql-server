@@ -1,5 +1,5 @@
 import { Maybe } from 'graphql/jsutils/Maybe'
-import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput  } from 'interfaces/graphql'
+import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput } from 'interfaces/graphql'
 import { ProfileDb } from 'models/mongo/profile'
 import DataSource from './DataSource'
 
@@ -41,6 +41,16 @@ interface GetCandidateTasksResponse {
 
 interface GetAreasResponse {
   data: Area[];
+  success: boolean;
+}
+
+interface GetLocationResponse {
+  data: {
+    address: [{
+      formatted_address: string;
+      geometry: JSON;
+    }];
+  };
   success: boolean;
 }
 
@@ -155,6 +165,17 @@ class GatsAPI extends DataSource {
         candidateId,
         laborReferentInputs
       })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getLocation(args: Maybe<PaginationInput>): Promise<GetLocationResponse> {
+    try {
+      const { text, limit, skip } = args || {}
+      console.log('🚀 ~ file: GatsAPI.ts ~ line 171 ~ GatsAPI ~ getLocation ~ args', args)
+
+      return this.get<GetLocationResponse>(`/autocomplete/location?text=${text || ''}&limit=${limit || 15}&skip=${skip || 0}`)
     } catch (error) {
       throw error
     }

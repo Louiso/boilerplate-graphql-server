@@ -65,6 +65,11 @@ type SocialNetwork {
   url: String
 }
 
+type Location {
+  geometry: JSON
+  address: String
+}
+
 type Education {
   _id: ID!
   institutionName: String

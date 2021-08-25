@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server'
 import { IContext } from 'interfaces/general'
-import { QueryGetAreasArgs, QueryResolvers } from 'interfaces/graphql'
+import { QueryGetAreasArgs, QueryGetLocationArgs, QueryResolvers } from 'interfaces/graphql'
 
 import ProfileActuator from 'actuators/profile'
 
@@ -11,6 +11,11 @@ export const Query: QueryResolvers<IContext> = {
     }),
   getAreas: (_, args: QueryGetAreasArgs, context: IContext) =>
     ProfileActuator.getAreas(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
+      }),
+  getLocation: (_, args: QueryGetLocationArgs, context: IContext) =>
+    ProfileActuator.getLocation(args, context)
       .catch((error) => {
         throw new ApolloError(error)
       })
