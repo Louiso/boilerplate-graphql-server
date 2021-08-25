@@ -393,6 +393,22 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
       context.dataSources.gatsAPI.createLaborReferents(candidate!._id, laborReferentInputs)
     ])
 
+    if(!profile.firstProfileSubmissionDate) {
+      const profileDB = await ProfileModel.findByIdAndUpdate(
+        profile._id,
+        {
+          $set: {
+            firstProfileSubmissionDate: new Date() as any
+          }
+        },
+        {
+          'new': true
+        }
+      )
+
+      return profileDB!
+    }
+
     return profile
   } catch (error) {
     throw error
