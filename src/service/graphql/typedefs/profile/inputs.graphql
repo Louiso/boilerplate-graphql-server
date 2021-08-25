@@ -115,6 +115,7 @@ input UpdateProfileBasicInformationInput {
   phone: String
   salaryExpectation: SalaryExpectationInput
   firstJob: Boolean
+  location: String
 }
 
 input PaginationInput {

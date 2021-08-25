@@ -13,14 +13,23 @@ import {
   MutationUpdateReferentsArgs,
   Experience,
   MutationUpdateEducationArgs,
-  MutationUpdateAdditionalInformationArgs
+  MutationUpdateAdditionalInformationArgs,
+  QueryGetLocationArgs,
+  Location
 } from 'interfaces/graphql'
 import { keyBy } from 'utils/by'
+import { createSearchRegexp } from 'utils/regex'
+const localLocations: GeocodingType [] = require('./locations.json')
 // import ProfileProgressActuator from '../profileProgress'
-
-// interface Elements {
-//   testing: boolean;
-// }
+interface GeocodingType {
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
+  formatted_address: string;
+}
 
 const getProfileExhaustive = async (_: QueryGetProfileExhaustiveArgs, context: IContext): Promise<Profile> => {
   try {
@@ -459,6 +468,19 @@ const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalIn
   }
 }
 
+const getLocation = async ({ input }: QueryGetLocationArgs): Promise<Array<Location>> => {
+  try {
+    const regexp = createSearchRegexp(input?.text || '')
+    const results = localLocations
+      .filter(location => regexp.test(location.formatted_address))
+      .slice(0, input?.limit || 5).map(item => item)
+
+    return results.map(({ geometry, formatted_address }) => ({ address: formatted_address, geometry }))
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateCV,
   getProfileExhaustive,
@@ -468,5 +490,6 @@ export default {
   updateExperience,
   updateReferents,
   updateEducation,
-  updateAdditionalInformation
+  updateAdditionalInformation,
+  getLocation
 }

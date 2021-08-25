@@ -1,4 +1,5 @@
 type Query {
   getProfileExhaustive(jobId: ID): Profile! @auth
   getAreas(input: PaginationInput): [ Area ] @auth
+  getLocation(input: PaginationInput): [ Location ] @auth
 }
