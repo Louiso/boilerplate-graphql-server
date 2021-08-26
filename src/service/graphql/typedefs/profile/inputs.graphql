@@ -137,3 +137,8 @@ input ReferentInput {
   phoneNumber: String
   experienceId: String
 }
+
+input EducationAndEspecialization {
+  education: [EducationInput]
+  especialization: [EspecializationInput]
+}
