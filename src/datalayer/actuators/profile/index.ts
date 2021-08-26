@@ -444,10 +444,14 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
 
+    const { especialization = {}, education = {} } = input || {}
+
+    const objUpdt = { education, especialization }
+
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: { education: input! } },
+        { $set: objUpdt! },
         { 'new': true })
       .lean()
 
