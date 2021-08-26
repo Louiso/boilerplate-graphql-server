@@ -18,7 +18,7 @@ type Mutation {
   ): Profile @auth
 
    updateEducation(
-    input: [EducationAndEspecialization!]
+    input: EducationAndEspecializationInput
   ): Profile @auth
 
   updateAdditionalInformation(
