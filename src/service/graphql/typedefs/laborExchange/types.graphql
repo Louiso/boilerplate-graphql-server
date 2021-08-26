@@ -1,0 +1,13 @@
+type LaborExchangeTemplateHeaderLogo {
+  source: String
+  sourceHeader: String
+}
+
+type LaborExchangeTemplateHeader {
+  background: String
+  logo: LaborExchangeTemplateHeaderLogo
+}
+
+type LaborExchangeTemplate {
+  header: LaborExchangeTemplateHeader!
+}
