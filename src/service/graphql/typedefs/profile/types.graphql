@@ -118,6 +118,7 @@ type Especialization {
   description: String
   imgUrl: String
   studyingHere: Boolean
+  condition: String
 }
 
 type Knowledge {
