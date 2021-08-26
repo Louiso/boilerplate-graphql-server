@@ -29,4 +29,5 @@ type Candidate {
   websites: [EmailsPhonesResponse!]!
   candidateTasks: [ CandidateTask! ]!
   status: CandidateStatus!
+  profileSubmissionDate: Date
 }

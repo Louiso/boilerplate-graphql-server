@@ -42,6 +42,7 @@ type Profile @entity {
   docType: String! @column
   idUser: String! @column
   referents: [Referents!] @column
+  firstProfileSubmissionDate: Date @column
 }
 
 type Referents {

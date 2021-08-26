@@ -29,4 +29,5 @@ type Theme {
   typography: ThemeTypography!
   overrides: Overrides!
   cssTextFamily: String
+  template: LaborExchangeTemplate!
 }

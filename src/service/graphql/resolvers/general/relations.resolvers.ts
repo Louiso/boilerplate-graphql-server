@@ -18,7 +18,7 @@ const resolvers: Resolvers<IContext> = {
       return new Date(value) // value from the client
     },
     serialize(value) {
-      return value.getTime() // value sent to the client
+      return new Date(value).getTime() // value sent to the client
     }
   }),
   JSON: GraphQLJSON
