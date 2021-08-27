@@ -7,9 +7,18 @@ export const connection = mongoose.createConnection(
   process.env.MONGO_CONNECTION as string, {
     useUnifiedTopology: true,
     socketTimeoutMS   : 0,
-    keepAlive         : true
+    keepAlive         : true,
+    useNewUrlParser   : true
   }
 )
+
+connection.on('connected', function() {
+  console.log('MongoDB connected!')
+})
+
+connection.once('open', function() {
+  console.log('MongoDB connection opened!')
+})
 
 aws.config.update({
   accessKeyId    : AWS_ACCESS_KEY_ID,
