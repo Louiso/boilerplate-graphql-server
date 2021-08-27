@@ -44,7 +44,7 @@ input EducationInput {
   institutionName: String!
   degree: String
   condition: String
-  career: String!
+  career: String
   academicArea: String
   startDate: Date
   endDate: Date

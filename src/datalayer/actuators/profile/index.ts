@@ -245,7 +245,6 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
         !edu.institutionName ||
         !edu.degree ||
         !edu.condition ||
-        !edu.career ||
         (edu.studyingHere && !edu.startDate) ||
         (!edu.studyingHere && !edu.startDate && !edu.endDate)
       )
