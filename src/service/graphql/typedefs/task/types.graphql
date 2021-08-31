@@ -1,6 +1,7 @@
 type CategoryTask {
   _id: ID!
   codeTask: String!
+  pathContentForm: String!
   title: String
   urlExec: String
   urlApi: String
@@ -8,8 +9,26 @@ type CategoryTask {
   urlImage: String
 }
 
+type KrowderGroup {
+  count: Int!
+  krowderGroupId: ID
+  isDeleted: Boolean
+}
+
+type TaskConfig {
+  _id: ID!
+  krowderGroups: [ KrowderGroup! ]!
+}
+
+
+type ContentTask {
+  content: JSON
+}
 
 type Task {
   _id: ID!
+  alias: String
   categoryTask: CategoryTask!
+  contentTask: ContentTask
+  taskConfig: TaskConfig!
 }

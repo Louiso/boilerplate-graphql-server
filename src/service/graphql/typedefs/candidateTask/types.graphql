@@ -22,4 +22,17 @@ type CandidateTask {
   timezone: TimezoneType
   updateContentTask: Boolean
   taskDate: Date
+  candidateInfo: CandidateInfoCreateTaskResult
+}
+
+type CandidateInfoCreateTaskResult {
+  candidateState: CandidateStatus
+  email: String
+  name: String
+  firstName: String
+  lastName: String
+  phone: String
+  docNumber: String
+  age: String
+  gender: String
 }
