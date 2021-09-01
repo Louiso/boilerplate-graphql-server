@@ -5,7 +5,7 @@ const getLaborExchangeTemplate = async ({ slug }: QueryGetLaborExchangeTemplateA
   try {
     const data = await context.dataSources.portalesAPI.getTheme({ slug })
 
-    return data.theme.template
+    return data.theme.template!
   } catch (error) {
     throw error
   }

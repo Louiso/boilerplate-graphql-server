@@ -8,10 +8,11 @@ type ThemePaletteConfig {
 }
 
 type ThemePalette {
-  background: ThemePaletteConfig!
+  background: ThemePaletteConfig
   primary: ThemePaletteConfig!
   secondary: ThemePaletteConfig!
-  text: ThemePaletteConfig!
+  text: ThemePaletteConfig
+  custom: ThemePaletteConfig
 }
 
 type ThemeTypography {
@@ -26,8 +27,8 @@ type Overrides {
 
 type Theme {
   palette: ThemePalette!
-  typography: ThemeTypography!
-  overrides: Overrides!
+  typography: ThemeTypography
+  overrides: Overrides
   cssTextFamily: String
-  template: LaborExchangeTemplate!
+  template: LaborExchangeTemplate
 }

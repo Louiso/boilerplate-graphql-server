@@ -445,12 +445,12 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
 
     const { especialization = {}, education = {} } = input || {}
 
-    const objUpdt = { education, especialization }
+    const update: any = { education, especialization }
 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: objUpdt! },
+        { $set: update! },
         { 'new': true })
       .lean()
 
