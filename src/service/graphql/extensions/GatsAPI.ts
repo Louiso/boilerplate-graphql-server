@@ -101,7 +101,7 @@ interface GetCandidateTaskResponse {
 
 interface GetTaskResponse {
   success: boolean;
-  data: Task;
+  task: Task;
 }
 
 interface UpdateCandidateTaskByArgs {

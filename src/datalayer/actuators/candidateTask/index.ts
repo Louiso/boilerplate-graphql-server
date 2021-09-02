@@ -1,4 +1,4 @@
-import { Candidate, CandidateTask } from 'interfaces/graphql'
+import { Candidate, CandidateTask, MutationCreateResultTaskArgs, QueryGetCandidateTaskArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 import { getUrlApi } from 'utils/get'
 import Axios from 'axios'
@@ -16,11 +16,11 @@ const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: {
 }
 
 const createResultTask = async (
-  { candidateTaskId, taskId, jobId }: { candidateTaskId: string; taskId: string; jobId: string; },
+  { candidateTaskId, taskId, jobId }: MutationCreateResultTaskArgs,
   { dataSources: { gatsAPI }, authorization, userId }: IContext
 ): Promise<CandidateTask> => {
   try {
-    const [ { data: candidateTask }, { data: task }, { data: job } ] = await Promise.all([
+    const [ { data: candidateTask }, { task }, { data: job } ] = await Promise.all([
       gatsAPI.getCandidateTask(candidateTaskId),
       gatsAPI.getTask(taskId),
       gatsAPI.getJob({ jobId, publicationIndex: 0 })
@@ -72,12 +72,14 @@ const createResultTask = async (
       verifyResultTaskId = candidateTask.resultTaskId
     }
 
-    const { data: candidateTaskDb } = await gatsAPI.updateCandidateTaskBy({
+    await gatsAPI.updateCandidateTaskBy({
       candidateTaskId,
       input: {
         resultTaskId: verifyResultTaskId
       }
     })
+
+    const { data: candidateTaskDb } = await gatsAPI.getCandidateTask(candidateTaskId)
 
     return candidateTaskDb
   } catch (error) {
@@ -85,7 +87,21 @@ const createResultTask = async (
   }
 }
 
+const getCandidateTask = async (
+  { candidateTaskId }: QueryGetCandidateTaskArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    const { data: candidateTask } = await gatsAPI.getCandidateTask(candidateTaskId)
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
-  createResultTask
+  createResultTask,
+  getCandidateTask
 }

@@ -1,0 +1,7 @@
+type Mutation {
+  createResultTask(
+    candidateTaskId: ID!
+    taskId: ID!
+    jobId: ID!
+  ): CandidateTask! @auth
+}
