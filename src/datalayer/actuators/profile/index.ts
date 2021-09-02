@@ -243,7 +243,6 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
     const incompleteEducations = (profile.education || [])
       .filter((edu) =>
         !edu.institutionName ||
-        !edu.degree ||
         !edu.condition ||
         (edu.studyingHere && !edu.startDate) ||
         (!edu.studyingHere && !edu.startDate && !edu.endDate)
