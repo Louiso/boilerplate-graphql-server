@@ -54,7 +54,8 @@ const especializationSchema = new Schema({
   especializationtype : { type: String },
   imgUrl              : { type: String },
   startDate           : { type: Date },
-  studyingHere        : { 'default': false, type: Boolean }
+  studyingHere        : { 'default': false, type: Boolean },
+  condition           : { type: String }
 })
 
 const knowledgeSchema = new Schema({
