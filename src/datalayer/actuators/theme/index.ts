@@ -1,13 +1,21 @@
 import { IContext } from 'interfaces/general'
 import { QueryGetThemeArgs, Theme } from 'interfaces/graphql'
 
-const getTheme = async ({ slug }: QueryGetThemeArgs, context: IContext): Promise<Theme> => {
+const getTheme = async ({ slug, jobId }: QueryGetThemeArgs, context: IContext): Promise<Theme> => {
   try {
-    const data = await context.dataSources.portalesAPI.getTheme({ slug })
+    const [ dataTheme, { data: job } ] = await Promise.all([
+      context.dataSources.portalesAPI.getTheme({ slug }),
+      context.dataSources.gatsAPI.getJob({ jobId, publicationIndex: 0 })
+    ])
+
+    let { theme } = dataTheme
+
+    if(job.companyPublished?.premium)
+      theme = job.companyPublished.theme!
 
     return {
-      ... data.theme,
-      cssTextFamily: data.cssTextFamily
+      ...theme,
+      cssTextFamily: dataTheme.cssTextFamily
     }
   } catch (error) {
     throw error
