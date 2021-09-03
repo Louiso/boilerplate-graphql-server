@@ -243,7 +243,6 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
     const incompleteEducations = (profile.education || [])
       .filter((edu) =>
         !edu.institutionName ||
-        !edu.degree ||
         !edu.condition ||
         (edu.studyingHere && !edu.startDate) ||
         (!edu.studyingHere && !edu.startDate && !edu.endDate)
@@ -445,12 +444,12 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
 
     const { especialization = {}, education = {} } = input || {}
 
-    const objUpdt = { education, especialization }
+    const update: any = { education, especialization }
 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: objUpdt! },
+        { $set: update! },
         { 'new': true })
       .lean()
 

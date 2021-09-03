@@ -9,6 +9,8 @@ type Company {
   photo: String
   slug: String
   profile: CompanyProfile
+  theme: JSON
+  premium: Boolean
 }
 
 type Job {
