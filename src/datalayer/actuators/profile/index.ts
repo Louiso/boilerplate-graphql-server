@@ -322,7 +322,8 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
         especializationtype : esp.especializationtype,
         imgUrl              : esp.imgUrl,
         startDate           : esp.startDate,
-        studyingHere        : esp.studyingHere
+        studyingHere        : esp.studyingHere,
+        condition           : esp.condition
       })),
       experience: profile.experience.map((exp) => ({
         _id        : exp._id, // se enviá el _id para q siempre este referenciado con la experiencia del profile
