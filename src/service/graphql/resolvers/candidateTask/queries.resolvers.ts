@@ -8,5 +8,10 @@ export const Query: QueryResolvers<IContext> = {
     CandidateTaskActuator.getCandidateTask(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  getAppSections: async (_, args, context) =>
+    CandidateTaskActuator.getAppSections(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }

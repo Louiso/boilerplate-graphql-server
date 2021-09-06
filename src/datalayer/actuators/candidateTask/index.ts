@@ -1,7 +1,15 @@
-import { Candidate, CandidateTask, MutationCreateResultTaskArgs, QueryGetCandidateTaskArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 import { getUrlApi } from 'utils/get'
 import Axios from 'axios'
+
+import {
+  Candidate,
+  CandidateTask,
+  MutationCreateResultTaskArgs,
+  QueryGetCandidateTaskArgs,
+  QueryGetAppSectionsArgs,
+  Section
+} from 'interfaces/graphql'
 
 const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: { gatsAPI } }: IContext): Promise<Array<CandidateTask>> => {
   try {
@@ -100,8 +108,37 @@ const getCandidateTask = async (
   }
 }
 
+const getAppSections = async (
+  { taskId, candidateTaskId }: QueryGetAppSectionsArgs,
+  { dataSources: { gatsAPI }, authorization }: IContext
+): Promise<Section[]> => {
+  try {
+    const [ { data: candidateTask }, { task } ] = await Promise.all([
+      gatsAPI.getCandidateTask(candidateTaskId),
+      gatsAPI.getTask(taskId)
+    ])
+    const urlApi = getUrlApi({
+      codeTask: task.categoryTask.pathContentForm,
+      urlApi  : task.categoryTask.urlApi!
+    })
+
+    const url = `${urlApi}/app/sections/${candidateTask.resultTaskId}`
+
+    const { data: { data: sections } } = await Axios.get(url, {
+      headers: {
+        Authorization: authorization
+      }
+    })
+
+    return sections
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
-  getCandidateTask
+  getCandidateTask,
+  getAppSections
 }

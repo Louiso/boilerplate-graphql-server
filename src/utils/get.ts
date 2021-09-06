@@ -7,10 +7,12 @@ interface GetUrlApiArgs {
   FORM_API
 */
 export const getUrlApi = ({ urlApi, codeTask }: GetUrlApiArgs): string => {
-  let url = process.env[`${codeTask.toUpperCase()}_API`]
+  const envName = `${codeTask.toUpperCase()}_API`
+
+  let url = process.env[envName]
 
   if(!url)
     url = urlApi
 
-  return urlApi
+  return url
 }

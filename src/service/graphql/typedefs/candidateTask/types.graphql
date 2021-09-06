@@ -5,6 +5,15 @@ enum CandidateTaskStatus {
   reviewed
 }
 
+type Section {
+  isWildCard: Boolean
+  needValidBeforeToRender: Boolean
+  sectionCode: String
+  hiddenWhileCurrentSectionIsIncomplete: Boolean
+  completed: Boolean
+  valid: Boolean
+}
+
 type TimezoneType {
   candidate: String
   responsable: String
