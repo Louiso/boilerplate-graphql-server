@@ -26,6 +26,34 @@ interface GetLaborExchangeBySlugResponse {
   success: boolean;
 }
 
+interface GetSimilarJobsArgs {
+  search?: Maybe<string>;
+  jobId: string;
+  limit?: number;
+  page?: number;
+  slug?: Maybe<string>;
+}
+
+interface GetSimilarJobsResponse {
+  data: {
+    docs: {
+      detailCompany?: {
+        company_id: string;
+        company_logo: string;
+        company_name: string;
+      };
+      expirationDate: string;
+      isLaborum: boolean;
+      job_id: string;
+      publishDate: string;
+      title: string;
+      visibleInformation: boolean;
+      __typename: string;
+    }[];
+  };
+  success: boolean;
+}
+
 class PortalesAPI extends DataSource {
   constructor(authorization: string) {
     super(`${process.env.PORTALES_API as string}/api/v1`, authorization)
@@ -42,6 +70,28 @@ class PortalesAPI extends DataSource {
   async getLaborExchangeBySlug(data: GetLaborExchangeBySlugArgs): Promise<GetLaborExchangeBySlugResponse> {
     try {
       return this.get<GetLaborExchangeBySlugResponse>(`/laborexchange/${data.slug}/bySlug`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getSimilarJobs(data: GetSimilarJobsArgs): Promise<GetSimilarJobsResponse> {
+    try {
+      if(!data.slug) return {
+        data: {
+          docs: []
+        },
+        success: true
+      }
+
+      const { data: laborExchange } = await this.getLaborExchangeBySlug({ slug: data.slug })
+
+      return this.post<GetSimilarJobsResponse>(`/elastic/laborExchange/${laborExchange._id}/jobs`, {
+        limit : data.limit ?? 30,
+        page  : data.page ?? 1,
+        jobId : data.jobId,
+        search: data.search
+      })
     } catch (error) {
       throw error
     }
