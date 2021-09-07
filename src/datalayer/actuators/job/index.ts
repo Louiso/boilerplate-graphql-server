@@ -49,7 +49,6 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
 
 const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, context: IContext): Promise<Job[]> => {
   try {
-    console.log('search, jobId, slug', search, jobId, slug)
     const { data: { docs } } = await context.dataSources.portalesAPI.getSimilarJobs({ search, jobId, limit: 30, page: 1, slug })
 
     return docs
