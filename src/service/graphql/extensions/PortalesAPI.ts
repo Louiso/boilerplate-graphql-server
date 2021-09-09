@@ -69,7 +69,7 @@ class PortalesAPI extends DataSource {
 
   async getLaborExchangeBySlug(data: GetLaborExchangeBySlugArgs): Promise<GetLaborExchangeBySlugResponse> {
     try {
-      return this.get<GetLaborExchangeBySlugResponse>(`/laborexchange/${data.slug}/bySlug`)
+      return this.get<GetLaborExchangeBySlugResponse>(`/laborexchange/${data.slug || 'laborum'}/bySlug`)
     } catch (error) {
       throw error
     }
@@ -84,7 +84,7 @@ class PortalesAPI extends DataSource {
         success: true
       }
 
-      const { data: laborExchange } = await this.getLaborExchangeBySlug({ slug: data.slug })
+      const { data: laborExchange } = await this.getLaborExchangeBySlug({ slug: data.slug || 'laborum' })
 
       return this.post<GetSimilarJobsResponse>(`/elastic/laborExchange/${laborExchange._id}/jobs`, {
         limit : data.limit ?? 30,
