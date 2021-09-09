@@ -9,33 +9,34 @@ const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCand
     const { success, data } = await gatsAPI.getCandidate({ jobId }).catch(() => ({ success: false, data: null }))
 
     if(!success) {
-      let laborExchange
-      if(slug) {
-        const { data } = await portalesAPI.getLaborExchangeBySlug({ slug: slug })
-        laborExchange = data
-      }
+      const promises: Promise<any>[] = [
+        JobActuator.getJob({ jobId, publicationIndex: publicationIndex ?? 0 }, context)
+      ]
 
-      const job = await JobActuator.getJob({ jobId, publicationIndex: publicationIndex ?? 0 }, context)
+      if(slug)
+        promises.push(portalesAPI.getLaborExchangeBySlug({ slug: slug }))
+
+      const [ job, { data: laborExchange } ] = await Promise.all(promises)
+
       const [ publication ] = job.publications!
 
-      await gatsAPI.applyToJob({
+      const applyJobResult = await gatsAPI.applyToJob({
         jobId,
         publicationId  : publication._id,
-        sourceApply    : laborExchange?.name.toLowerCase() ?? 'landing',
+        sourceApply    : slug ? laborExchange?.name.toLowerCase() : 'landing',
         laborExchangeId: laborExchange?._id
       })
 
-      const { success, data } = await gatsAPI.getCandidate({ jobId })
+      if(!applyJobResult.success) throw new Error('Error al aplicar a job')
 
-      if(!success) throw new Error(`Candidate for jobId:${jobId} userId:${context.userId} NotFound`)
-
-      candidate = data
+      candidate = applyJobResult.data
     } else {
       candidate = data!
     }
 
     return candidate
   } catch (error) {
+    console.log('getCandidateByJob -> error', error)
     throw error
   }
 }
