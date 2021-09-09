@@ -61,7 +61,7 @@ class PortalesAPI extends DataSource {
   }
   async getTheme(data: GetThemeArgs): Promise<GetThemeResponse> {
     try {
-      return this.get<GetThemeResponse>(`/laborexchange/theme/slug/${data.slug || 'krowdy'}`, data)
+      return this.get<GetThemeResponse>(`/laborexchange/theme/slug/${data.slug || 'laborum'}`, data)
     } catch (error) {
       throw error
     }
