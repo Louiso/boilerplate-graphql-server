@@ -21,6 +21,8 @@ dev docker build:
     - echo "AWS_ACCESS_KEY_ID=${DEV_AWS_ACCESS_KEY_ID}" >> .env
     - echo "AWS_SECRET_ACCESS_KEY=${DEV_AWS_SECRET_ACCESS_KEY}" >> .env
     - echo "AWS_REGION=${DEV_AWS_REGION}" >> .env
+    - echo "REDIS_HOST=${DEV_REDIS_HOST}" >> .env
+    - echo "REDIS_PORT=${DEV_REDIS_PORT}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
@@ -58,6 +60,8 @@ prebuild docker build:
     - echo "AWS_ACCESS_KEY_ID=${PREBUILD_AWS_ACCESS_KEY_ID}" >> .env
     - echo "AWS_SECRET_ACCESS_KEY=${PREBUILD_AWS_SECRET_ACCESS_KEY}" >> .env
     - echo "AWS_REGION=${PREBUILD_AWS_REGION}" >> .env
+    - echo "REDIS_HOST=${PREBUILD_REDIS_HOST}" >> .env
+    - echo "REDIS_PORT=${PREBUILD_REDIS_PORT}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
@@ -95,6 +99,8 @@ build docker build:
     - echo "AWS_ACCESS_KEY_ID=${BUILD_AWS_ACCESS_KEY_ID}" >> .env
     - echo "AWS_SECRET_ACCESS_KEY=${BUILD_AWS_SECRET_ACCESS_KEY}" >> .env
     - echo "AWS_REGION=${BUILD_AWS_REGION}" >> .env
+    - echo "REDIS_HOST=${BUILD_REDIS_HOST}" >> .env
+    - echo "REDIS_PORT=${BUILD_REDIS_PORT}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
