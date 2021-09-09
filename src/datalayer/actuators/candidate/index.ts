@@ -16,7 +16,7 @@ const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCand
       if(slug)
         promises.push(portalesAPI.getLaborExchangeBySlug({ slug: slug }))
 
-      const [ job, { data: laborExchange } ] = await Promise.all(promises)
+      const [ job, { data: laborExchange } = { data: null } ] = await Promise.all(promises)
 
       const [ publication ] = job.publications!
 
