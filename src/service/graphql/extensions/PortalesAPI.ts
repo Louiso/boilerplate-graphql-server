@@ -1,5 +1,7 @@
+import { setRedis } from './../../../utils/redis'
 import { Maybe } from 'graphql/jsutils/Maybe'
 import { Theme } from 'interfaces/graphql'
+import { getRedis } from 'utils/redis'
 import DataSource from './DataSource'
 
 interface GetThemeArgs {
@@ -61,7 +63,22 @@ class PortalesAPI extends DataSource {
   }
   async getTheme(data: GetThemeArgs): Promise<GetThemeResponse> {
     try {
-      return this.get<GetThemeResponse>(`/laborexchange/theme/slug/${data.slug || 'laborum'}`, data)
+      const options = {
+        slug         : data.slug || 'laborum',
+        dataSourceUrl: process.env.PORTALES_API
+      }
+
+      const REDIS_KEY = `getTheme(${JSON.stringify(options)})`
+
+      const redisData = await getRedis(REDIS_KEY) as GetThemeResponse
+
+      if(redisData) return redisData
+
+      const resultData = await this.get<GetThemeResponse>(`/laborexchange/theme/slug/${options.slug}`, data)
+
+      setRedis(REDIS_KEY, resultData)
+
+      return resultData
     } catch (error) {
       throw error
     }
@@ -69,7 +86,22 @@ class PortalesAPI extends DataSource {
 
   async getLaborExchangeBySlug(data: GetLaborExchangeBySlugArgs): Promise<GetLaborExchangeBySlugResponse> {
     try {
-      return this.get<GetLaborExchangeBySlugResponse>(`/laborexchange/${data.slug || 'laborum'}/bySlug`)
+      const options = {
+        slug         : data.slug || 'laborum',
+        dataSourceUrl: process.env.PORTALES_API
+      }
+
+      const REDIS_KEY = `getLaborExchangeBySlug(${JSON.stringify(options)})`
+
+      const redisData = await getRedis(REDIS_KEY) as GetLaborExchangeBySlugResponse
+
+      if(redisData) return redisData
+
+      const resultData = await this.get<GetLaborExchangeBySlugResponse>(`/laborexchange/${options.slug}/bySlug`)
+
+      setRedis(REDIS_KEY, resultData)
+
+      return resultData
     } catch (error) {
       throw error
     }
