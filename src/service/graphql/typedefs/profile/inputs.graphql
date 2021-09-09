@@ -137,6 +137,7 @@ input ReferentInput {
   name: String
   phoneNumber: String
   experienceId: String
+  position: String
 }
 
 input EducationAndEspecializationInput {

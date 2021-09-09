@@ -28,7 +28,8 @@ const referentSchema = new Schema({
   companyName : { trim: true, type: String },
   name        : { trim: true, type: String },
   phoneNumber : { trim: true, type: String },
-  experienceId: { trim: true, type: String }
+  experienceId: { trim: true, type: String },
+  position    : { trim: true, type: String }
 })
 
 const educationSchema = new Schema({
