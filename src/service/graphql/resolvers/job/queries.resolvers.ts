@@ -8,5 +8,9 @@ export const Query: QueryResolvers<IContext> = {
   getJob: (_, args, context) => JobActuator.getJob(args, context)
     .catch((error) => {
       throw new ApolloError(error)
+    }),
+  getSimilarJobs: (_, args, context) => JobActuator.getSimilarJobs(args, context)
+    .catch((error) => {
+      throw new ApolloError(error)
     })
 }

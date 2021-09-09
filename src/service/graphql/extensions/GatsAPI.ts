@@ -87,6 +87,7 @@ interface LaborReferentToCreateInput {
   jobPosition?: Maybe<string>;
   refId: string;
   refIdOrigin: string;
+  position?: Maybe<string>;
 }
 
 interface CreateLaborReferentsResponse {

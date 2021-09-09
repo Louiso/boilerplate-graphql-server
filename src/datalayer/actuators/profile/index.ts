@@ -382,7 +382,8 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
         phone       : referent.phoneNumber,
         refId       : referent._id,
         experienceId: experienceId,
-        refIdOrigin : 'applying'
+        refIdOrigin : 'applying',
+        position    : referent?.position
       })
     })
 
