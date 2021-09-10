@@ -4,4 +4,11 @@ type Mutation {
     taskId: ID!
     jobId: ID!
   ): CandidateTask! @auth
+
+  notifyOpenTaskInDesktop(
+    taskId: ID!
+    jobId: ID!
+    publicationIndex: Int!
+    slug: String
+  ): Candidate! @auth
 }

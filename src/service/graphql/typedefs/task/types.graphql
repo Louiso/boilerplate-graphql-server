@@ -8,6 +8,7 @@ type CategoryTask {
   urlIcon: String
   urlImage: String
   hasAnIntroduction: Boolean
+  useMediaRecorder: Boolean
 }
 
 type KrowderGroup {
