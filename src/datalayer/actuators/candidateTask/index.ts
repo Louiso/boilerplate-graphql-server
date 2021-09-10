@@ -8,8 +8,13 @@ import {
   MutationCreateResultTaskArgs,
   QueryGetCandidateTaskArgs,
   QueryGetAppSectionsArgs,
-  Section
+  Section,
+  MutationNotifyOpenTaskInDesktopArgs
 } from 'interfaces/graphql'
+
+import { messageController } from 'actuators/messages'
+
+import JobActuator from 'actuators/job'
 
 const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: { gatsAPI } }: IContext): Promise<Array<CandidateTask>> => {
   try {
@@ -18,6 +23,48 @@ const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: {
     if(!success) throw new Error(`Error al traer los candidateTasks candidateId: ${_id}`)
 
     return candidateTasks
+  } catch (error) {
+    throw error
+  }
+}
+
+const notifyOpenTaskInDesktop = async (
+  {
+    taskId,
+    jobId,
+    publicationIndex,
+    slug
+  }: MutationNotifyOpenTaskInDesktopArgs,
+  context: IContext): Promise<Candidate> => {
+  try {
+    const [ jobInformation, candidateInformation, taskInformation ] = await Promise.all([
+      JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
+      context.dataSources.gatsAPI.getCandidate({ jobId }),
+      context.dataSources.gatsAPI.getTask(taskId)
+    ])
+
+    const {
+      publications
+    } = jobInformation
+
+    const [ publication ] = publications!
+
+    if(!candidateInformation || !candidateInformation?.data.firstName || !candidateInformation?.data.email) throw new Error('Error al enviar mailing de notificacion')
+
+    const templateData = {
+      companyLogo : jobInformation?.companyPublished?.profile?.logo || 'https://cdn.krowdy.com/images/magneto_2.png',
+      destinatario: candidateInformation.data.firstName,
+      company     : jobInformation?.companyPublished?.name || 'Confidencial',
+      job         : publication?.title || 'Puesto laboral',
+      jobUrl      : `${process.env.PORTALES_API}/job/${jobId}/publication/${publicationIndex}?slug=${slug}`,
+      email       : candidateInformation.data.email,
+      subject     : 'Hola Mundo', // TODO: Corregir el subject
+      taskName    : taskInformation.task.categoryTask.title!
+    }
+
+    await messageController.sendEmailOpenTaskInDesktop(templateData)
+
+    return candidateInformation.data
   } catch (error) {
     throw error
   }
@@ -140,5 +187,6 @@ export default {
   getCandidateTasksByCandidate,
   createResultTask,
   getCandidateTask,
-  getAppSections
+  getAppSections,
+  notifyOpenTaskInDesktop
 }
