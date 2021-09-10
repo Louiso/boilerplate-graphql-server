@@ -47,6 +47,17 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
   }
 }
 
+const getJobInformation = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: IContext): Promise<Job> => {
+  try {
+    const { data: job } = await context.dataSources.gatsAPI.getJob({ jobId, publicationIndex })
+
+    return job
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
-  getJob
+  getJob,
+  getJobInformation
 }
