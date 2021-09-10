@@ -9,6 +9,6 @@ type Mutation {
     taskId: ID!
     jobId: ID!
     publicationIndex: Int!
-    slug: String!
+    slug: String
   ): Candidate! @auth
 }

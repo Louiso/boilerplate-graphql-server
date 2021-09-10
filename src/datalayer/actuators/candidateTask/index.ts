@@ -56,7 +56,7 @@ const notifyOpenTaskInDesktop = async (
       destinatario: candidateInformation.data.firstName,
       company     : jobInformation?.companyPublished?.name || 'Confidencial',
       job         : publication?.title || 'Puesto laboral',
-      jobUrl      : `${process.env.PORTALES_API}/job/${jobId}/publication/${publicationIndex}?slug=${slug}`,
+      jobUrl      : `${process.env.APP_URL}/job/${jobId}/publication/${publicationIndex}${slug ? `?slug=${slug}` : ''}`,
       email       : candidateInformation.data.email,
       subject     : 'Hola Mundo', // TODO: Corregir el subject
       taskName    : taskInformation.task.categoryTask.title!
