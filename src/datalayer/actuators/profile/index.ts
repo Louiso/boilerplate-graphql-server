@@ -383,7 +383,8 @@ const sendProfile = async ({ jobId }: MutationSendProfileArgs, context: IContext
         phone       : referent.phoneNumber,
         refId       : referent._id,
         experienceId: experienceId,
-        refIdOrigin : 'applying'
+        refIdOrigin : 'applying',
+        position    : referent?.position
       })
     })
 
@@ -445,12 +446,12 @@ const updateEducation = async ({ input }: MutationUpdateEducationArgs, context: 
 
     const { especialization = {}, education = {} } = input || {}
 
-    const objUpdt = { education, especialization }
+    const update: any = { education, especialization }
 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: objUpdt! },
+        { $set: update! },
         { 'new': true })
       .lean()
 

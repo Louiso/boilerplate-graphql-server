@@ -14,8 +14,8 @@ export const Query: QueryResolvers<IContext> = {
       .catch((error) => {
         throw new ApolloError(error)
       }),
-  getLocation: (_, args: QueryGetLocationArgs, context: IContext) =>
-    ProfileActuator.getLocation(args, context)
+  getLocation: (_, args: QueryGetLocationArgs) =>
+    ProfileActuator.getLocation(args)
       .catch((error) => {
         throw new ApolloError(error)
       })

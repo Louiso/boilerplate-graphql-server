@@ -6,3 +6,6 @@ public
 src/service/interfaces/graphql.ts
 src/service/interfaces/graphql.schema.json
 .DS_Store
+.env-prod
+.env-local
+.env-staging

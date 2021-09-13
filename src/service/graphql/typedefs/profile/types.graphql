@@ -51,6 +51,7 @@ type Referents {
   name: String
   phoneNumber: String
   experienceId: String
+  position: String
 }
 
 type EmailsPhonesResponse {
