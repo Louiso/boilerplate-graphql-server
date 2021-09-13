@@ -105,6 +105,10 @@ interface GetTaskResponse {
   task: Task;
 }
 
+interface LeaveJobResponde {
+  success: boolean;
+}
+
 interface UpdateCandidateTaskByArgs {
   candidateTaskId: string;
   input: {
@@ -220,6 +224,14 @@ class GatsAPI extends DataSource {
         _id: candidateTaskId,
         input
       })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async leaveJob({ candidateId }: {candidateId: string;}): Promise<LeaveJobResponde> {
+    try {
+      return this.post('/candidates/leaveJob', { candidateId })
     } catch (error) {
       throw error
     }
