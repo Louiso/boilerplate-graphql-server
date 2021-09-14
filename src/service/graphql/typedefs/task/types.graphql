@@ -7,7 +7,6 @@ type CategoryTask {
   urlApi: String
   urlIcon: String
   urlImage: String
-  hasAnIntroduction: Boolean
   useMediaRecorder: Boolean
 }
 
