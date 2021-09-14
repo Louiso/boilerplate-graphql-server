@@ -27,3 +27,4 @@ aws.config.update({
 })
 
 export const s3 = new aws.S3({ signatureVersion: 'v4' })
+export const ses = new aws.SES()
