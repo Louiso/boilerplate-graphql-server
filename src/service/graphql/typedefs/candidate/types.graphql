@@ -31,3 +31,7 @@ type Candidate {
   status: CandidateStatus!
   profileSubmissionDate: Date
 }
+
+type SuccessResponse {
+  success: Boolean
+}
