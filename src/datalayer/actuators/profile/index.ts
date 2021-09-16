@@ -92,7 +92,7 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
 
     // genera un objeto q permite actualizar los datos hasta segunda capa, no admite array puede generar error
     for (const key in input)
-      if(typeof input[key] !== 'object') update[key] = input[key]
+      if(typeof input[key] !== 'object' || input[key] === null) update[key] = input[key]
       else if(input[key] instanceof Date)  update[key] = input[key]
       else if(!Array.isArray(input[key]))
         for (const subKey in input[key])
