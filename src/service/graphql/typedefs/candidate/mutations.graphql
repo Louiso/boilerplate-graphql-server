@@ -1,0 +1,3 @@
+type Mutation {
+  leavePostulation(candidateId: String!): SuccessResponse! @auth
+}

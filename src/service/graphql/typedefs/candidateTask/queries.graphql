@@ -1,0 +1,5 @@
+type Query {
+  getCandidateTask(candidateTaskId: ID!): CandidateTask! @auth
+
+  getAppSections(candidateTaskId: ID! taskId: ID!): [Section!]! @auth
+}
