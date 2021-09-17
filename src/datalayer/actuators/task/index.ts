@@ -3,11 +3,9 @@ import { IContext } from 'interfaces/general'
 const updateTaskDate = async ({ input }, context: IContext) => {
   try {
     const data =  await context.dataSources.gatsAPI.updateTaskDate(input) || {}
-    console.log('🚀 ~ file: index.ts ~ line 4 ~ updateTaskDate ~ data', data)
 
     return data
   } catch (error) {
-    console.log('🚀 ~ file: index.ts ~ line 5 ~ updateTaskDate ~ error', error)
     throw error
   }
 }
