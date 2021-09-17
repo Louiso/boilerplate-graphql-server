@@ -64,7 +64,8 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
           _id : doc.detailCompany?.company_id,
           name: doc.detailCompany?.company_name
         },
-        stages: []
+        stages      : [],
+        publications: []
       }))
   } catch (error) {
     throw error
