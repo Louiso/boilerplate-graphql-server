@@ -237,9 +237,9 @@ class GatsAPI extends DataSource {
     }
   }
 
-  async updateTaskDate({ candidateTaskId, taskDate, timeZone }:{ candidateTaskId: string; taskDate: string; timeZone:string;}) {
+  updateTaskDate({ candidateTaskId, taskDate, timeZone }:{ candidateTaskId: string; taskDate: string; timeZone:string;}) {
     try {
-      const data = await this.post('/candidateTasks/updateTaskDate',
+      return this.post('/candidateTasks/updateTaskDate',
         {
           candidateTaskId,
           dataResultTask: {
@@ -247,12 +247,7 @@ class GatsAPI extends DataSource {
             timeZone
           }
         })
-
-      console.log('🚀 ~ file: GatsAPI.ts ~ line 256 ~ GatsAPI ~ updateTaskDate ~ data', data)
-
-      return data
     } catch (error) {
-      console.log('🚀 ~ file: GatsAPI.ts ~ line 265 ~ GatsAPI ~ updateTaskDate ~ error', error)
       throw error
     }
   }
