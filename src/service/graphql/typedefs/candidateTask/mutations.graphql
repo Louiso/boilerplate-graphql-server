@@ -11,4 +11,13 @@ type Mutation {
     publicationIndex: Int!
     slug: String
   ): Candidate! @auth
+
+  updateBasicCandidateTask(
+    candidateTaskId: ID!
+    input: UpdateBasicCandidateTaskInput!
+  ): CandidateTask! @auth
+
+  executed(
+    candidateTaskId: ID!
+  ): CandidateTask! @auth
 }

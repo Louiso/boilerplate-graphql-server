@@ -13,5 +13,16 @@ export const Mutation: MutationResolvers<IContext> = {
     CandidateTaskActuator.notifyOpenTaskInDesktop(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  updateBasicCandidateTask: async (_, args, context) =>
+    CandidateTaskActuator.updateBasicCandidateTask(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
+      }),
+  executed: async (_, args, context) =>
+    CandidateTaskActuator.executed(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
+
