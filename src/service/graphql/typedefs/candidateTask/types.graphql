@@ -32,6 +32,9 @@ type CandidateTask {
   updateContentTask: Boolean
   taskDate: Date
   candidateInfo: CandidateInfoCreateTaskResult
+  isIntroductionViewed: Boolean
+
+  task: Task!
 }
 
 type CandidateInfoCreateTaskResult {

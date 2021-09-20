@@ -1,5 +1,5 @@
 type Mutation {
   updateTaskDate(
-    input: UpdateTaskDateInput
+    input: UpdateTaskDateInput!
   ): SuccessResponse! @auth
 }

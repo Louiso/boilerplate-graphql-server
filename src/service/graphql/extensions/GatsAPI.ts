@@ -116,6 +116,12 @@ interface UpdateCandidateTaskByArgs {
   };
 }
 
+interface UpdateTaskDateArgs {
+  candidateTaskId?: Maybe<string>;
+  taskDate?: Maybe<string>;
+  timeZone?: Maybe<string>;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -237,7 +243,7 @@ class GatsAPI extends DataSource {
     }
   }
 
-  updateTaskDate({ candidateTaskId, taskDate, timeZone }:{ candidateTaskId: string; taskDate: string; timeZone:string;}) {
+  async updateTaskDate({ candidateTaskId, taskDate, timeZone }: UpdateTaskDateArgs): Promise<any> {
     try {
       return this.post('/candidateTasks/updateTaskDate',
         {
