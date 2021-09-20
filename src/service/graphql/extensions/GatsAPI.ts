@@ -236,6 +236,21 @@ class GatsAPI extends DataSource {
       throw error
     }
   }
+
+  updateTaskDate({ candidateTaskId, taskDate, timeZone }:{ candidateTaskId: string; taskDate: string; timeZone:string;}) {
+    try {
+      return this.post('/candidateTasks/updateTaskDate',
+        {
+          candidateTaskId,
+          dataResultTask: {
+            taskDate,
+            timeZone
+          }
+        })
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default GatsAPI
