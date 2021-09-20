@@ -9,6 +9,7 @@ type CategoryTask {
   urlImage: String
   useMediaRecorder: Boolean
   byKrowdy: Boolean
+  isLinkExternal: Boolean
 }
 
 type KrowderGroup {
