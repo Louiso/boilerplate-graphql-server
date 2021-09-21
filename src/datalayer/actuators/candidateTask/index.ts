@@ -9,7 +9,9 @@ import {
   QueryGetCandidateTaskArgs,
   QueryGetAppSectionsArgs,
   Section,
-  MutationNotifyOpenTaskInDesktopArgs
+  MutationNotifyOpenTaskInDesktopArgs,
+  MutationUpdateBasicCandidateTaskArgs,
+  MutationExecutedArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -183,10 +185,43 @@ const getAppSections = async (
   }
 }
 
+const updateBasicCandidateTask = async (
+  { candidateTaskId, input }: MutationUpdateBasicCandidateTaskArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    const { data: candidateTask } = await gatsAPI.updateBasicCandidateTask({
+      candidateTaskId,
+      input
+    })
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
+const executed = async (
+  { candidateTaskId }: MutationExecutedArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    await gatsAPI.executed({ candidateTaskId })
+
+    const { data: candidateTask } = await gatsAPI.getCandidateTask(candidateTaskId)
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
   getCandidateTask,
   getAppSections,
-  notifyOpenTaskInDesktop
+  notifyOpenTaskInDesktop,
+  updateBasicCandidateTask,
+  executed
 }

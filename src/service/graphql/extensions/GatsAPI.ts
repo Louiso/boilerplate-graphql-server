@@ -116,6 +116,33 @@ interface UpdateCandidateTaskByArgs {
   };
 }
 
+interface UpdateTaskDateArgs {
+  candidateTaskId?: Maybe<string>;
+  taskDate?: Maybe<string>;
+  timeZone?: Maybe<string>;
+}
+
+interface UpdateBasicCandidateTaskArgs {
+  candidateTaskId: string;
+  input: {
+    isIntroductionViewed?: Maybe<boolean>;
+  };
+}
+
+interface UpdateBasicCandidateTaskResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
+interface ExecutedArgs {
+  candidateTaskId: string;
+}
+
+interface ExecutedResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -237,7 +264,7 @@ class GatsAPI extends DataSource {
     }
   }
 
-  updateTaskDate({ candidateTaskId, taskDate, timeZone }:{ candidateTaskId: string; taskDate: string; timeZone:string;}) {
+  async updateTaskDate({ candidateTaskId, taskDate, timeZone }: UpdateTaskDateArgs): Promise<any> {
     try {
       return this.post('/candidateTasks/updateTaskDate',
         {
@@ -246,6 +273,29 @@ class GatsAPI extends DataSource {
             taskDate,
             timeZone
           }
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateBasicCandidateTask({ candidateTaskId, input }: UpdateBasicCandidateTaskArgs): Promise<UpdateBasicCandidateTaskResponse> {
+    try {
+      return this.put(`/candidateTasks/${candidateTaskId}/basic`,
+        {
+          input
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async executed({ candidateTaskId }: ExecutedArgs): Promise<ExecutedResponse> {
+    try {
+      return this.post('/candidateTasks/executed',
+        {
+          candidateTaskId,
+          dataResultTask: {}
         })
     } catch (error) {
       throw error
