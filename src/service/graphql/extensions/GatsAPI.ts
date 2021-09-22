@@ -143,6 +143,20 @@ interface ExecutedResponse {
   data: CandidateTask;
 }
 
+interface UpdateCandidateInfoArgs {
+  candidateTaskId: string;
+  input: {
+    age?: Maybe<number>;
+    docNumber?: Maybe<string>;
+    gender?: Maybe<string>;
+  };
+}
+
+interface UpdateCandidateInfoResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -296,6 +310,18 @@ class GatsAPI extends DataSource {
         {
           candidateTaskId,
           dataResultTask: {}
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateCandidateInfo({ candidateTaskId, input }: UpdateCandidateInfoArgs): Promise<UpdateCandidateInfoResponse> {
+    try {
+      return this.post('/candidateTasks/updateCandidateInfo',
+        {
+          candidateTaskId,
+          input
         })
     } catch (error) {
       throw error

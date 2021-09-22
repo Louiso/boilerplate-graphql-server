@@ -20,4 +20,9 @@ type Mutation {
   executed(
     candidateTaskId: ID!
   ): CandidateTask! @auth
+
+  updateCandidateInfo(
+    candidateTaskId: ID!
+    input: UpdateCandidateInfoInput!
+  ): CandidateTask! @auth
 }

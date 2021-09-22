@@ -11,7 +11,8 @@ import {
   Section,
   MutationNotifyOpenTaskInDesktopArgs,
   MutationUpdateBasicCandidateTaskArgs,
-  MutationExecutedArgs
+  MutationExecutedArgs,
+  MutationUpdateCandidateInfoArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -216,6 +217,19 @@ const executed = async (
   }
 }
 
+const updateCandidateInfo = async (
+  { candidateTaskId, input }: MutationUpdateCandidateInfoArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    const { data: candidateTask } = await gatsAPI.updateCandidateInfo({ candidateTaskId, input })
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
@@ -223,5 +237,6 @@ export default {
   getAppSections,
   notifyOpenTaskInDesktop,
   updateBasicCandidateTask,
-  executed
+  executed,
+  updateCandidateInfo
 }

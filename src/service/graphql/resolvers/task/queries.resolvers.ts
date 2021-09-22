@@ -5,7 +5,7 @@ import TaskActuator from 'actuators/task'
 
 export const Query: QueryResolvers<IContext> = {
   getTaskById: (_, args, context: IContext) =>
-    TaskActuator.getTaskById(args, context)
+    TaskActuator.getTaskById({ taskId: args.taskId! }, context)
       .catch((error) => {
         throw new ApolloError(error)
       })
