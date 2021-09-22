@@ -157,6 +157,10 @@ interface UpdateCandidateInfoResponse {
   data: CandidateTask;
 }
 
+interface FinishMultiTestArgs {
+  resultTaskId: string;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -323,6 +327,13 @@ class GatsAPI extends DataSource {
           candidateTaskId,
           input
         })
+    } catch (error) {
+      throw error
+    }
+  }
+  async finishMultiTest({ resultTaskId }: FinishMultiTestArgs): Promise<UpdateCandidateInfoResponse> {
+    try {
+      return this.get(`/api/v1/multitest/successedTask/${resultTaskId}`)
     } catch (error) {
       throw error
     }

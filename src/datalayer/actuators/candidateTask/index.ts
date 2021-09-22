@@ -12,7 +12,8 @@ import {
   MutationNotifyOpenTaskInDesktopArgs,
   MutationUpdateBasicCandidateTaskArgs,
   MutationExecutedArgs,
-  MutationUpdateCandidateInfoArgs
+  MutationUpdateCandidateInfoArgs,
+  MutationFinishMultitestArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -230,6 +231,21 @@ const updateCandidateInfo = async (
   }
 }
 
+const finishMultitest = async (
+  { candidateTaskId, resultTaskId }: MutationFinishMultitestArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    await gatsAPI.finishMultiTest({ resultTaskId })
+
+    const { data: candidateTask } = await gatsAPI.getCandidateTask(candidateTaskId)
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
@@ -238,5 +254,6 @@ export default {
   notifyOpenTaskInDesktop,
   updateBasicCandidateTask,
   executed,
-  updateCandidateInfo
+  updateCandidateInfo,
+  finishMultitest
 }
