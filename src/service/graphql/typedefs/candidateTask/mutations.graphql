@@ -25,4 +25,9 @@ type Mutation {
     candidateTaskId: ID!
     input: UpdateCandidateInfoInput!
   ): CandidateTask! @auth
+
+  finishMultitest(
+    candidateTaskId: ID!
+    resultTaskId: String!
+  ): CandidateTask! @auth
 }

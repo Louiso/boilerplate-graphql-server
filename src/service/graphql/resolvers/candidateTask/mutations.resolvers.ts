@@ -28,6 +28,11 @@ export const Mutation: MutationResolvers<IContext> = {
     CandidateTaskActuator.updateCandidateInfo(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  finishMultitest: async (_, args, context) =>
+    CandidateTaskActuator.finishMultitest(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
 
