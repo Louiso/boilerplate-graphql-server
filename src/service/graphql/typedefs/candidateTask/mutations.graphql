@@ -36,4 +36,8 @@ type Mutation {
     candidateTaskId: ID!
     resultTaskId: String!
   ): CandidateTask! @auth
+
+  updateFirstTimeIn(
+    input: UpdateFirstTimeInInput!
+  ): SuccessResponse! @auth
 }

@@ -14,6 +14,8 @@ import {
   MutationExecutedArgs,
   MutationUpdateCandidateInfoArgs,
   MutationFinishMultitestArgs,
+  MutationUpdateFirstTimeInArgs,
+  SuccessResponse,
   MutationNotifyMultipleFlowInterviewArgs
 } from 'interfaces/graphql'
 
@@ -275,6 +277,22 @@ const finishMultitest = async (
   }
 }
 
+const updateFirstTimeIn = async ({ input }: MutationUpdateFirstTimeInArgs, context: IContext): Promise<SuccessResponse> => {
+  try {
+    const { candidateTaskId, firstTimeIn } = input
+
+    if(!candidateTaskId || !firstTimeIn) throw Error('CandidateTaskId es requerido')
+
+    const { success }  =  await context.dataSources.gatsAPI.updateCandidateTaskBy({ candidateTaskId, input: { firstTimeIn, wasNotified: false } })
+
+    if(!success) throw Error('Error al traer tarea')
+
+    return { success }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
@@ -285,5 +303,6 @@ export default {
   executed,
   updateCandidateInfo,
   finishMultitest,
+  updateFirstTimeIn,
   notifyMultipleFlowInterview
 }
