@@ -171,7 +171,7 @@ class MESSAGES {
         secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
         customColor        : jobInformation.companyPublished?.theme?.palette?.custom?.main ?? '',
         krowdyColor        : jobInformation.companyPublished?.theme?.palette?.krowdy?.main ?? '',
-        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : ''}`,
+        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : 'krowdy'}`,
         subject            : messageParams.subject,
         companyPremium     : jobInformation.companyPublished?.premium ?? false
       }
