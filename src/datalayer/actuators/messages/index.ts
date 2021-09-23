@@ -1,7 +1,8 @@
 import { SendTemplatedEmailRequest } from 'aws-sdk/clients/ses'
 import { ses } from 'config/connections'
-import { objectMap } from 'utils/by'
+import { mappingObjects } from 'utils/by'
 import { Candidate, Job, CandidateTask, TypeCustomMessage } from 'interfaces/graphql'
+import { Maybe } from 'graphql/jsutils/Maybe'
 
 interface EmailParams {
   ToAddresses: string[];
@@ -28,6 +29,7 @@ interface EmailInterviewNotificationParams {
   typeMessage: string;
   candidateTask: CandidateTask;
   jobInformation: Job;
+  slug?: Maybe<string>;
 }
 
 interface TemplateEmailsCategoryTaskParams {
@@ -120,7 +122,7 @@ class MESSAGES {
   }
 
   replaceTokensCandidateInMessages(templateEmail: TemplateEmailsCategoryTaskParams, valuesToSet: any) {
-    const assignValuesToObject = objectMap(templateEmail, (v: any) => this.replaceTokens(v, valuesToSet))
+    const assignValuesToObject = mappingObjects(templateEmail, (v: any) => this.replaceTokens(v, valuesToSet))
 
     return assignValuesToObject
   }
@@ -131,7 +133,8 @@ class MESSAGES {
         candidateInformation,
         jobInformation,
         candidateTask,
-        typeMessage
+        typeMessage,
+        slug
       } = parametersInterviewNotification
 
       const [ publication ] = jobInformation.publications!
@@ -149,10 +152,49 @@ class MESSAGES {
         return
 
       const templateEmail = templateEmails![TypeCustomMessage[typeMessage]]
-      const testingMessage = this.replaceTokensCandidateInMessages(templateEmail, valuesToSet)
-      console.log('spacemacs ~ file: index.ts ~ line 152 ~ MESSAGES ~ sendInterviewNotification ~ testingMessage', testingMessage)
+      const messageParams = this.replaceTokensCandidateInMessages(templateEmail, valuesToSet)
 
-      return
+      const parametersTemplateData = {
+        confidentialCompany: publication?.confidentialCompany,
+        companyLogo        : jobInformation.companyPublished?.profile?.logo,
+        job                : publication.title,
+        company            : jobInformation.companyPublished?.name,
+        location           : jobInformation.companyPublished?.profile?.location || '',
+        candidateHelpText  : messageParams.candidateHelpText,
+        textHeader         : messageParams.textHeader,
+        withImage          : messageParams.withImage,
+        textBody           : messageParams.textBody,
+        srcImage           : messageParams.srcImage,
+        executeUrl         : 'https://chamba.laborum.pe',
+        textButton         : messageParams.textButton,
+        primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
+        secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
+        customColor        : jobInformation.companyPublished?.theme?.palette?.custom?.main ?? '',
+        krowdyColor        : jobInformation.companyPublished?.theme?.palette?.krowdy?.main ?? '',
+        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : ''}`,
+        subject            : messageParams.subject,
+        companyPremium     : jobInformation.companyPublished?.premium ?? false
+      }
+      console.log('spacemacs ~ file: index.ts ~ line 178 ~ MESSAGES ~ sendInterviewNotification ~ parametersTemplateData', parametersTemplateData)
+
+      const getParamsTemplate = this.generateTemplateData(parametersTemplateData)
+
+      let company = jobInformation?.companyPublished?.name
+      if(publication?.confidentialCompany)
+        company = 'Team Krowdy'
+
+      const getParamsEmail = this.generateEmailParams({
+        ToAddresses   : [ `${candidateInformation?.email}` ],
+        templateName  : 'ats_candidates_interviews_notify',
+        company       : company!,
+        emailSender   : 'notificaciones@krowdy.com',
+        replyAddresses: [ 'notificaciones@krowdy.com' ],
+        templateData  : getParamsTemplate
+      })
+
+      const operationSendEmail = await this.sendEmail(getParamsEmail)
+
+      return operationSendEmail
     } catch (error) {
       console.log('spacemacs ~ file: index.ts ~ line 156 ~ MESSAGES ~ sendInterviewNotification ~ error', error)
       throw error

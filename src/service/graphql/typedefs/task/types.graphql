@@ -30,6 +30,7 @@ type TemplateEmailsParams {
   textBody: String
   withImage: Boolean
   srcImage: String
+  subject: String
 }
 
 type KrowderGroup {

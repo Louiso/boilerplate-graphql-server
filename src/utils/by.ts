@@ -13,7 +13,7 @@ export const groupBy = function<T>(xs: T[], key: keyof T):{ [x: string]: T[]; } 
   }, {})
 }
 
-export const objectMap = (obj: any, fn: any) =>
+export const mappingObjects = (obj: any, fn: any) =>
   Object.fromEntries(
     Object.entries(obj).map(
       ([ k, v ], i) => [ k, fn(v, k, i) ]
