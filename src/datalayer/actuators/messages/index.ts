@@ -1,7 +1,7 @@
 import { SendTemplatedEmailRequest } from 'aws-sdk/clients/ses'
 import { ses } from 'config/connections'
 import { mappingObjects } from 'utils/by'
-import { Candidate, Job, CandidateTask, TypeCustomMessage } from 'interfaces/graphql'
+import { Job, CandidateTask, TypeCustomMessage } from 'interfaces/graphql'
 import { Maybe } from 'graphql/jsutils/Maybe'
 
 interface EmailParams {
@@ -25,7 +25,6 @@ interface EmailOpenDesktopParams {
 }
 
 interface EmailInterviewNotificationParams {
-  candidateInformation: Candidate;
   typeMessage: string;
   candidateTask: CandidateTask;
   jobInformation: Job;
@@ -130,23 +129,23 @@ class MESSAGES {
   async sendInterviewNotification(parametersInterviewNotification: EmailInterviewNotificationParams) {
     try {
       const {
-        candidateInformation,
         jobInformation,
         candidateTask,
         typeMessage,
         slug
       } = parametersInterviewNotification
 
+      const { templateEmails } = candidateTask.task.categoryTask
+      const { candidateInfo } = candidateTask
+
       const [ publication ] = jobInformation.publications!
       const valuesToSet = {
-        firstName  : candidateInformation.firstName,
+        firstName  : candidateInfo?.firstName,
         jobTitle   : publication.title,
         dayDate    : '11/03/2021',
         hourDate   : '04:30',
         minutesDate: '15:00'
       }
-
-      const { templateEmails } = candidateTask.task.categoryTask
 
       if(!(typeMessage  in TypeCustomMessage))
         return
@@ -184,7 +183,7 @@ class MESSAGES {
         company = 'Team Krowdy'
 
       const getParamsEmail = this.generateEmailParams({
-        ToAddresses   : [ `${candidateInformation?.email}` ],
+        ToAddresses   : [ `${candidateInfo?.email}` ],
         templateName  : 'ats_candidates_interviews_notify',
         company       : company!,
         emailSender   : 'notificaciones@krowdy.com',

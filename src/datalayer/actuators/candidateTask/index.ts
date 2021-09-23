@@ -43,23 +43,21 @@ const notifyMultipleFlowInterview = async (
     slug
   }: MutationNotifyMultipleFlowInterviewArgs,
   context: IContext
-) : Promise<Candidate> => {
+) : Promise<CandidateTask> => {
   try {
-    const [ jobInformation, candidateInformation, candidateTask ] = await Promise.all([
+    const [ jobInformation, candidateTask ] = await Promise.all([
       JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
-      context.dataSources.gatsAPI.getCandidate({ jobId }),
       context.dataSources.gatsAPI.getCandidateTask(candidateTaskId)
     ])
 
     await messageController.sendInterviewNotification({
       jobInformation,
-      candidateInformation: candidateInformation.data,
       typeMessage,
-      candidateTask       : candidateTask.data,
+      candidateTask: candidateTask.data,
       slug
     })
 
-    return candidateInformation.data
+    return candidateTask.data
   } catch (error) {
     throw error
   }
