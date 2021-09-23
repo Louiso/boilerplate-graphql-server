@@ -12,6 +12,12 @@ type Mutation {
     slug: String
   ): Candidate! @auth
 
+  notifyMultipleFlowInterview(
+    candidateTaskId: ID!
+    jobId: ID!
+    typeMessage: String!
+  ): Candidate! @auth
+
   updateBasicCandidateTask(
     candidateTaskId: ID!
     input: UpdateBasicCandidateTaskInput!

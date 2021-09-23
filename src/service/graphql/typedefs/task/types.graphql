@@ -11,6 +11,25 @@ type CategoryTask {
   isSchedulable: Boolean
   byKrowdy: Boolean
   isLinkExternal: Boolean
+  templateEmails: CustomTemplatesEmails
+}
+
+type CustomTemplatesEmails {
+  schedule: TemplateEmailsParams 
+  ToJoin: TemplateEmailsParams
+  ToStart: TemplateEmailsParams
+  Canceled:  TemplateEmailsParams
+  ReSchedule: TemplateEmailsParams
+  Confirm:  TemplateEmailsParams
+}
+
+type TemplateEmailsParams {
+  candidateHelpText: String
+  textButton: String
+  textHeader: String
+  textBody: String
+  withImage: Boolean
+  srcImage: String
 }
 
 type KrowderGroup {

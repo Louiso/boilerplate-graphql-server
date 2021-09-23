@@ -15,7 +15,8 @@ import {
   MutationUpdateCandidateInfoArgs,
   MutationFinishMultitestArgs,
   MutationUpdateFirstTimeInArgs,
-  SuccessResponse
+  SuccessResponse,
+  MutationNotifyMultipleFlowInterviewArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -29,6 +30,34 @@ const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: {
     if(!success) throw new Error(`Error al traer los candidateTasks candidateId: ${_id}`)
 
     return candidateTasks
+  } catch (error) {
+    throw error
+  }
+}
+
+const notifyMultipleFlowInterview = async (
+  {
+    candidateTaskId,
+    jobId,
+    typeMessage
+  }: MutationNotifyMultipleFlowInterviewArgs,
+  context: IContext
+) : Promise<Candidate> => {
+  try {
+    const [ jobInformation, candidateInformation, candidateTask ] = await Promise.all([
+      JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
+      context.dataSources.gatsAPI.getCandidate({ jobId }),
+      context.dataSources.gatsAPI.getCandidateTask(candidateTaskId)
+    ])
+
+    await messageController.sendInterviewNotification({
+      jobInformation,
+      candidateInformation: candidateInformation.data,
+      typeMessage,
+      candidateTask       : candidateTask.data
+    })
+
+    return candidateInformation.data
   } catch (error) {
     throw error
   }
@@ -64,7 +93,7 @@ const notifyOpenTaskInDesktop = async (
       job         : publication?.title || 'Puesto laboral',
       jobUrl      : `${process.env.APP_URL}/job/${jobId}/publication/${publicationIndex}${slug ? `?slug=${slug}` : ''}`,
       email       : candidateInformation.data.email,
-      subject     : 'Hola Mundo', // TODO: Corregir el subject
+      subject     : `${candidateInformation.data.firstName}, Realiza el ${taskInformation.task.categoryTask.title!}`,
       taskName    : taskInformation.task.categoryTask.title!
     }
 
@@ -274,5 +303,6 @@ export default {
   executed,
   updateCandidateInfo,
   finishMultitest,
-  updateFirstTimeIn
+  updateFirstTimeIn,
+  notifyMultipleFlowInterview
 }
