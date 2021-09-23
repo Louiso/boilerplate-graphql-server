@@ -113,6 +113,8 @@ interface UpdateCandidateTaskByArgs {
   candidateTaskId: string;
   input: {
     resultTaskId?: string;
+    firstTimeIn?: string;
+    wasNotified?: boolean;
   };
 }
 
