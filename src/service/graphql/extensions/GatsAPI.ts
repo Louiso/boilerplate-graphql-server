@@ -1,5 +1,5 @@
 import { Maybe } from 'graphql/jsutils/Maybe'
-import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput } from 'interfaces/graphql'
+import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput, Task } from 'interfaces/graphql'
 import { ProfileDb } from 'models/mongo/profile'
 import DataSource from './DataSource'
 
@@ -95,6 +95,27 @@ interface CreateLaborReferentsResponse {
   data: any[];
 }
 
+interface GetCandidateTaskResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
+interface GetTaskResponse {
+  success: boolean;
+  task: Task;
+}
+
+interface LeaveJobResponde {
+  success: boolean;
+}
+
+interface UpdateCandidateTaskByArgs {
+  candidateTaskId: string;
+  input: {
+    resultTaskId?: string;
+  };
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -174,9 +195,43 @@ class GatsAPI extends DataSource {
   async getLocation(args: Maybe<PaginationInput>): Promise<GetLocationResponse> {
     try {
       const { text, limit, skip } = args || {}
-      console.log('🚀 ~ file: GatsAPI.ts ~ line 171 ~ GatsAPI ~ getLocation ~ args', args)
 
       return this.get<GetLocationResponse>(`/autocomplete/location?text=${text || ''}&limit=${limit || 15}&skip=${skip || 0}`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getCandidateTask(candidateTaskId: string): Promise<GetCandidateTaskResponse> {
+    try {
+      return this.get<GetCandidateTaskResponse>(`/candidateTasks/${candidateTaskId}`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getTask(taskId: string): Promise<GetTaskResponse> {
+    try {
+      return this.post<GetTaskResponse>('/api/v1/tasks/getTask', { taskId })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateCandidateTaskBy({ candidateTaskId, input }: UpdateCandidateTaskByArgs): Promise<GetCandidateTaskResponse> {
+    try {
+      return this.post('/candidateTasks/updateCandidateTaskBy', {
+        _id: candidateTaskId,
+        input
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async leaveJob({ candidateId }: {candidateId: string;}): Promise<LeaveJobResponde> {
+    try {
+      return this.post('/candidates/leaveJob', { candidateId })
     } catch (error) {
       throw error
     }

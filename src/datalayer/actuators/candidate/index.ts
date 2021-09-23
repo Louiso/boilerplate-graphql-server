@@ -1,4 +1,4 @@
-import { Candidate, QueryGetCandidateArgs } from 'interfaces/graphql'
+import { Candidate, QueryGetCandidateArgs, SuccessResponse, MutationLeavePostulationArgs } from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 import JobActuator from '../job'
 
@@ -41,6 +41,19 @@ const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCand
   }
 }
 
+const leavePostulation = async ({ candidateId }: MutationLeavePostulationArgs, context: IContext): Promise<SuccessResponse> => {
+  try {
+    const { dataSources: { gatsAPI } } = context
+
+    const { success } = await gatsAPI.leaveJob({ candidateId }).catch(() => ({ success: false, data: null }))
+
+    return { success }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
-  getCandidateByJob
+  getCandidateByJob,
+  leavePostulation
 }

@@ -26,15 +26,19 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
           }
         }))
 
+        const CvCategoryTask: any = {
+          _id     : String(Types.ObjectId('6116a2a35939b813602d1074')),
+          codeTask: 'cv',
+          title   : 'Perfil'
+        }
+
+        const CvTask: any = {
+          _id         : String(Types.ObjectId('6116a290f707b7de87737113')),
+          categoryTask: CvCategoryTask
+        }
+
         if(index === 0)
-          tasks.unshift({
-            _id         : String(Types.ObjectId('6116a290f707b7de87737113')),
-            categoryTask: {
-              _id     : String(Types.ObjectId('6116a2a35939b813602d1074')),
-              codeTask: 'cv',
-              title   : 'Perfil'
-            }
-          })
+          tasks.unshift(CvTask)
 
         return ({
           ...stage,
@@ -60,8 +64,19 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
           _id : doc.detailCompany?.company_id,
           name: doc.detailCompany?.company_name
         },
-        stages: []
+        stages      : [],
+        publications: []
       }))
+  } catch (error) {
+    throw error
+  }
+}
+
+const getJobInformation = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: IContext): Promise<Job> => {
+  try {
+    const { data: job } = await context.dataSources.gatsAPI.getJob({ jobId, publicationIndex })
+
+    return job
   } catch (error) {
     throw error
   }
@@ -69,5 +84,6 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
 
 export default {
   getJob,
-  getSimilarJobs
+  getSimilarJobs,
+  getJobInformation
 }
