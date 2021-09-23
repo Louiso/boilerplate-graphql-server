@@ -7,3 +7,8 @@ input UpdateCandidateInfoInput {
   docNumber: String
   gender: String
 }
+
+input UpdateFirstTimeInInput {
+  firstTimeIn: String
+  candidateTaskId: String
+}
