@@ -10,6 +10,15 @@ enum CandidateStatus {
   winner 
 }
 
+enum TypeCustomMessage {
+  Schedule
+  ToJoin
+  ToStart
+  Canceled
+  ReSchedule
+  Confirm
+}
+
 type Candidate {
   _id: ID!
   curriculum: Curriculum

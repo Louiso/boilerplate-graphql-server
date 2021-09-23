@@ -33,7 +33,6 @@ type CandidateTask {
   taskDate: Date
   candidateInfo: CandidateInfoCreateTaskResult
   isIntroductionViewed: Boolean
-
   task: Task!
 }
 

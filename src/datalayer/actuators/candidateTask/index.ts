@@ -13,7 +13,8 @@ import {
   MutationUpdateBasicCandidateTaskArgs,
   MutationExecutedArgs,
   MutationUpdateCandidateInfoArgs,
-  MutationFinishMultitestArgs
+  MutationFinishMultitestArgs,
+  MutationNotifyMultipleFlowInterviewArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -27,6 +28,34 @@ const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: {
     if(!success) throw new Error(`Error al traer los candidateTasks candidateId: ${_id}`)
 
     return candidateTasks
+  } catch (error) {
+    throw error
+  }
+}
+
+const notifyMultipleFlowInterview = async (
+  {
+    candidateTaskId,
+    jobId,
+    typeMessage
+  }: MutationNotifyMultipleFlowInterviewArgs,
+  context: IContext
+) : Promise<Candidate> => {
+  try {
+    const [ jobInformation, candidateInformation, candidateTask ] = await Promise.all([
+      JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
+      context.dataSources.gatsAPI.getCandidate({ jobId }),
+      context.dataSources.gatsAPI.getCandidateTask(candidateTaskId)
+    ])
+
+    await messageController.sendInterviewNotification({
+      jobInformation,
+      candidateInformation: candidateInformation.data,
+      typeMessage,
+      candidateTask       : candidateTask.data
+    })
+
+    return candidateInformation.data
   } catch (error) {
     throw error
   }
@@ -255,5 +284,6 @@ export default {
   updateBasicCandidateTask,
   executed,
   updateCandidateInfo,
-  finishMultitest
+  finishMultitest,
+  notifyMultipleFlowInterview
 }
