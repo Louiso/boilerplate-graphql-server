@@ -46,7 +46,7 @@ const notifyMultipleFlowInterview = async (
     executeMinutes
   }: MutationNotifyMultipleFlowInterviewArgs,
   context: IContext
-) : Promise<CandidateTask> => {
+) : Promise<SuccessResponse> => {
   try {
     const [ jobInformation, candidateTask ] = await Promise.all([
       JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
@@ -63,7 +63,7 @@ const notifyMultipleFlowInterview = async (
       executeMinutes
     })
 
-    return candidateTask.data
+    return { success: true }
   } catch (error) {
     throw error
   }
