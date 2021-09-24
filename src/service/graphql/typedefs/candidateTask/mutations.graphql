@@ -17,6 +17,9 @@ type Mutation {
     jobId: ID!
     typeMessage: String!
     slug: String
+    executeHour: String
+    executeDate: String
+    executeMinutes: String
   ): CandidateTask! @auth
 
   updateBasicCandidateTask(

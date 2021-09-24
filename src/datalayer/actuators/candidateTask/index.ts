@@ -40,7 +40,10 @@ const notifyMultipleFlowInterview = async (
     candidateTaskId,
     jobId,
     typeMessage,
-    slug
+    slug,
+    executeDate,
+    executeHour,
+    executeMinutes
   }: MutationNotifyMultipleFlowInterviewArgs,
   context: IContext
 ) : Promise<CandidateTask> => {
@@ -54,7 +57,10 @@ const notifyMultipleFlowInterview = async (
       jobInformation,
       typeMessage,
       candidateTask: candidateTask.data,
-      slug
+      slug,
+      executeDate,
+      executeHour,
+      executeMinutes
     })
 
     return candidateTask.data

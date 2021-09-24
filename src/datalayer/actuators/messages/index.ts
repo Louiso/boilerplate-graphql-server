@@ -29,6 +29,9 @@ interface EmailInterviewNotificationParams {
   candidateTask: CandidateTask;
   jobInformation: Job;
   slug?: Maybe<string>;
+  executeDate?: Maybe<string>;
+  executeHour?: Maybe<string>;
+  executeMinutes?: Maybe<string>;
 }
 
 interface TemplateEmailsCategoryTaskParams {
@@ -132,7 +135,10 @@ class MESSAGES {
         jobInformation,
         candidateTask,
         typeMessage,
-        slug
+        slug,
+        executeDate,
+        executeHour,
+        executeMinutes
       } = parametersInterviewNotification
 
       const { templateEmails } = candidateTask.task.categoryTask
@@ -142,9 +148,9 @@ class MESSAGES {
       const valuesToSet = {
         firstName  : candidateInfo?.firstName,
         jobTitle   : publication.title,
-        dayDate    : '11/03/2021',
-        hourDate   : '04:30',
-        minutesDate: '15:00'
+        dayDate    : executeDate,
+        hourDate   : executeHour,
+        minutesDate: executeMinutes
       }
 
       if(!(typeMessage  in TypeCustomMessage))
