@@ -32,6 +32,7 @@ interface EmailInterviewNotificationParams {
   executeDate?: Maybe<string>;
   executeHour?: Maybe<string>;
   executeMinutes?: Maybe<string>;
+  executeUrl?: Maybe<string>;
 }
 
 interface TemplateEmailsCategoryTaskParams {
@@ -138,7 +139,8 @@ class MESSAGES {
         slug,
         executeDate,
         executeHour,
-        executeMinutes
+        executeMinutes,
+        executeUrl
       } = parametersInterviewNotification
 
       const { templateEmails } = candidateTask.task.categoryTask
@@ -170,7 +172,7 @@ class MESSAGES {
         withImage          : messageParams.withImage,
         textBody           : messageParams.textBody,
         srcImage           : messageParams.srcImage,
-        executeUrl         : 'https://chamba.laborum.pe',
+        executeUrl,
         textButton         : messageParams.textButton,
         primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
         secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',

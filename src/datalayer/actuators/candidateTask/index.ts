@@ -43,7 +43,8 @@ const notifyMultipleFlowInterview = async (
     slug,
     executeDate,
     executeHour,
-    executeMinutes
+    executeMinutes,
+    executeUrl
   }: MutationNotifyMultipleFlowInterviewArgs,
   context: IContext
 ) : Promise<SuccessResponse> => {
@@ -60,7 +61,8 @@ const notifyMultipleFlowInterview = async (
       slug,
       executeDate,
       executeHour,
-      executeMinutes
+      executeMinutes,
+      executeUrl
     })
 
     return { success: true }
