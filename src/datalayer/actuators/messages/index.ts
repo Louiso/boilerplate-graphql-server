@@ -148,7 +148,7 @@ class MESSAGES {
 
       const [ publication ] = jobInformation.publications!
       const valuesToSet = {
-        firstName  : candidateInfo?.firstName,
+        firstName  : candidateInfo?.fullName ?? `${candidateInfo?.firstName} ${candidateInfo?.lastName}`,
         jobTitle   : publication.title,
         dayDate    : executeDate,
         hourDate   : executeHour,
