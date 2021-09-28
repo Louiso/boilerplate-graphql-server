@@ -56,6 +56,24 @@ interface GetSimilarJobsResponse {
   success: boolean;
 }
 
+interface CreatePostulationLogArgs {
+  jobId?: string;
+  slug?: Maybe<string>;
+  user?: {
+    email?: string;
+    dni?: Maybe<string>;
+    gender?: Maybe<string>;
+    firstName?: string;
+    lastName?: string;
+    userId?: Maybe<string>;
+  };
+}
+
+interface DefaultSuccessResponse {
+  success: boolean;
+  data?: any;
+}
+
 class PortalesAPI extends DataSource {
   constructor(authorization: string) {
     super(`${process.env.PORTALES_API as string}/api/v1`, authorization)
@@ -126,6 +144,19 @@ class PortalesAPI extends DataSource {
       })
     } catch (error) {
       throw error
+    }
+  }
+
+  createPostulationLog({ jobId, slug, user }: CreatePostulationLogArgs): Promise<DefaultSuccessResponse> {
+    try {
+      return this.post('/apply/create-postulation', {
+        jobId,
+        slug,
+        user
+      })
+    } catch (err) {
+      console.log('spacemacs ~ file: PortalesAPI.ts ~ line 159 ~ PortalesAPI ~ createPostulationLog ~ err', err)
+      throw err
     }
   }
 }
