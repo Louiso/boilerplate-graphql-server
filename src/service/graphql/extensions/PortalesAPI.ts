@@ -36,6 +36,19 @@ interface GetSimilarJobsArgs {
   slug?: Maybe<string>;
 }
 
+interface CreatePostulationLog {
+  jobId?: string;
+  slug: string;
+  user?: {
+    email?: string;
+    dni?: string;
+    gender?: string;
+    firstName?: string;
+    lastName?: string;
+    userId?: string
+  }
+}
+
 interface GetSimilarJobsResponse {
   data: {
     docs: {
@@ -126,6 +139,19 @@ class PortalesAPI extends DataSource {
       })
     } catch (error) {
       throw error
+    }
+  }
+
+
+  createPostulationLog ({ jobId, slug, user }: CreatePostulationLog) {
+    try {
+      return this.post('/apply/create-postulation', {
+        jobId,
+        slug, 
+        user
+      })
+    } catch (err) {
+      throw err
     }
   }
 }
