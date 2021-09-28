@@ -409,18 +409,22 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
     }
 
     if(slug)
-    await context.dataSources.portalesAPI.createPostulationLog({
-      jobId,
-      slug,
-      user: {
-        email    : profile.emails[0].value!,
-        dni      : profile.docType === 'dni' ? profile.docNumber : null,
-        firstName: profile.firstName,
-        lastName : profile.lastName,
-        gender   : profile.sex,
-        userId   : context.userId
+      try {
+        await context.dataSources.portalesAPI.createPostulationLog({
+          jobId,
+          slug,
+          user: {
+            email    : profile.emails[0].value!,
+            dni      : profile.docType === 'dni' ? profile.docNumber : null,
+            firstName: profile.firstName,
+            lastName : profile.lastName,
+            gender   : profile.sex,
+            userId   : context.userId
+          }
+        })
+      } catch (error) {
+        console.log('API Portales - sendProfile ~ error', error)
       }
-    })
 
     return profile
   } catch (error) {

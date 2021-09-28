@@ -56,7 +56,6 @@ interface GetSimilarJobsResponse {
   success: boolean;
 }
 
-
 interface CreatePostulationLogArgs {
   jobId?: string;
   slug?: Maybe<string>;
@@ -156,6 +155,7 @@ class PortalesAPI extends DataSource {
         user
       })
     } catch (err) {
+      console.log('spacemacs ~ file: PortalesAPI.ts ~ line 159 ~ PortalesAPI ~ createPostulationLog ~ err', err)
       throw err
     }
   }
