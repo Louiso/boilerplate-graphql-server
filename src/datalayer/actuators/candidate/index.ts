@@ -2,7 +2,10 @@ import { Candidate, QueryGetCandidateArgs, SuccessResponse, MutationLeavePostula
 import { IContext } from 'interfaces/general'
 import JobActuator from '../job'
 
-const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCandidateArgs, context: IContext): Promise<Candidate> => {
+const getCandidateByJob = async (
+  { jobId, publicationIndex, slug, trackingCandidateId }: QueryGetCandidateArgs,
+  context: IContext
+): Promise<Candidate> => {
   try {
     const { dataSources: { gatsAPI, portalesAPI } } = context
     let candidate: Candidate
@@ -22,9 +25,10 @@ const getCandidateByJob = async ({ jobId, publicationIndex, slug }: QueryGetCand
 
       const applyJobResult = await gatsAPI.applyToJob({
         jobId,
-        publicationId  : publication._id,
-        sourceApply    : slug ? laborExchange?.name.toLowerCase() : 'landing',
-        laborExchangeId: laborExchange?._id
+        publicationId   : publication._id,
+        sourceApply     : slug ? laborExchange?.name.toLowerCase() : 'landing',
+        laborExchangeId : laborExchange?._id,
+        candidateIdTrack: trackingCandidateId
       })
 
       if(!applyJobResult.success) throw new Error('Error al aplicar a job')

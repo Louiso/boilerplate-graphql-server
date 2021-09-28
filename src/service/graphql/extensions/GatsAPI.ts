@@ -69,7 +69,7 @@ interface ApplyToJobArgs {
   laborExchangeId?: string;
   publicationId: string;
   sourceApply: string;
-  candidateIdTrack?: string;
+  candidateIdTrack?: Maybe<string>;
 }
 
 interface ApplyToJobResponse {
