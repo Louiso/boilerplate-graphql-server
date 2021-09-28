@@ -161,6 +161,8 @@ class MESSAGES {
       const templateEmail = templateEmails![TypeCustomMessage[typeMessage]]
       const messageParams = this.replaceTokensCandidateInMessages(templateEmail, valuesToSet)
 
+      const defaultExecuteURL = `${process.env.APP_URL}/scheduled/${candidateTask.jobId}/task/${candidateTask.taskId}/publication/0${slug ? `?slug=${slug}` : ''}`
+
       const parametersTemplateData = {
         confidentialCompany: publication?.confidentialCompany,
         companyLogo        : jobInformation.companyPublished?.profile?.logo,
@@ -172,13 +174,13 @@ class MESSAGES {
         withImage          : messageParams.withImage,
         textBody           : messageParams.textBody,
         srcImage           : messageParams.srcImage,
-        executeUrl         : executeUrl || `${process.env.APP_URL}/scheduled/${candidateTask.jobId}/task/${candidateTask.taskId}/publication/0`,
+        executeUrl         : executeUrl || defaultExecuteURL,
         textButton         : messageParams.textButton,
         primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
         secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
         customColor        : jobInformation.companyPublished?.theme?.palette?.custom?.main ?? '',
         krowdyColor        : jobInformation.companyPublished?.theme?.palette?.krowdy?.main ?? '',
-        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : 'krowdy'}`,
+        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : ''}`,
         subject            : messageParams.subject,
         companyPremium     : jobInformation.companyPublished?.premium ?? false
       }
