@@ -172,7 +172,7 @@ class MESSAGES {
         withImage          : messageParams.withImage,
         textBody           : messageParams.textBody,
         srcImage           : messageParams.srcImage,
-        executeUrl,
+        executeUrl         : executeUrl || `${process.env.APP_URL}/scheduled/${candidateTask.jobId}/task/${candidateTask.taskId}/publication/0`,
         textButton         : messageParams.textButton,
         primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
         secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
