@@ -56,6 +56,10 @@ interface GetSimilarJobsResponse {
   success: boolean;
 }
 
+interface CreatePostulationLog {
+
+}
+
 class PortalesAPI extends DataSource {
   constructor(authorization: string) {
     super(`${process.env.PORTALES_API as string}/api/v1`, authorization)
@@ -126,6 +130,18 @@ class PortalesAPI extends DataSource {
       })
     } catch (error) {
       throw error
+    }
+  }
+
+  createPostulationLog ({ jobId, slug, user }: CreatePostulationLog) {
+    try {
+      return this.post('/apply/create-postulation', {
+        jobId,
+        slug, 
+        user
+      })
+    } catch (err) {
+      throw err
     }
   }
 }
