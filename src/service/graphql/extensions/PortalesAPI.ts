@@ -36,17 +36,17 @@ interface GetSimilarJobsArgs {
   slug?: Maybe<string>;
 }
 
-interface CreatePostulationLog {
+interface CreatePostulationLogArgs {
   jobId?: string;
-  slug: string;
+  slug?: Maybe<string>;
   user?: {
     email?: string;
-    dni?: string;
-    gender?: string;
+    dni?: Maybe<string>;
+    gender?: Maybe<string>;
     firstName?: string;
     lastName?: string;
-    userId?: string
-  }
+    userId?: Maybe<string>;
+  };
 }
 
 interface GetSimilarJobsResponse {
@@ -67,6 +67,11 @@ interface GetSimilarJobsResponse {
     }[];
   };
   success: boolean;
+}
+
+interface DefaultSuccessResponse {
+  success: boolean;
+  data?: any;
 }
 
 class PortalesAPI extends DataSource {
@@ -142,12 +147,11 @@ class PortalesAPI extends DataSource {
     }
   }
 
-
-  createPostulationLog ({ jobId, slug, user }: CreatePostulationLog) {
+  createPostulationLog({ jobId, slug, user }: CreatePostulationLogArgs): Promise<DefaultSuccessResponse> {
     try {
       return this.post('/apply/create-postulation', {
         jobId,
-        slug, 
+        slug,
         user
       })
     } catch (err) {
