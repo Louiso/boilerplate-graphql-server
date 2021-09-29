@@ -36,6 +36,19 @@ interface GetSimilarJobsArgs {
   slug?: Maybe<string>;
 }
 
+interface CreatePostulationLogArgs {
+  jobId?: string;
+  slug?: Maybe<string>;
+  user?: {
+    email?: string;
+    dni?: Maybe<string>;
+    gender?: Maybe<string>;
+    firstName?: string;
+    lastName?: string;
+    userId?: Maybe<string>;
+  };
+}
+
 interface GetSimilarJobsResponse {
   data: {
     docs: {
@@ -54,19 +67,6 @@ interface GetSimilarJobsResponse {
     }[];
   };
   success: boolean;
-}
-
-interface CreatePostulationLogArgs {
-  jobId?: string;
-  slug?: Maybe<string>;
-  user?: {
-    email?: string;
-    dni?: Maybe<string>;
-    gender?: Maybe<string>;
-    firstName?: string;
-    lastName?: string;
-    userId?: Maybe<string>;
-  };
 }
 
 interface DefaultSuccessResponse {
@@ -155,7 +155,6 @@ class PortalesAPI extends DataSource {
         user
       })
     } catch (err) {
-      console.log('spacemacs ~ file: PortalesAPI.ts ~ line 159 ~ PortalesAPI ~ createPostulationLog ~ err', err)
       throw err
     }
   }

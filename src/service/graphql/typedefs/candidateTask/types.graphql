@@ -32,6 +32,10 @@ type CandidateTask {
   updateContentTask: Boolean
   taskDate: Date
   candidateInfo: CandidateInfoCreateTaskResult
+  isIntroductionViewed: Boolean
+  firstTimeIn: String
+  wasNotified: Boolean
+  task: Task!
 }
 
 type CandidateInfoCreateTaskResult {
@@ -41,6 +45,7 @@ type CandidateInfoCreateTaskResult {
   firstName: String
   lastName: String
   phone: String
+  fullName: String
   docNumber: String
   age: String
   gender: String
