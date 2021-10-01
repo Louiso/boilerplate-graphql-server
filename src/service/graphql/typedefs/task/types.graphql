@@ -54,5 +54,5 @@ type Task {
   alias: String
   categoryTask: CategoryTask!
   contentTask: ContentTask
-  taskConfig: TaskConfig!
+  taskConfig: TaskConfig
 }
