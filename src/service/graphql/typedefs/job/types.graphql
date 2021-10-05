@@ -1,6 +1,7 @@
 type CompanyProfile {
   _id: ID
   logo: String
+  location: String
 }
 
 type Company {

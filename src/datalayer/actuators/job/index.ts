@@ -47,7 +47,8 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
       })
     }
   } catch (error) {
-    throw error
+    if(error.response?.data?.message.includes('NotFound')) throw new Error('Job NotFound')
+    else throw error
   }
 }
 

@@ -8,6 +8,29 @@ type CategoryTask {
   urlIcon: String
   urlImage: String
   useMediaRecorder: Boolean
+  isSchedulable: Boolean
+  byKrowdy: Boolean
+  isLinkExternal: Boolean
+  templateEmails: CustomTemplatesEmails
+}
+
+type CustomTemplatesEmails {
+  schedule: TemplateEmailsParams 
+  ToJoin: TemplateEmailsParams
+  ToStart: TemplateEmailsParams
+  Canceled:  TemplateEmailsParams
+  ReSchedule: TemplateEmailsParams
+  Confirm:  TemplateEmailsParams
+}
+
+type TemplateEmailsParams {
+  candidateHelpText: String
+  textButton: String
+  textHeader: String
+  textBody: String
+  withImage: Boolean
+  srcImage: String
+  subject: String
 }
 
 type KrowderGroup {
@@ -31,5 +54,5 @@ type Task {
   alias: String
   categoryTask: CategoryTask!
   contentTask: ContentTask
-  taskConfig: TaskConfig!
+  taskConfig: TaskConfig
 }

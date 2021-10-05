@@ -69,7 +69,7 @@ interface ApplyToJobArgs {
   laborExchangeId?: string;
   publicationId: string;
   sourceApply: string;
-  candidateIdTrack?: string;
+  candidateIdTrack?: Maybe<string>;
 }
 
 interface ApplyToJobResponse {
@@ -113,7 +113,54 @@ interface UpdateCandidateTaskByArgs {
   candidateTaskId: string;
   input: {
     resultTaskId?: string;
+    firstTimeIn?: string;
+    wasNotified?: boolean;
   };
+}
+
+interface UpdateTaskDateArgs {
+  candidateTaskId?: Maybe<string>;
+  taskDate?: Maybe<string>;
+  timeZone?: Maybe<string>;
+}
+
+interface UpdateBasicCandidateTaskArgs {
+  candidateTaskId: string;
+  input: {
+    isIntroductionViewed?: Maybe<boolean>;
+  };
+}
+
+interface UpdateBasicCandidateTaskResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
+interface ExecutedArgs {
+  candidateTaskId: string;
+}
+
+interface ExecutedResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
+interface UpdateCandidateInfoArgs {
+  candidateTaskId: string;
+  input: {
+    age?: Maybe<number>;
+    docNumber?: Maybe<string>;
+    gender?: Maybe<string>;
+  };
+}
+
+interface UpdateCandidateInfoResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
+interface FinishMultiTestArgs {
+  resultTaskId: string;
 }
 
 class GatsAPI extends DataSource {
@@ -232,6 +279,63 @@ class GatsAPI extends DataSource {
   async leaveJob({ candidateId }: {candidateId: string;}): Promise<LeaveJobResponde> {
     try {
       return this.post('/candidates/leaveJob', { candidateId })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateTaskDate({ candidateTaskId, taskDate, timeZone }: UpdateTaskDateArgs): Promise<any> {
+    try {
+      return this.post('/candidateTasks/updateTaskDate',
+        {
+          candidateTaskId,
+          dataResultTask: {
+            taskDate,
+            timeZone
+          }
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateBasicCandidateTask({ candidateTaskId, input }: UpdateBasicCandidateTaskArgs): Promise<UpdateBasicCandidateTaskResponse> {
+    try {
+      return this.put(`/candidateTasks/${candidateTaskId}/basic`,
+        {
+          input
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async executed({ candidateTaskId }: ExecutedArgs): Promise<ExecutedResponse> {
+    try {
+      return this.post('/candidateTasks/executed',
+        {
+          candidateTaskId,
+          dataResultTask: {}
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateCandidateInfo({ candidateTaskId, input }: UpdateCandidateInfoArgs): Promise<UpdateCandidateInfoResponse> {
+    try {
+      return this.post('/candidateTasks/updateCandidateInfo',
+        {
+          candidateTaskId,
+          input
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+  async finishMultiTest({ resultTaskId }: FinishMultiTestArgs): Promise<UpdateCandidateInfoResponse> {
+    try {
+      return this.get(`/api/v1/multitest/successedTask/${resultTaskId}`)
     } catch (error) {
       throw error
     }

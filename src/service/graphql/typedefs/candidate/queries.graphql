@@ -3,5 +3,6 @@ type Query {
     jobId: ID! 
     publicationIndex: Int
     slug: String
+    trackingCandidateId: ID
   ): Candidate! @auth
 }

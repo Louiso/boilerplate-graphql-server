@@ -9,7 +9,14 @@ import {
   QueryGetCandidateTaskArgs,
   QueryGetAppSectionsArgs,
   Section,
-  MutationNotifyOpenTaskInDesktopArgs
+  MutationNotifyOpenTaskInDesktopArgs,
+  MutationUpdateBasicCandidateTaskArgs,
+  MutationExecutedArgs,
+  MutationUpdateCandidateInfoArgs,
+  MutationFinishMultitestArgs,
+  MutationUpdateFirstTimeInArgs,
+  SuccessResponse,
+  MutationNotifyMultipleFlowInterviewArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -23,6 +30,42 @@ const getCandidateTasksByCandidate = async ({ _id }: Candidate, { dataSources: {
     if(!success) throw new Error(`Error al traer los candidateTasks candidateId: ${_id}`)
 
     return candidateTasks
+  } catch (error) {
+    throw error
+  }
+}
+
+const notifyMultipleFlowInterview = async (
+  {
+    candidateTaskId,
+    jobId,
+    typeMessage,
+    slug,
+    executeDate,
+    executeHour,
+    executeMinutes,
+    executeUrl
+  }: MutationNotifyMultipleFlowInterviewArgs,
+  context: IContext
+) : Promise<SuccessResponse> => {
+  try {
+    const [ jobInformation, candidateTask ] = await Promise.all([
+      JobActuator.getJobInformation({ jobId, publicationIndex: 0 }, context),
+      context.dataSources.gatsAPI.getCandidateTask(candidateTaskId)
+    ])
+
+    await messageController.sendInterviewNotification({
+      jobInformation,
+      typeMessage,
+      candidateTask: candidateTask.data,
+      slug,
+      executeDate,
+      executeHour,
+      executeMinutes,
+      executeUrl
+    })
+
+    return { success: true }
   } catch (error) {
     throw error
   }
@@ -183,10 +226,91 @@ const getAppSections = async (
   }
 }
 
+const updateBasicCandidateTask = async (
+  { candidateTaskId, input }: MutationUpdateBasicCandidateTaskArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    const { data: candidateTask } = await gatsAPI.updateBasicCandidateTask({
+      candidateTaskId,
+      input
+    })
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
+const executed = async (
+  { candidateTaskId }: MutationExecutedArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    await gatsAPI.executed({ candidateTaskId })
+
+    const { data: candidateTask } = await gatsAPI.getCandidateTask(candidateTaskId)
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
+const updateCandidateInfo = async (
+  { candidateTaskId, input }: MutationUpdateCandidateInfoArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    const { data: candidateTask } = await gatsAPI.updateCandidateInfo({ candidateTaskId, input })
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
+const finishMultitest = async (
+  { candidateTaskId, resultTaskId }: MutationFinishMultitestArgs,
+  { dataSources: { gatsAPI } }: IContext
+): Promise<CandidateTask> => {
+  try {
+    await gatsAPI.finishMultiTest({ resultTaskId })
+
+    const { data: candidateTask } = await gatsAPI.getCandidateTask(candidateTaskId)
+
+    return candidateTask
+  } catch (error) {
+    throw error
+  }
+}
+
+const updateFirstTimeIn = async ({ input }: MutationUpdateFirstTimeInArgs, context: IContext): Promise<SuccessResponse> => {
+  try {
+    const { candidateTaskId, firstTimeIn } = input
+
+    if(!candidateTaskId || !firstTimeIn) throw Error('CandidateTaskId es requerido')
+
+    const { success }  =  await context.dataSources.gatsAPI.updateCandidateTaskBy({ candidateTaskId, input: { firstTimeIn, wasNotified: false } })
+
+    if(!success) throw Error('Error al traer tarea')
+
+    return { success }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
   getCandidateTask,
   getAppSections,
-  notifyOpenTaskInDesktop
+  notifyOpenTaskInDesktop,
+  updateBasicCandidateTask,
+  executed,
+  updateCandidateInfo,
+  finishMultitest,
+  updateFirstTimeIn,
+  notifyMultipleFlowInterview
 }
