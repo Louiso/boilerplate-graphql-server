@@ -219,7 +219,7 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
 
     /* cv */
 
-    // if(!Object.values(profile.curriculum ?? {}).length) errors.push('Curriculum invalido')
+    if(!profile.curriculum?.url) errors.push('Curriculum (CV) requerido')
 
     // if(!profile.curriculum?.url) errors.push('Curriculum requerido')
 
