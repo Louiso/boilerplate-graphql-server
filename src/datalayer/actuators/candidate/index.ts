@@ -26,7 +26,7 @@ const getCandidateByJob = async (
       const applyJobResult = await gatsAPI.applyToJob({
         jobId,
         publicationId   : publication._id,
-        sourceApply     : slug ? laborExchange?.name.toLowerCase() : 'landing',
+        sourceApply     : slug ? laborExchange?.name.toLowerCase() : trackingCandidateId ? null : 'landing',
         laborExchangeId : laborExchange?._id,
         candidateIdTrack: trackingCandidateId
       })
