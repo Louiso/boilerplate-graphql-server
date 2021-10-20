@@ -298,46 +298,52 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         url      : profile.curriculum?.url
       },
       docNumber: profile.docNumber,
-      education: profile.education.map((edu) => ({
-        academicArea   : edu.academicArea,
-        career         : edu.career,
-        condition      : edu.condition,
-        degree         : edu.degree,
-        description    : edu.description,
-        endDate        : edu.endDate,
-        imgUrl         : edu.imgUrl,
-        institutionName: edu.institutionName,
-        startDate      : edu.startDate,
-        studyingHere   : edu.studyingHere
-      })),
+      education: profile.education
+        .filter(educt => Object.keys(educt).length > 1)
+        .map((edu) => ({
+          academicArea   : edu.academicArea,
+          career         : edu.career,
+          condition      : edu.condition,
+          degree         : edu.degree,
+          description    : edu.description,
+          endDate        : edu.endDate,
+          imgUrl         : edu.imgUrl,
+          institutionName: edu.institutionName,
+          startDate      : edu.startDate,
+          studyingHere   : edu.studyingHere
+        })),
       emails: profile.emails.map((email) => ({
         type : email.type,
         value: email.value
       })),
-      especialization: profile.especialization.map((esp) => ({
-        description         : esp.description,
-        endDate             : esp.endDate,
-        especializationName : esp.especializationName,
-        especializationPlace: esp.especializationPlace,
-        especializationtype : esp.especializationtype,
-        imgUrl              : esp.imgUrl,
-        startDate           : esp.startDate,
-        studyingHere        : esp.studyingHere,
-        condition           : esp.condition
-      })),
-      experience: profile.experience.map((exp) => ({
-        _id        : exp._id, // se enviá el _id para q siempre este referenciado con la experiencia del profile
-        area       : exp.area,
-        companyName: exp.companyName,
-        description: exp.description,
-        endDate    : exp.endDate,
-        hierarchy  : exp.hierarchy,
-        imgUrl     : exp.imgUrl,
-        jobPosition: exp.jobPosition,
-        location   : exp.location,
-        startDate  : exp.startDate,
-        workHere   : exp.workHere
-      })),
+      especialization: profile.especialization
+        .filter(espz => Object.keys(espz).length > 1)
+        .map((esp) => ({
+          description         : esp.description,
+          endDate             : esp.endDate,
+          especializationName : esp.especializationName,
+          especializationPlace: esp.especializationPlace,
+          especializationtype : esp.especializationtype,
+          imgUrl              : esp.imgUrl,
+          startDate           : esp.startDate,
+          studyingHere        : esp.studyingHere,
+          condition           : esp.condition
+        })),
+      experience: profile.experience
+        .filter(expr => Object.keys(expr).length > 1)
+        .map((exp) => ({
+          _id        : exp._id, // se enviá el _id para q siempre este referenciado con la experiencia del profile
+          area       : exp.area,
+          companyName: exp.companyName,
+          description: exp.description,
+          endDate    : exp.endDate,
+          hierarchy  : exp.hierarchy,
+          imgUrl     : exp.imgUrl,
+          jobPosition: exp.jobPosition,
+          location   : exp.location,
+          startDate  : exp.startDate,
+          workHere   : exp.workHere
+        })),
       firstJob : profile.firstJob,
       firstName: profile.firstName,
       knowledge: profile.knowledge.map((know) => ({
