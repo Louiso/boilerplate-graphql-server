@@ -40,8 +40,8 @@ const getCandidateByJob = async (
 
     return candidate
   } catch (error) {
-    console.log('getCandidateByJob -> error', error)
-    throw error
+    if(error?.response?.data?.message) throw new Error(error?.response?.data?.message)
+    else throw error
   }
 }
 
