@@ -8,5 +8,15 @@ export const Mutation: MutationResolvers<IContext> = {
     CandidateActuator.leavePostulation(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  addMergeTokenToCandidate: async (_, args, context) =>
+    CandidateActuator.addMergeTokenToCandidate(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
+      }),
+  addUserOnMergeCandidate: async (_, args, context) =>
+    CandidateActuator.addUserOnMergeCandidate(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }

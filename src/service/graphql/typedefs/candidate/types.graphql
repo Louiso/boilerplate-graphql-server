@@ -44,3 +44,8 @@ type Candidate {
 type SuccessResponse {
   success: Boolean
 }
+
+type CandidateInfo {
+  candidateId: String!
+  status: String!
+}
