@@ -1,3 +1,15 @@
 type Mutation {
   leavePostulation(candidateId: String!): SuccessResponse! @auth
+
+  addMergeTokenToCandidate(
+    jobId: ID!
+    trackId: ID!
+    email: String!
+  ): CandidateInfo @auth
+
+  addUserOnMergeCandidate(
+    jobId: ID!
+    token: String!
+    trackId: ID!
+  ): CandidateInfo @auth
 }

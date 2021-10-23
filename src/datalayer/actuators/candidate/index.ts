@@ -1,4 +1,13 @@
-import { Candidate, QueryGetCandidateArgs, SuccessResponse, MutationLeavePostulationArgs } from 'interfaces/graphql'
+import {
+  Candidate,
+  QueryGetCandidateArgs,
+  SuccessResponse,
+  MutationLeavePostulationArgs,
+  QueryGetCandidateByIdArgs,
+  MutationAddMergeTokenToCandidateArgs,
+  CandidateInfo,
+  MutationAddUserOnMergeCandidateArgs
+} from 'interfaces/graphql'
 import { IContext } from 'interfaces/general'
 import JobActuator from '../job'
 
@@ -57,7 +66,60 @@ const leavePostulation = async ({ candidateId }: MutationLeavePostulationArgs, c
   }
 }
 
+const getCandidateById = async ({ candidateId }: QueryGetCandidateByIdArgs, context: IContext): Promise<Candidate> => {
+  try {
+    const { dataSources: { gatsAPI } } = context
+
+    const { data } = await gatsAPI.getCandidateById(candidateId)
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+const addMergeTokenToCandidate = async (
+  { jobId, trackId, email }: MutationAddMergeTokenToCandidateArgs,
+  context: IContext
+): Promise<CandidateInfo> => {
+  try {
+    const { dataSources: { gatsAPI } } = context
+
+    const { data } = await gatsAPI.addMergeTokenToCandidate({
+      jobId,
+      trackId,
+      email
+    })
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+const addUserOnMergeCandidate = async (
+  { jobId, trackId, token }: MutationAddUserOnMergeCandidateArgs,
+  context: IContext
+): Promise<CandidateInfo> => {
+  try {
+    const { dataSources: { gatsAPI } } = context
+
+    const { data } = await gatsAPI.addUserOnMergeCandidate({
+      jobId,
+      trackId,
+      token
+    })
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateByJob,
-  leavePostulation
+  leavePostulation,
+  getCandidateById,
+  addMergeTokenToCandidate,
+  addUserOnMergeCandidate
 }
