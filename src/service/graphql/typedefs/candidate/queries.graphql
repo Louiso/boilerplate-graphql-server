@@ -5,4 +5,8 @@ type Query {
     slug: String
     trackingCandidateId: ID
   ): Candidate! @auth
+
+  getCandidateById(
+    candidateId: ID!
+  ): Candidate! @auth
 }

@@ -1,5 +1,5 @@
 import { Maybe } from 'graphql/jsutils/Maybe'
-import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput, Task } from 'interfaces/graphql'
+import { Area, Candidate, Job, Stage, CandidateTask, PaginationInput, Task, CandidateInfo } from 'interfaces/graphql'
 import { ProfileDb } from 'models/mongo/profile'
 import DataSource from './DataSource'
 
@@ -163,6 +163,28 @@ interface FinishMultiTestArgs {
   resultTaskId: string;
 }
 
+interface AddMergeTokenToCandidateArgs {
+  email: string;
+  jobId: string;
+  trackId: string;
+}
+
+interface AddMergeTokenToCandidateResponse {
+  success: boolean;
+  data: CandidateInfo;
+}
+
+interface AddUserOnMergeCandidateArgs {
+  jobId: string;
+  token: string;
+  trackId: string;
+}
+
+interface AddUserOnMergeCandidateResponse {
+  success: boolean;
+  data: CandidateInfo;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -173,6 +195,30 @@ class GatsAPI extends DataSource {
   async getCandidate({ jobId }: GetCandidateArgs): Promise<GetCandidateResponse> {
     try {
       return this.get<GetCandidateResponse>(`/candidates/${jobId}/byJob`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getCandidateById(candidateId: string): Promise<GetCandidateResponse> {
+    try {
+      return this.get<GetCandidateResponse>(`/candidates/${candidateId}`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async addMergeTokenToCandidate(args: AddMergeTokenToCandidateArgs): Promise<AddMergeTokenToCandidateResponse> {
+    try {
+      return this.post('/candidates/addMergeTokenToCandidate', args)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async addUserOnMergeCandidate(args: AddUserOnMergeCandidateArgs): Promise<AddUserOnMergeCandidateResponse> {
+    try {
+      return this.post('/candidates/addUserOnMergeCandidate', args)
     } catch (error) {
       throw error
     }

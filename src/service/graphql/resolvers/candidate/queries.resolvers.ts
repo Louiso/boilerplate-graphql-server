@@ -8,5 +8,10 @@ export const Query: QueryResolvers<IContext> = {
     CandidateActuator.getCandidateByJob(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  getCandidateById: async (_, args, context) =>
+    CandidateActuator.getCandidateById(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
