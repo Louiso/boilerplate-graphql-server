@@ -39,6 +39,7 @@ type Candidate {
   candidateTasks: [ CandidateTask! ]!
   status: CandidateStatus!
   profileSubmissionDate: Date
+  yearsOfExperience: Float
 }
 
 type SuccessResponse {
