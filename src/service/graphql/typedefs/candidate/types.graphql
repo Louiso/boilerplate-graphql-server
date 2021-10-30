@@ -40,6 +40,7 @@ type Candidate {
   status: CandidateStatus!
   profileSubmissionDate: Date
   yearsOfExperience: Float
+  oauthSocialToken: String
 }
 
 type SuccessResponse {
