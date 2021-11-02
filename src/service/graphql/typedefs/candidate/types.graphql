@@ -39,6 +39,8 @@ type Candidate {
   candidateTasks: [ CandidateTask! ]!
   status: CandidateStatus!
   profileSubmissionDate: Date
+  yearsOfExperience: Float
+  oauthSocialToken: String
 }
 
 type SuccessResponse {
