@@ -417,8 +417,8 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
           user: {
             email    : profile.emails[0].value!,
             dni      : profile.docType === 'dni' ? profile.docNumber : null,
-            firstName: profile.firstName,
-            lastName : profile.lastName,
+            firstName: profile.firstName ?? '',
+            lastName : profile.lastName ?? '',
             gender   : profile.sex,
             userId   : context.userId
           }
