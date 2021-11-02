@@ -1,3 +1,11 @@
+enum PublicationStatus {
+  draft
+  published
+  closed
+  filed
+  pending
+}
+
 type CompanyProfile {
   _id: ID
   logo: String
@@ -27,6 +35,7 @@ type Publication {
   title: String
   location: String
   area: String
+  status: PublicationStatus
   availabilityToTravel: Boolean,
   careers: [ String ]
   contractType: String
@@ -43,6 +52,7 @@ type Publication {
   educationLevel: Education
   profile: ProfileJob
   salary: Salary
+  expirationDate: Date
 }
 
 type Benefit {
