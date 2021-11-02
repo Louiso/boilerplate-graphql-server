@@ -310,7 +310,8 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
           imgUrl         : edu.imgUrl,
           institutionName: edu.institutionName,
           startDate      : edu.startDate,
-          studyingHere   : edu.studyingHere
+          studyingHere   : edu.studyingHere,
+          level          : edu.level
         })),
       emails: profile.emails.map((email) => ({
         type : email.type,
