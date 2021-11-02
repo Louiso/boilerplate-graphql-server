@@ -124,7 +124,11 @@ const createResultTask = async (
       gatsAPI.getJob({ jobId, publicationIndex: 0 })
     ])
 
-    const { taskConfig: { krowderGroups = [] } = {}, alias } = task
+    if(!task) throw new Error(`Task ${taskId} NotFound`)
+
+    const { alias } = task
+
+    const { krowderGroups } = task.taskConfig!
 
     const publications = job.publications! || []
 
