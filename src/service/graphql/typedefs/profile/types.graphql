@@ -5,8 +5,8 @@ type Profile @entity {
   photo: String @column
   nationality: String @column
   docNumber: String @column
-  firstName: String! @column
-  lastName: String! @column
+  firstName: String @column
+  lastName: String @column
   sex: String @column
   salaryExpectation: SalaryExpectation @column
   civilState: String @column
