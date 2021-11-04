@@ -41,6 +41,7 @@ type Candidate {
   profileSubmissionDate: Date
   yearsOfExperience: Float
   oauthSocialToken: String
+  userId: ID
 }
 
 type SuccessResponse {

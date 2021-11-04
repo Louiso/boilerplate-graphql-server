@@ -53,6 +53,7 @@ type Publication {
   profile: ProfileJob
   salary: Salary
   expirationDate: Date
+  firstPublicationDate: Date
 }
 
 type Benefit {
