@@ -8,7 +8,7 @@ dev docker build:
   before_script:
     - apk add --update --no-cache curl jq py3-configobj py3-pip py3-setuptools python3 python3-dev
     - "which bash || apk add --no-cache curl bash"
-    - "which aws || pip install awscli"
+    - "which aws || pip install awscli --ignore-installed six"
   script:
     - echo "Recovering .env"
     - echo "PORT=${PORT}" >> .env
