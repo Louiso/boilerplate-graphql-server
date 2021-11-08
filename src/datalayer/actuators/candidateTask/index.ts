@@ -16,7 +16,8 @@ import {
   MutationFinishMultitestArgs,
   MutationUpdateFirstTimeInArgs,
   SuccessResponse,
-  MutationNotifyMultipleFlowInterviewArgs
+  MutationNotifyMultipleFlowInterviewArgs,
+  MutationUploadCVFromEmailArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -305,6 +306,34 @@ const updateFirstTimeIn = async ({ input }: MutationUpdateFirstTimeInArgs, conte
   }
 }
 
+const uploadCVFromEmail = async (
+  {
+    jobId,
+    publicationIndex,
+    slug
+  }: MutationUploadCVFromEmailArgs,
+  context: IContext): Promise<Candidate> => {
+  try {
+    const [ jobInformation, candidateInformation ] = await Promise.all([
+      JobActuator.getJobInformation({ jobId, publicationIndex }, context),
+      context.dataSources.gatsAPI.getCandidate({ jobId })
+    ])
+
+    if(!candidateInformation || !candidateInformation?.data.firstName || !candidateInformation?.data.email) throw new Error('Error al enviar mailing de notificacion')
+
+    await messageController.sendUploadCVFromEmailNotification({
+      jobInformation,
+      candidateInformation: candidateInformation.data,
+      publicationIndex,
+      slug
+    })
+
+    return candidateInformation.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getCandidateTasksByCandidate,
   createResultTask,
@@ -316,5 +345,6 @@ export default {
   updateCandidateInfo,
   finishMultitest,
   updateFirstTimeIn,
-  notifyMultipleFlowInterview
+  notifyMultipleFlowInterview,
+  uploadCVFromEmail
 }

@@ -12,6 +12,12 @@ type Mutation {
     slug: String
   ): Candidate! @auth
 
+  uploadCVFromEmail(
+    jobId: ID!
+    publicationIndex: Int!
+    slug: String
+  ): Candidate! @auth
+
   notifyMultipleFlowInterview(
     candidateTaskId: ID!
     jobId: ID!

@@ -191,8 +191,12 @@ const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, co
   }
 }
 
-const checkProfile = async (context: IContext): Promise<{ errors: string[]; profile: Profile; }> => {
+const checkProfile = async (context: IContext, jobId: string): Promise<{ errors: string[]; profile: Profile; }> => {
   const errors: string[] = []
+
+  const { data: job } = {} = await context.dataSources.gatsAPI.getJob({ jobId, publicationIndex: 0 })
+
+  const { massApplication } = job
 
   const profile = await ProfileModel
     .findOne({ idUser: context.userId! })
@@ -218,8 +222,8 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
     if(profile.salaryExpectation?.amount === null || profile.salaryExpectation?.amount === undefined) errors.push('Expectativa salarial requerida')
 
     /* cv */
-
-    // if(!profile.curriculum?.url) errors.push('Curriculum (CV) requerido')
+    if(!profile.curriculum?.url  && (massApplication && massApplication.enabled && !massApplication.cv))
+      errors.push('Curriculum (CV) requerido')
 
     // if(!profile.curriculum?.url) errors.push('Curriculum requerido')
 
@@ -278,7 +282,7 @@ const checkProfile = async (context: IContext): Promise<{ errors: string[]; prof
 const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IContext): Promise<Profile> => {
   try {
     const [ { errors, profile }, { data: getCandidateData, success } ] = await Promise.all([
-      checkProfile(context),
+      checkProfile(context, jobId),
       context.dataSources.gatsAPI.getCandidate({ jobId }).catch(() => ({ success: false, data: null }))
     ])
 
