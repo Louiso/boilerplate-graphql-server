@@ -54,6 +54,7 @@ type Publication {
   salary: Salary
   expirationDate: Date
   firstPublicationDate: Date
+  publishday: Date
 }
 
 type Benefit {
