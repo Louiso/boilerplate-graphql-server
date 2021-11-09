@@ -1,3 +1,5 @@
 type Query {
   getLaborExchangeTemplate(slug: String): LaborExchangeTemplate
+
+  getLaborExchangeBySlug(slug: String!): LaborExchange
 }

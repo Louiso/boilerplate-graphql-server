@@ -11,3 +11,14 @@ type LaborExchangeTemplateHeader {
 type LaborExchangeTemplate {
   header: LaborExchangeTemplateHeader!
 }
+
+type LaborExchangeTheme {
+  template: LaborExchangeTemplate!
+}
+
+type LaborExchange {
+  _id: ID!
+  name: String!
+  slug: String!
+  theme: LaborExchangeTheme
+}
