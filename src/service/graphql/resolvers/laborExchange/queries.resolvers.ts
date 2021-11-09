@@ -9,5 +9,10 @@ export const Query: QueryResolvers<IContext> = {
     LaborExchangeActuator.getLaborExchangeTemplate(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  getLaborExchangeBySlug: (_, args, context) =>
+    LaborExchangeActuator.getLaborExchangeBySlug(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
