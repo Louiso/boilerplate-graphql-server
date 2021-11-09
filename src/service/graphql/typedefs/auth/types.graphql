@@ -1,7 +1,7 @@
 type User {
   _id: ID!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   email: String!
   phone: String
   photo: String
