@@ -222,7 +222,16 @@ const checkProfile = async (context: IContext, jobId: string): Promise<{ errors:
     if(profile.salaryExpectation?.amount === null || profile.salaryExpectation?.amount === undefined) errors.push('Expectativa salarial requerida')
 
     /* cv */
-    if(!profile.curriculum?.url  && (massApplication && massApplication.enabled && !massApplication.cv))
+    let invalidCV = false
+
+    if(massApplication && massApplication.enabled) {
+      if(massApplication.cv && !profile.curriculum?.url)
+        invalidCV = true
+    } else if(!profile.curriculum?.url) {
+      invalidCV = true
+    }
+
+    if(invalidCV)
       errors.push('Curriculum (CV) requerido')
 
     // if(!profile.curriculum?.url) errors.push('Curriculum requerido')
