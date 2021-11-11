@@ -28,6 +28,13 @@ type Job {
   title: String!
   companyPublished: Company
   publications: [Publication!]!
+  massApplication: MassApplication
+}
+
+type MassApplication {
+  enabled: Boolean
+  cv: Boolean
+  profile: Boolean
 }
 
 type Publication {

@@ -5,6 +5,8 @@ type Mutation {
 
   updateCV(
     input: UpdateCVInput!
+    fromMail: Boolean
+    jobId: String
   ): Profile! @auth
   
   sendProfile(

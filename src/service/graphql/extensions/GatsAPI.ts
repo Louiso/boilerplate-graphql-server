@@ -59,6 +59,20 @@ interface SendProfileArgs {
   userInfo: ProfileDb & { genre: string; };
 }
 
+interface SendProfileCVArgs {
+  jobId: string;
+  curriculum: ProfileDb['curriculum'];
+}
+
+interface GenerateInvitationCodeArgs {
+  candidateId: string;
+}
+
+interface GenerateInvitationCodeResponse {
+  success: boolean;
+  data: any;
+}
+
 interface SendProfileResponse {
   success: boolean;
   data: any;
@@ -261,6 +275,22 @@ class GatsAPI extends DataSource {
   async sendProfile(args: SendProfileArgs): Promise<SendProfileResponse> {
     try {
       return this.post<SendProfileResponse>('/candidates/sendProfile', args)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async sendProfileCV(args: SendProfileCVArgs): Promise<SendProfileResponse> {
+    try {
+      return this.post<SendProfileResponse>('/candidates/sendCV', args)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async generateInvitationCode(args: GenerateInvitationCodeArgs): Promise<GenerateInvitationCodeResponse> {
+    try {
+      return this.post<GenerateInvitationCodeResponse>('/candidates/generate/invitationCode', args)
     } catch (error) {
       throw error
     }
