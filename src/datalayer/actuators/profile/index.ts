@@ -131,7 +131,7 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
   }
 }
 
-const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Promise<Profile> => {
+const updateCV = async ({ input, fromMail, jobId }: MutationUpdateCvArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
@@ -154,6 +154,18 @@ const updateCV = async ({ input }: MutationUpdateCvArgs, context: IContext): Pro
         }
       )
       .lean()
+
+    if(fromMail) {
+      const { fileName, url } = input
+
+      await context.dataSources.gatsAPI.sendProfileCV({
+        jobId,
+        curriculum: {
+          fileName,
+          url
+        }
+      })
+    }
 
     return profileDb!
   } catch (error) {
