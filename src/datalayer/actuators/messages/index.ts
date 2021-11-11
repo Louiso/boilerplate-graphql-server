@@ -3,6 +3,7 @@ import { ses } from 'config/connections'
 import { mappingObjects } from 'utils/by'
 import { Job, CandidateTask, TypeCustomMessage, Candidate } from 'interfaces/graphql'
 import { Maybe } from 'graphql/jsutils/Maybe'
+import { IContext } from 'interfaces/general'
 
 interface EmailParams {
   ToAddresses: string[];
@@ -40,6 +41,7 @@ interface UploadCVFromEmailParams {
   candidateInformation: Candidate;
   publicationIndex: number;
   slug?: Maybe<string>;
+  context: IContext;
 }
 
 interface TemplateEmailsCategoryTaskParams {
@@ -223,14 +225,25 @@ class MESSAGES {
         jobInformation,
         candidateInformation,
         publicationIndex,
-        slug
+        slug,
+        context
       } = params
 
       const {
         publications
       } = jobInformation
 
+      const {
+        _id:candidateId
+      } = candidateInformation
+
       const [ publication ] = publications!
+
+      const getInvitationCode = await context.dataSources.gatsAPI.generateInvitationCode({ candidateId })
+
+      const { data: { oauthSocialToken } } = getInvitationCode
+
+      const url = `${process.env.APP_URL}/publication/${jobInformation._id}/publication/${publicationIndex}?typeView=upload-cv&invitationCode=${oauthSocialToken}${slug ? `&slug=${slug}` : ''}`
 
       const parametersTemplateData = {
         confidentialCompany: publication?.confidentialCompany,
@@ -243,13 +256,13 @@ class MESSAGES {
         withImage          : true,
         textBody           : `Sube tu archivo en Word o PDF a la postulación a ${jobInformation.title} para continuar con los siguientes pasos.`,
         srcImage           : 'https://cdn.krowdy.com/images/tasks/upload-cv/filesandfolder.png',
-        executeUrl         : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${publicationIndex}/upload-cv`,
+        executeUrl         : url,
         textButton         : 'Adjuntar mi CV',
         primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
         secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
         customColor        : jobInformation.companyPublished?.theme?.palette?.custom?.main ?? '',
         krowdyColor        : jobInformation.companyPublished?.theme?.palette?.krowdy?.main ?? '',
-        jobUrl             : `${process.env.APP_URL}/job/${jobInformation._id}/publication/${0}${slug ? `?slug=${slug}` : ''}`,
+        jobUrl             : url,
         subject            : 'Adjunta tu CV',
         companyPremium     : jobInformation.companyPublished?.premium ?? false,
         email              : candidateInformation?.email

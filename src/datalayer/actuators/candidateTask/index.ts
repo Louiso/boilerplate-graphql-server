@@ -325,7 +325,8 @@ const uploadCVFromEmail = async (
       jobInformation,
       candidateInformation: candidateInformation.data,
       publicationIndex,
-      slug
+      slug,
+      context
     })
 
     return candidateInformation.data
