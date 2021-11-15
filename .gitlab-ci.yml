@@ -24,6 +24,7 @@ dev docker build:
     - echo "REDIS_HOST=${DEV_REDIS_HOST}" >> .env
     - echo "REDIS_PORT=${DEV_REDIS_PORT}" >> .env
     - echo "APP_URL=${DEV_APP_URL}" >> .env
+    - echo "NEWRELIC_ENABLED_SERVICE=${DEV_NEWRELIC_ENABLED_SERVICE}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
@@ -64,6 +65,7 @@ prebuild docker build:
     - echo "REDIS_HOST=${PREBUILD_REDIS_HOST}" >> .env
     - echo "REDIS_PORT=${PREBUILD_REDIS_PORT}" >> .env
     - echo "APP_URL=${PREBUILD_APP_URL}" >> .env
+    - echo "NEWRELIC_ENABLED_SERVICE=${PREBUILD_NEWRELIC_ENABLED_SERVICE}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
@@ -104,6 +106,7 @@ build docker build:
     - echo "REDIS_HOST=${BUILD_REDIS_HOST}" >> .env
     - echo "REDIS_PORT=${BUILD_REDIS_PORT}" >> .env
     - echo "APP_URL=${BUILD_APP_URL}" >> .env
+    - echo "NEWRELIC_ENABLED_SERVICE=${BUILD_NEWRELIC_ENABLED_SERVICE}" >> .env
     - echo "Recovering build version"
     - export BUILD_VERSION=${CI_COMMIT_TAG}
     - echo "Login to aws ecr"
