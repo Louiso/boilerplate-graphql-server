@@ -17,8 +17,9 @@ import {
   QueryGetLocationArgs,
   Location
 } from 'interfaces/graphql'
-import { keyBy } from 'utils/by'
+import { groupBy, keyBy } from 'utils/by'
 import { createSearchRegexp } from 'utils/regex'
+import { sortBy } from 'utils/sort'
 const localLocations: GeocodingType [] = require('./locations.json')
 // import ProfileProgressActuator from '../profileProgress'
 interface GeocodingType {
@@ -159,7 +160,7 @@ const updateCV = async ({ input, fromMail, jobId }: MutationUpdateCvArgs, contex
       const { fileName, url } = input
 
       await context.dataSources.gatsAPI.sendProfileCV({
-        jobId,
+        jobId     : jobId!,
         curriculum: {
           fileName,
           url
@@ -314,6 +315,69 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
 
     const candidate = getCandidateData!
 
+    const experiences = profile.experience
+
+    const formattedExperiences = experiences.map((exp) => ({
+      ...exp,
+      endDate  : exp.endDate ? new Date(exp.endDate).getTime() : undefined,
+      startDate: exp.startDate ? new Date(exp.startDate).getTime() : undefined
+    }))
+
+    const workHeres = formattedExperiences.filter((experience) => experience.workHere)
+    const restExperience = formattedExperiences.filter((experience) => !experience.workHere)
+
+    const experienceWorkHereSortByStartDate = workHeres.sort(sortBy('startDate', 'desc'))
+    const experienceNoWorkHereSortByEndDate = restExperience.sort(sortBy('endDate', 'desc'))
+
+    const expeGroupByEndDate = groupBy(experienceNoWorkHereSortByEndDate, 'endDate')
+
+    const resWorkHereSortedByEndDateAndStartDate = []
+    for (const endDate in expeGroupByEndDate)
+      resWorkHereSortedByEndDateAndStartDate.push(...expeGroupByEndDate[endDate].sort(sortBy('startDate', 'desc')))
+
+    const sortedExperiences = experienceWorkHereSortByStartDate.concat(resWorkHereSortedByEndDateAndStartDate)
+
+    const educations = profile.education
+
+    const formattedEducations = educations.map((edu) => ({
+      ...edu,
+      endDate  : edu.endDate ? new Date(edu.endDate).getTime() : undefined,
+      startDate: edu.startDate ? new Date(edu.startDate).getTime() : undefined
+    }))
+
+    const studyingHeres = formattedEducations.filter((education) => education.studyingHere)
+    const restStudies = formattedEducations.filter((education) => !education.studyingHere)
+
+    const educationStudyingHereSortByStartDate = studyingHeres.sort(sortBy('startDate', 'desc'))
+    const educationNoStudyingHereSortByEndDate = restStudies.sort(sortBy('endDate', 'desc'))
+
+    const educationGroupByEndDate = groupBy(educationNoStudyingHereSortByEndDate, 'endDate')
+
+    const resStudyingHereSortedByEndDateAndStartDate = []
+    for (const endDate in educationGroupByEndDate)
+      resStudyingHereSortedByEndDateAndStartDate.push(...educationGroupByEndDate[endDate].sort(sortBy('startDate', 'desc')))
+
+    const sortedEducations = educationStudyingHereSortByStartDate.concat(resStudyingHereSortedByEndDateAndStartDate)
+
+    const profileDb = await ProfileModel
+      .findByIdAndUpdate(profile._id, {
+        $set: {
+          education: sortedEducations.map((education) => ({
+            ...education,
+            endDate  : education.endDate ? new Date(education.endDate) : null,
+            startDate: education.startDate ? new Date(education.startDate) : null
+          })) as any[],
+          experience: sortedExperiences.map((exp) => ({
+            ...exp,
+            endDate  : exp.endDate ? new Date(exp.endDate) : null,
+            startDate: exp.startDate ? new Date(exp.startDate) : null
+          })) as any[]
+        }
+      })
+      .lean()
+
+    if(!profileDb) throw new Error(`Profile userId: ${context.userId} NotFound`)
+
     const candidateInput: any = {
       birthDate : profile.birthDate,
       civilState: profile.civilState,
@@ -323,7 +387,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         url      : profile.curriculum?.url
       },
       docNumber: profile.docNumber,
-      education: profile.education
+      education: profileDb.education
         .filter(educt => Object.keys(educt).length > 1)
         .map((edu) => ({
           academicArea   : edu.academicArea,
@@ -355,7 +419,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
           studyingHere        : esp.studyingHere,
           condition           : esp.condition
         })),
-      experience: profile.experience
+      experience: profileDb.experience
         .filter(expr => Object.keys(expr).length > 1)
         .map((exp) => ({
           _id        : exp._id, // se enviá el _id para q siempre este referenciado con la experiencia del profile

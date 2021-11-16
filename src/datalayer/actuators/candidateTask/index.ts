@@ -17,7 +17,7 @@ import {
   MutationUpdateFirstTimeInArgs,
   SuccessResponse,
   MutationNotifyMultipleFlowInterviewArgs,
-  MutationUploadCVFromEmailArgs
+  MutationUploadCvFromEmailArgs
 } from 'interfaces/graphql'
 
 import { messageController } from 'actuators/messages'
@@ -311,7 +311,7 @@ const uploadCVFromEmail = async (
     jobId,
     publicationIndex,
     slug
-  }: MutationUploadCVFromEmailArgs,
+  }: MutationUploadCvFromEmailArgs,
   context: IContext): Promise<Candidate> => {
   try {
     const [ jobInformation, candidateInformation ] = await Promise.all([
