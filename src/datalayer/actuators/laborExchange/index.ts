@@ -11,8 +11,10 @@ const getLaborExchangeTemplate = async ({ slug }: QueryGetLaborExchangeTemplateA
   }
 }
 
-const getLaborExchangeBySlug = async ({ slug }: QueryGetLaborExchangeBySlugArgs, context: IContext): Promise<LaborExchange> => {
+const getLaborExchangeBySlug = async ({ slug }: QueryGetLaborExchangeBySlugArgs, context: IContext): Promise<LaborExchange | null> => {
   try {
+    if(!slug) return null
+
     const data = await context.dataSources.portalesAPI.getLaborExchangeBySlug({ slug })
 
     return data.data
