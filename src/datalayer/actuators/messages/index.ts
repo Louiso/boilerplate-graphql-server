@@ -1,8 +1,9 @@
 import { SendTemplatedEmailRequest } from 'aws-sdk/clients/ses'
 import { ses } from 'config/connections'
 import { mappingObjects } from 'utils/by'
-import { Job, CandidateTask, TypeCustomMessage } from 'interfaces/graphql'
+import { Job, CandidateTask, TypeCustomMessage, Candidate } from 'interfaces/graphql'
 import { Maybe } from 'graphql/jsutils/Maybe'
+import { IContext } from 'interfaces/general'
 
 interface EmailParams {
   ToAddresses: string[];
@@ -33,6 +34,14 @@ interface EmailInterviewNotificationParams {
   executeHour?: Maybe<string>;
   executeMinutes?: Maybe<string>;
   executeUrl?: Maybe<string>;
+}
+
+interface UploadCVFromEmailParams {
+  jobInformation: Job;
+  candidateInformation: Candidate;
+  publicationIndex: number;
+  slug?: Maybe<string>;
+  context: IContext;
 }
 
 interface TemplateEmailsCategoryTaskParams {
@@ -206,6 +215,76 @@ class MESSAGES {
       return operationSendEmail
     } catch (error) {
       console.log('spacemacs ~ file: index.ts ~ line 156 ~ MESSAGES ~ sendInterviewNotification ~ error', error)
+      throw error
+    }
+  }
+
+  async sendUploadCVFromEmailNotification(params: UploadCVFromEmailParams) {
+    try {
+      const {
+        jobInformation,
+        candidateInformation,
+        publicationIndex,
+        slug,
+        context
+      } = params
+
+      const {
+        publications
+      } = jobInformation
+
+      const {
+        _id:candidateId
+      } = candidateInformation
+
+      const [ publication ] = publications!
+
+      const getInvitationCode = await context.dataSources.gatsAPI.generateInvitationCode({ candidateId })
+
+      const { data: { oauthSocialToken } } = getInvitationCode
+
+      const url = `${process.env.APP_URL}/publication/${jobInformation._id}/publication/${publicationIndex}?typeView=upload-cv&invitationCode=${oauthSocialToken}${slug ? `&slug=${slug}` : ''}`
+
+      const parametersTemplateData = {
+        confidentialCompany: publication?.confidentialCompany,
+        companyLogo        : jobInformation.companyPublished?.profile?.logo,
+        job                : publication.title,
+        company            : jobInformation.companyPublished?.name,
+        location           : jobInformation.companyPublished?.profile?.location || '',
+        candidateHelpText  : `Hola ${candidateInformation?.firstName}, `,
+        textHeader         : 'Adjunta tu CV',
+        withImage          : true,
+        textBody           : `Sube tu archivo en Word o PDF a la postulación a ${jobInformation.title} para continuar con los siguientes pasos.`,
+        srcImage           : 'https://cdn.krowdy.com/images/tasks/upload-cv/filesandfolder.png',
+        executeUrl         : url,
+        textButton         : 'Adjuntar mi CV',
+        primaryColor       : jobInformation.companyPublished?.theme?.palette?.primary?.main ?? '#1890FF',
+        secondaryColor     : jobInformation.companyPublished?.theme?.palette?.secondary?.main ?? '',
+        customColor        : jobInformation.companyPublished?.theme?.palette?.custom?.main ?? '',
+        krowdyColor        : jobInformation.companyPublished?.theme?.palette?.krowdy?.main ?? '',
+        jobUrl             : url,
+        subject            : 'Adjunta tu CV',
+        companyPremium     : jobInformation.companyPublished?.premium ?? false,
+        email              : candidateInformation?.email
+      }
+
+      const getParamsTemplate = messageController.generateTemplateData(parametersTemplateData)
+
+      let company = jobInformation?.companyPublished?.name
+      if(publication?.confidentialCompany)
+        company = 'Team Krowdy'
+
+      const getParamsEmail = messageController.generateEmailParams({
+        ToAddresses   : [ `${candidateInformation?.email}` ],
+        templateName  : 'ats_candidates_interviews_notify',
+        company       : company!,
+        emailSender   : 'notificaciones@krowdy.com',
+        replyAddresses: [ 'notificaciones@krowdy.com' ],
+        templateData  : getParamsTemplate
+      })
+
+      await messageController.sendEmail(getParamsEmail)
+    } catch (error) {
       throw error
     }
   }

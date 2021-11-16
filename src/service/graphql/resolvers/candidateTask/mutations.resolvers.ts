@@ -14,6 +14,11 @@ export const Mutation: MutationResolvers<IContext> = {
       .catch((error) => {
         throw new ApolloError(error)
       }),
+  uploadCVFromEmail: async (_, args, context) =>
+    CandidateTaskActuator.uploadCVFromEmail(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
+      }),
   notifyMultipleFlowInterview: async (_, args, context) =>
     CandidateTaskActuator.notifyMultipleFlowInterview(args, context)
       .catch((error) => {

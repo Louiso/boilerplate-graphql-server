@@ -117,6 +117,7 @@ input UpdateProfileBasicInformationInput {
   salaryExpectation: SalaryExpectationInput
   firstJob: Boolean
   location: String
+  nationality: String
 }
 
 input PaginationInput {
