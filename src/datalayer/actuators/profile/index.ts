@@ -346,7 +346,7 @@ const checkProfile = async (context: IContext, jobId: string): Promise<{ errors:
     // const incompleteEspecializations = (profile.especialization || [])
     //   .filter((esp) =>
     //     !esp.especializationName ||
-    //     !esp.especializationType ||
+    //     !esp.especializationtype ||
     //     !esp.especializationPlace ||
     //     (esp.studyingHere && !esp.startDate) ||
     //     (!esp.studyingHere && !esp.startDate && !esp.endDate)
@@ -475,7 +475,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
           endDate             : esp.endDate,
           especializationName : esp.especializationName,
           especializationPlace: esp.especializationPlace,
-          especializationType : esp.especializationType,
+          especializationtype : esp.especializationtype,
           imgUrl              : esp.imgUrl,
           startDate           : esp.startDate,
           studyingHere        : esp.studyingHere,
