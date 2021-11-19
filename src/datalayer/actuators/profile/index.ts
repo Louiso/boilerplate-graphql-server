@@ -61,6 +61,10 @@ const getProfileExhaustive = async (_: QueryGetProfileExhaustiveArgs, context: I
       } as any)
     }
 
+    const checkErrors = checkBasicProfile(profile!)
+
+    if(checkErrors && checkErrors.errors.length)
+      delete profile.firstProfileSubmissionDate
     // if(jobId)
     //   await ProfileProgressActuator.getProgressExhaustive({ jobId }, context)
 
@@ -201,6 +205,64 @@ const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, co
     return profileDb!
   } catch (error) {
     throw error
+  }
+}
+
+const checkBasicProfile = (profile: Profile) => {
+  const errors: string[] = []
+
+  try {
+    // const [ firstPhone ] = profile.phones
+    /*
+      basic information
+    */
+
+    // if(firstPhone && firstPhone.value && /[a-z]/gi.test(firstPhone.value!)) errors.push('Numero telefónico invalido')
+
+    if(!profile.birthDate) errors.push('Fecha de nacimiento requerido')
+    if(profile.birthDate && new Date(String(profile.birthDate)).getTime() >= new Date().getTime()) errors.push('Fecha de nacimiento invalida')
+
+    if(!profile.sex) errors.push('Género requerido')
+
+    if(!profile.docNumber) errors.push('Documento de identidad requerido')
+
+    if(profile.salaryExpectation?.amount === null || profile.salaryExpectation?.amount === undefined) errors.push('Expectativa salarial requerida')
+
+    // if(!profile.curriculum?.url) errors.push('Curriculum requerido')
+
+    // if(profile.curriculum?.url && profile.curriculum?.url.indexOf(profile._id) === -1) errors.push('Curriculum requerido')
+
+    /* experiencias */
+
+    const incompleteExperiences = (profile.experience || [])
+      .filter((exp) =>
+        !exp.jobPosition ||
+        !exp.hierarchy ||
+        !exp.companyName ||
+        !exp.area ||
+        (exp.workHere && !exp.startDate) ||
+        (!exp.workHere && !exp.startDate && !exp.endDate)
+      )
+
+    if(incompleteExperiences.length) errors.push('Experiencias incompletas')
+
+    /* estudios */
+    const incompleteEducations = (profile.education || [])
+      .filter((edu) =>
+        !edu.institutionName ||
+        !edu.condition ||
+        (edu.studyingHere && !edu.startDate) ||
+        (!edu.studyingHere && !edu.startDate && !edu.endDate)
+      )
+
+    if(incompleteEducations.length) errors.push('Estudios incompletos')
+  } catch (error) {
+    errors.push(error.message)
+  } finally {
+    return {
+      errors,
+      profile: profile
+    }
   }
 }
 
