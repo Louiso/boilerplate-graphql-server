@@ -116,73 +116,14 @@ const notifyOpenTaskInDesktop = async (
 
 const createResultTask = async (
   { candidateTaskId, taskId, jobId }: MutationCreateResultTaskArgs,
-  { dataSources: { gatsAPI }, authorization, userId }: IContext
+  { dataSources: { gatsAPI } }: IContext
 ): Promise<CandidateTask> => {
   try {
-    const [ { data: candidateTask }, { task }, { data: job } ] = await Promise.all([
-      gatsAPI.getCandidateTask(candidateTaskId),
-      gatsAPI.getTask(taskId),
-      gatsAPI.getJob({ jobId, publicationIndex: 0 })
-    ])
-
-    if(!task) throw new Error(`Task ${taskId} NotFound`)
-
-    const { alias } = task
-
-    const { krowderGroups } = task.taskConfig!
-
-    const publications = job.publications! || []
-
-    const [ publication ] = publications
-
-    const urlApi = getUrlApi({
-      codeTask: task.categoryTask.pathContentForm,
-      urlApi  : task.categoryTask.urlApi!
-    })
-
-    let verifyResultTaskId = null
-
-    if(!candidateTask.resultTaskId) {
-      const { data: { data, success } } = await Axios.post(`${urlApi}/createTaskResult`, {
-        input: {
-          candidate      : candidateTask.candidateInfo,
-          candidateId    : candidateTask.candidateId,
-          candidateTaskId: candidateTask._id,
-          job            : {
-            _id  : job._id,
-            title: publication.title
-          },
-          stageId: candidateTask.stageId,
-          task   : {
-            alias,
-            contentTask: task.contentTask
-          },
-          taskId       : task._id,
-          typeEvaluator: krowderGroups.length ? 'krowders' : 'custom',
-          userId
-        }
-      }, {
-        headers: {
-          Authorization: authorization
-        }
-      })
-
-      if(!success) throw new Error('Error al crear tarea')
-      const { resultTaskId } = data
-
-      verifyResultTaskId = resultTaskId
-    } else {
-      verifyResultTaskId = candidateTask.resultTaskId
-    }
-
-    await gatsAPI.updateCandidateTaskBy({
+    const { data: candidateTaskDb } = await gatsAPI.createResultTask({
       candidateTaskId,
-      input: {
-        resultTaskId: verifyResultTaskId
-      }
+      jobId,
+      taskId
     })
-
-    const { data: candidateTaskDb } = await gatsAPI.getCandidateTask(candidateTaskId)
 
     return candidateTaskDb
   } catch (error) {
