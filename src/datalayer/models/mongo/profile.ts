@@ -52,7 +52,7 @@ const especializationSchema = new Schema({
   endDate             : { type: Date },
   especializationName : { trim: true, type: String },
   especializationPlace: { trim: true, type: String },
-  especializationtype : { type: String },
+  especializationType : { type: String },
   imgUrl              : { type: String },
   startDate           : { type: Date },
   studyingHere        : { 'default': false, type: Boolean },

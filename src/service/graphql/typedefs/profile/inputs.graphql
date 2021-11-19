@@ -7,7 +7,7 @@ input SalaryExpectationInput {
 input EspecializationInput {
   _id: ID!
   especializationName: String
-  especializationtype: String
+  especializationType: String
   especializationPlace: String
   startDate: Date
   endDate: Date
