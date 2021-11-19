@@ -199,6 +199,17 @@ interface AddUserOnMergeCandidateResponse {
   data: CandidateInfo;
 }
 
+interface CreateResultTaskArgs {
+  candidateTaskId: string;
+  taskId: string;
+  jobId: string;
+}
+
+interface CreateResultTaskResponse {
+  success: boolean;
+  data: CandidateTask;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -409,6 +420,20 @@ class GatsAPI extends DataSource {
       throw error
     }
   }
+
+  async createResultTask({ candidateTaskId, jobId, taskId }: CreateResultTaskArgs): Promise<CreateResultTaskResponse> {
+    try {
+      return this.post('/candidateTasks/createResultTask',
+        {
+          candidateTaskId,
+          jobId,
+          taskId
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
   async finishMultiTest({ resultTaskId }: FinishMultiTestArgs): Promise<UpdateCandidateInfoResponse> {
     try {
       return this.get(`/api/v1/multitest/successedTask/${resultTaskId}`)
