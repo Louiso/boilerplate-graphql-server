@@ -9,3 +9,4 @@ src/service/interfaces/graphql.schema.json
 .env-prod
 .env-local
 .env-staging
+newrelic_agent.log
