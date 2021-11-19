@@ -113,7 +113,7 @@ type Experience {
 type Especialization {
   _id: ID!
   especializationName: String
-  especializationType: String
+  especializationtype: String
   especializationPlace: String
   startDate: Date
   endDate: Date
