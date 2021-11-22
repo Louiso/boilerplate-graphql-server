@@ -1,5 +1,10 @@
 import { IContext } from 'interfaces/general'
-import { MutationUpdateTaskDateArgs, SuccessResponse, Task } from 'interfaces/graphql'
+import {
+  MutationUpdateTaskDateArgs,
+  MutationResetTaskArgs,
+  SuccessResponse,
+  Task
+} from 'interfaces/graphql'
 
 const updateTaskDate = async ({ input }: MutationUpdateTaskDateArgs, context: IContext): Promise<SuccessResponse> => {
   try {
@@ -23,7 +28,21 @@ const getTaskById = async ({ taskId }: {taskId:string;}, context: IContext): Pro
   }
 }
 
+const resetTask = async ({ candidateTaskId }: MutationResetTaskArgs, { dataSources }: IContext): Promise<SuccessResponse> => {
+  try {
+    console.log('🚀 ~ resetTask ~ dataSources', dataSources)
+    console.log('🚀 ~ resetTask ~ candidateTaskId', candidateTaskId)
+
+    return {
+      success: true
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateTaskDate,
-  getTaskById
+  getTaskById,
+  resetTask
 }

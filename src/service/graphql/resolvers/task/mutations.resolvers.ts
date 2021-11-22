@@ -8,5 +8,10 @@ export const Mutation: MutationResolvers<IContext> = {
     TaskActuator.updateTaskDate(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  resetTask: (_, args, context: IContext) =>
+    TaskActuator.resetTask(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
