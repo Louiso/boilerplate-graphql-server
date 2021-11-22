@@ -177,6 +177,14 @@ interface FinishMultiTestArgs {
   resultTaskId: string;
 }
 
+interface ResetTaskArgs {
+  candidateTaskId: string;
+}
+
+interface ResetTaskResponse {
+  success: boolean;
+}
+
 interface AddMergeTokenToCandidateArgs {
   email: string;
   jobId: string;
@@ -437,6 +445,14 @@ class GatsAPI extends DataSource {
   async finishMultiTest({ resultTaskId }: FinishMultiTestArgs): Promise<UpdateCandidateInfoResponse> {
     try {
       return this.get(`/api/v1/multitest/successedTask/${resultTaskId}`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async resetTask({ candidateTaskId }: ResetTaskArgs): Promise<ResetTaskResponse> {
+    try {
+      return this.post('/candidateTasks/resetTask', { candidateTaskId })
     } catch (error) {
       throw error
     }
