@@ -2,4 +2,8 @@ type Mutation {
   updateTaskDate(
     input: UpdateTaskDateInput!
   ): SuccessResponse! @auth
+
+  resetTask(
+    candidateTaskId: ID!
+  ): SuccessResponse!
 }
