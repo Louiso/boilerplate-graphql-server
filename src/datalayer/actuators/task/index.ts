@@ -28,14 +28,13 @@ const getTaskById = async ({ taskId }: {taskId:string;}, context: IContext): Pro
   }
 }
 
-const resetTask = async ({ candidateTaskId }: MutationResetTaskArgs, { dataSources }: IContext): Promise<SuccessResponse> => {
+const resetTask = async ({ candidateTaskId }: MutationResetTaskArgs, context: IContext): Promise<SuccessResponse> => {
   try {
-    console.log('🚀 ~ resetTask ~ dataSources', dataSources)
-    console.log('🚀 ~ resetTask ~ candidateTaskId', candidateTaskId)
+    const { success } = await context.dataSources.gatsAPI.resetTask({ candidateTaskId })
 
-    return {
-      success: true
-    }
+    if(!success) throw Error('Error al resetear tarea')
+
+    return { success }
   } catch (error) {
     throw error
   }
