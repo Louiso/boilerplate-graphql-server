@@ -452,7 +452,7 @@ class GatsAPI extends DataSource {
 
   async resetTask({ candidateTaskId }: ResetTaskArgs): Promise<ResetTaskResponse> {
     try {
-      return this.post('/candidateTasks/resetTask', { candidateTaskId })
+      return this.post('/candidateTasks/resetTask', { candidateTaskId, userType: 'candidate' })
     } catch (error) {
       throw error
     }
