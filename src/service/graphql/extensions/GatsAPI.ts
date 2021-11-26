@@ -177,6 +177,14 @@ interface FinishMultiTestArgs {
   resultTaskId: string;
 }
 
+interface ResetTaskArgs {
+  candidateTaskId: string;
+}
+
+interface ResetTaskResponse {
+  success: boolean;
+}
+
 interface AddMergeTokenToCandidateArgs {
   email: string;
   jobId: string;
@@ -197,6 +205,17 @@ interface AddUserOnMergeCandidateArgs {
 interface AddUserOnMergeCandidateResponse {
   success: boolean;
   data: CandidateInfo;
+}
+
+interface CreateResultTaskArgs {
+  candidateTaskId: string;
+  taskId: string;
+  jobId: string;
+}
+
+interface CreateResultTaskResponse {
+  success: boolean;
+  data: CandidateTask;
 }
 
 class GatsAPI extends DataSource {
@@ -409,9 +428,31 @@ class GatsAPI extends DataSource {
       throw error
     }
   }
+
+  async createResultTask({ candidateTaskId, jobId, taskId }: CreateResultTaskArgs): Promise<CreateResultTaskResponse> {
+    try {
+      return this.post('/candidateTasks/createResultTask',
+        {
+          candidateTaskId,
+          jobId,
+          taskId
+        })
+    } catch (error) {
+      throw error
+    }
+  }
+
   async finishMultiTest({ resultTaskId }: FinishMultiTestArgs): Promise<UpdateCandidateInfoResponse> {
     try {
       return this.get(`/api/v1/multitest/successedTask/${resultTaskId}`)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async resetTask({ candidateTaskId }: ResetTaskArgs): Promise<ResetTaskResponse> {
+    try {
+      return this.post('/candidateTasks/resetTask', { candidateTaskId, userType: 'candidate' })
     } catch (error) {
       throw error
     }
