@@ -1,0 +1,70 @@
+name: deployments-dev-applying-to-ecr
+on:
+  push:
+    tags:
+      - 'devapplying-**'
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_TASKRESOLVER_BACKEND }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_TASKRESOLVER_BACKEND }}
+        aws-region: ${{ secrets.AWS_REGION}}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push the image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY_NAME }}
+        IMAGE_TAG: ${{ github.ref_name }}
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        PORT: ${{ secrets.PORT }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.DEV_AWS_REGION }}
+        MONGO_CONNECTION: ${{ secrets.DEV_MONGO_CONNECTION }}
+        ATS_RESTIFY_BASE: ${{ secrets.DEV_ATS_RESTIFY_BASE }}
+        ACCOUNTS_API: ${{ secrets.DEV_ACCOUNTS_API }}
+        RESPONSABLES_API: ${{ secrets.DEV_RESPONSABLES_API }}
+        PORTALES_API: ${{ secrets.DEV_PORTALES_API }}
+        BUCKET_DIR: ${{ secrets.DEV_BUCKET_DIR }}
+        REDIS_HOST: ${{ secrets.DEV_REDIS_HOST }}
+        REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
+        APP_URL: ${{ secrets.DEV_APP_URL }}
+        NEWRELIC_ENABLED_SERVICE: ${{ secrets.DEV_NEWRELIC_ENABLED_SERVICE }}
+
+      run: |
+        # Build a docker container and push it to ECR
+        echo "NODE_ENV=$NODE_ENV" >> .env
+        echo "PORT=$PORT" >> .env
+        echo "MONGO_CONNECTION=$MONGO_CONNECTION" >> .env
+        echo "ATS_RESTIFY_BASE=$ATS_RESTIFY_BASE" >> .env
+        echo "ACCOUNTS_API=$ACCOUNTS_API" >> .env
+        echo "RESPONSABLES_API=$RESPONSABLES_API" >> .env
+        echo "PORTALES_API=$PORTALES_API" >> .env
+        echo "BUCKET_DIR=$BUCKET_DIR" >> .env
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> .env
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> .env
+        echo "AWS_REGION=$AWS_REGION" >> .env
+        echo "REDIS_HOST=$REDIS_HOST" >> .env
+        echo "REDIS_PORT=$REDIS_PORT" >> .env
+        echo "APP_URL=$APP_URL" >> .env
+        echo "NEWRELIC_ENABLED_SERVICE=$NEWRELIC_ENABLED_SERVICE" >> .env
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        echo "Pushing image to ECR..."
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        rm -rf .env
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
