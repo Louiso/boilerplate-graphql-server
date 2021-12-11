@@ -42,4 +42,4 @@ RUN npm run postinstall
 
 USER node
 
-CMD NODE_ENV=production node -r dotenv/config dist/index.js
+CMD NODE_ENV=production NEWRELIC_ENABLED_SERVICE=active node -r dotenv/config dist/index.js
