@@ -525,7 +525,6 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       gender : profile.sex,
       docType: profile.docType
     }
-    console.log('🚀 ~ file: index.ts ~ line 529 ~ sendProfile ~ candidateInput', candidateInput)
 
     const experienceBy = keyBy(profile.experience || [], '_id')
 
