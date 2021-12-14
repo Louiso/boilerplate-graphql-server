@@ -20,6 +20,7 @@ import {
 import { groupBy, keyBy } from 'utils/by'
 import { createSearchRegexp } from 'utils/regex'
 import { sortBy } from 'utils/sort'
+import { nationalitiesByCode } from 'utils/constants'
 const localLocations: GeocodingType [] = require('./locations.json')
 // import ProfileProgressActuator from '../profileProgress'
 interface GeocodingType {
@@ -439,7 +440,6 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       .lean()
 
     if(!profileDb) throw new Error(`Profile userId: ${context.userId} NotFound`)
-
     const candidateInput: any = {
       birthDate : profile.birthDate,
       civilState: profile.civilState,
@@ -504,7 +504,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       })),
       lastName   : profile.lastName,
       location   : profile.location,
-      nationality: profile.nationality,
+      nationality: profile.nationality ? nationalitiesByCode[profile.nationality.toUpperCase()] : null,
       phones     : profile.phones.map((phone) => ({
         type : phone.type,
         value: phone.value
@@ -525,6 +525,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       gender : profile.sex,
       docType: profile.docType
     }
+    console.log('🚀 ~ file: index.ts ~ line 529 ~ sendProfile ~ candidateInput', candidateInput)
 
     const experienceBy = keyBy(profile.experience || [], '_id')
 
