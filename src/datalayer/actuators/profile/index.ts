@@ -653,7 +653,10 @@ const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalIn
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: { websites: websites!, knowledge: knowledge! } },
+        { $set: {
+          websites : websites?.filter(({ value }) => value),
+          knowledge: knowledge?.filter(({ knowledgeName }) => knowledgeName)
+        } },
         { 'new': true }
       )
       .lean()
