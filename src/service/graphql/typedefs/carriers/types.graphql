@@ -29,4 +29,5 @@ type Carriers {
   name: String
   search: String
   view: String
+  updatedAt: Date
 }

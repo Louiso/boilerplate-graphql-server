@@ -3,6 +3,7 @@ import ProfileModel from '../../models/mongo/profile'
 import CarrierModel from '../../models/mongo/carriers'
 import {
   Profile,
+  Carriers,
   GroupOnetSuggestion,
   OnetSuggestion,
   FindOnetSuggestion,
@@ -64,7 +65,7 @@ const getJobOnetSuggestions = async (
 
     const groupOnetToResolve: FindOnetSuggestion[] = []
     for (const dt in groupDataByKey) {
-      const internalData = groupDataByKey[dt] as any[]
+      const internalData = groupDataByKey[dt] as OnetSuggestion[]
 
       const suggestedPositions: OnetSuggestion[] = []
 
@@ -102,18 +103,19 @@ const getJobOnetSuggestions = async (
 
 const updateProfileCarrier = async ({ input }: MutationUpdateProfileCarrierArgs, context: IContext): Promise<Profile> => {
   try {
+    const columns = { _id: 1, carriers: 1, userId: 1 }
+
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
+      .select(columns)
       .lean()
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
 
-    const update: any = {}
-
     const { carriers } = profile
 
-    const carriersUpdate = {
-      ...carriers,
+    const carriersUpdate: Carriers = {
+      ...carriers as Carriers,
       code     : input.code,
       name     : input.name,
       search   : input.search,
@@ -121,7 +123,7 @@ const updateProfileCarrier = async ({ input }: MutationUpdateProfileCarrierArgs,
       updatedAt: Date.now()
     }
 
-    update['carriers'] = carriersUpdate
+    const update: { carriers: Carriers; } = { carriers: carriersUpdate }
 
     const carriersSave = new CarrierModel({
       profileId: profile._id,

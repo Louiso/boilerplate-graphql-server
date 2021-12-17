@@ -700,7 +700,7 @@ const getExperienceValidate = async (context: IContext): Promise<ExperienceValid
       }
 
     const currentDate = new Date()
-    let currentsExperience = experience
+    let currentsExperience: Experience[] = experience
     let currentMonth = 0
 
     // Actualmente trabaja, filtra teabajo
@@ -708,8 +708,11 @@ const getExperienceValidate = async (context: IContext): Promise<ExperienceValid
       currentsExperience = experience.filter(e => e.workHere)
 
     // Ver su ultima experiencia mayor
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { endDate }: { endDate: Date; } = currentsExperience.reduce((a: any, b: any) => a.endDate > b.endDate ? a : b)
+    const experiencieMax = currentsExperience.reduce((experiencePrev, experiencieCurrent) =>
+      experiencePrev.endDate > experiencieCurrent.endDate ? experiencePrev : experiencieCurrent
+    )
+
+    const { endDate } = experiencieMax
 
     const diff = currentDate.getTime() - endDate.getTime()
     currentMonth = diff / (1000 * 60 * 60 * 24)
@@ -719,7 +722,6 @@ const getExperienceValidate = async (context: IContext): Promise<ExperienceValid
       isFirstJob : false
     }
   } catch (error) {
-    // eslint-disable-next-line no-restricted-syntax
     throw error
   }
 }
