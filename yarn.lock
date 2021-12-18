@@ -1188,6 +1188,11 @@
   "resolved" "https://registry.npmjs.org/@sindresorhus/is/-/is-0.14.0.tgz"
   "version" "0.14.0"
 
+"@swc/core-linux-musl@1.2.40":
+  "integrity" "sha512-Htjga3JDs9bwuQo0tHISyNwo3TNs2J8urdceNV3NURCQvbkL0TJ/S8tiuqeXHB0bShBG4fjxzU0CkwHT0BQYVg=="
+  "resolved" "https://registry.npmjs.org/@swc/core-linux-musl/-/core-linux-musl-1.2.40.tgz"
+  "version" "1.2.40"
+
 "@swc/core-linux@^1.2.40", "@swc/core-linux@1.2.40":
   "integrity" "sha512-Ou12St4fr4YOj/kqZiJUh9rsw8BzcvQrX2GbuLw4d0Cs8sL4hTxiG/1j/1XShYV8nSQQGNmp9lVoAGkDi0lE5g=="
   "resolved" "https://registry.npmjs.org/@swc/core-linux/-/core-linux-1.2.40.tgz"

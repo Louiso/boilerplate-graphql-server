@@ -85,10 +85,12 @@
 		"lint-staged": "10.5.3",
 		"nodemon": "2.0.6",
 		"prettier": "2.2.1",
-		"@swc/core-linux": "1.2.40"
+		"@swc/core-linux": "1.2.40",
+		"@swc/core-linux-musl": "1.2.40"
 	},
 	"optionalDependencies": {
-		"@swc/core-linux": "1.2.40"
+		"@swc/core-linux": "1.2.40",
+		"@swc/core-linux-musl": "1.2.40"
 	},
 	"_moduleAliases": {
 		"actuators": "/src/datalayer/actuators",
