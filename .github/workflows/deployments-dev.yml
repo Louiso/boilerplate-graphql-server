@@ -45,6 +45,7 @@ jobs:
         REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
         APP_URL: ${{ secrets.DEV_APP_URL }}
         NEWRELIC_ENABLED_SERVICE: ${{ secrets.DEV_NEWRELIC_ENABLED_SERVICE }}
+        APP_SCRAPPER_ONETS_URL: ${{ secrets.DEV_APP_SCRAPPER_ONETS_URL }}
 
       run: |
         # Build a docker container and push it to ECR
