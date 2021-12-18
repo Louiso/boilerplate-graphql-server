@@ -88,10 +88,6 @@
 		"@swc/core-linux": "1.2.40",
 		"@swc/core-linux-musl": "1.2.40"
 	},
-	"optionalDependencies": {
-		"@swc/core-linux": "1.2.40",
-		"@swc/core-linux-musl": "1.2.40"
-	},
 	"_moduleAliases": {
 		"actuators": "/src/datalayer/actuators",
 		"models": "/src/datalayer/models",
