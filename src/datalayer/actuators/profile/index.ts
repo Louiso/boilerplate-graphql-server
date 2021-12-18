@@ -15,12 +15,13 @@ import {
   MutationUpdateEducationArgs,
   MutationUpdateAdditionalInformationArgs,
   QueryGetLocationArgs,
-  Location
+  Location,
+  ExperienceValidate
 } from 'interfaces/graphql'
 import { groupBy, keyBy } from 'utils/by'
 import { createSearchRegexp } from 'utils/regex'
 import { sortBy } from 'utils/sort'
-const localLocations: GeocodingType [] = require('./locations.json')
+const localLocations: GeocodingType[] = require('./locations.json')
 // import ProfileProgressActuator from '../profileProgress'
 interface GeocodingType {
   geometry: {
@@ -74,9 +75,9 @@ const getProfileExhaustive = async (_: QueryGetProfileExhaustiveArgs, context: I
   }
 }
 
-const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Area>> => {
+const getAreas = async ({ input }: QueryGetAreasArgs, context: IContext): Promise<Array<Area>> => {
   try {
-    const { success, data } =  await context.dataSources.gatsAPI.getAreas(input) || {}
+    const { success, data } = await context.dataSources.gatsAPI.getAreas(input) || {}
     if(!success) return []
 
     return data
@@ -98,10 +99,10 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
     // genera un objeto q permite actualizar los datos hasta segunda capa, no admite array puede generar error
     for (const key in input)
       if(typeof input[key] !== 'object' || input[key] === null) update[key] = input[key]
-      else if(input[key] instanceof Date)  update[key] = input[key]
+      else if(input[key] instanceof Date) update[key] = input[key]
       else if(!Array.isArray(input[key]))
         for (const subKey in input[key])
-          if(typeof input[key][subKey]  !== 'object') update[`${key}.${subKey}`] = input[key][subKey]
+          if(typeof input[key][subKey] !== 'object') update[`${key}.${subKey}`] = input[key][subKey]
 
     if('docNumber' in input && !('docType' in input))
       update[profile.docType!] = input.docNumber!
@@ -178,7 +179,7 @@ const updateCV = async ({ input, fromMail, jobId }: MutationUpdateCvArgs, contex
   }
 }
 
-const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Profile> =>  {
+const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
@@ -531,7 +532,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
     const laborReferentInputs = (profile.referents || []).map((referent) => {
       const experienceId = referent.experienceId!
 
-      const experience = experienceId ?  experienceBy[experienceId] : null
+      const experience = experienceId ? experienceBy[experienceId] : null
 
       return ({
         candidateId : candidate?._id,
@@ -680,6 +681,51 @@ const getLocation = async ({ input }: QueryGetLocationArgs): Promise<Array<Locat
   }
 }
 
+const getExperienceValidate = async (context: IContext): Promise<ExperienceValidate> => {
+  try {
+    const columns = { _id: 1, firstName: 1, lastName: 1, experience: 1, userId: 1 }
+
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .select(columns)
+      .lean()
+
+    const { experience } = profile || { experience: [] }
+
+    // Primer trabajo
+    if(!experience || experience.length === 0)
+      return {
+        isMaxSixExp: false,
+        isFirstJob : true
+      }
+
+    const currentDate = new Date()
+    let currentsExperience: Experience[] = experience
+    let currentMonth = 0
+
+    // Actualmente trabaja, filtra teabajo
+    if(experience.some(e => e.workHere))
+      currentsExperience = experience.filter(e => e.workHere)
+
+    // Ver su ultima experiencia mayor
+    const experiencieMax = currentsExperience.reduce((experiencePrev, experiencieCurrent) =>
+      experiencePrev.endDate > experiencieCurrent.endDate ? experiencePrev : experiencieCurrent
+    )
+
+    const { endDate } = experiencieMax
+
+    const diff = currentDate.getTime() - endDate.getTime()
+    currentMonth = diff / (1000 * 60 * 60 * 24)
+
+    return {
+      isMaxSixExp: currentMonth > 6,
+      isFirstJob : false
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   updateCV,
   getProfileExhaustive,
@@ -690,5 +736,6 @@ export default {
   updateReferents,
   updateEducation,
   updateAdditionalInformation,
-  getLocation
+  getLocation,
+  getExperienceValidate
 }

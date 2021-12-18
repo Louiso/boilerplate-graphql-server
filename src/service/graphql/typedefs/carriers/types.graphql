@@ -1,0 +1,33 @@
+type OnetSuggestion {
+  name: String
+  url: String
+  cluster: String
+  code: String
+  codeCluster: String
+  codePathway: String
+  description: String
+  pathWay: String
+  requirements: String
+  synonyms: [String]
+}
+
+type FindOnetSuggestion {
+  key: GroupOnetSuggestion
+  data: [OnetSuggestion]
+}
+
+type GroupOnetSuggestion {
+  principalCluster: String
+  iconCluster: String
+  iconClusterSVG: String
+  suggestedPositions: [OnetSuggestion]
+}
+
+type Carriers {
+   _id: ID!
+  code: String
+  name: String
+  search: String
+  view: String
+  updatedAt: Date
+}
