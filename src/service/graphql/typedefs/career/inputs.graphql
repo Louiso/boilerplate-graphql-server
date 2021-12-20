@@ -1,4 +1,4 @@
-input CarrierInput {
+input CareerInput {
   code: String
   name: String
   search: String

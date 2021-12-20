@@ -1,13 +1,13 @@
 import { Schema, Document, Types } from 'mongoose'
-import { Carriers } from 'interfaces/graphql'
+import { Career } from 'interfaces/graphql'
 import { connection } from '../../../config/connections'
 import { NormalizeId } from 'interfaces/general'
 
-export type CarrierDB = Document & NormalizeId<Carriers>
+export type CareerDB = Document & NormalizeId<Career>
 
 const { ObjectId } = Types
 
-export const carrierSchema = new Schema({
+export const careerSchema = new Schema({
   profileId: { trim: true, type: ObjectId },
   code     : { trim: true, type: String },
   name     : { trim: true, type: String },
@@ -17,6 +17,6 @@ export const carrierSchema = new Schema({
   updatedAt: { type: Date, 'default': Date.now }
 })
 
-const CarrierModel = connection.model<CarrierDB>('Carrier', carrierSchema)
+const CareerModel = connection.model<CareerDB>('Career', careerSchema)
 
-export default CarrierModel
+export default CareerModel

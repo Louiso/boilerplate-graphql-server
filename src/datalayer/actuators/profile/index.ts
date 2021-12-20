@@ -15,8 +15,7 @@ import {
   MutationUpdateEducationArgs,
   MutationUpdateAdditionalInformationArgs,
   QueryGetLocationArgs,
-  Location,
-  ExperienceValidate
+  Location
 } from 'interfaces/graphql'
 import { groupBy, keyBy } from 'utils/by'
 import { createSearchRegexp } from 'utils/regex'
@@ -681,51 +680,6 @@ const getLocation = async ({ input }: QueryGetLocationArgs): Promise<Array<Locat
   }
 }
 
-const getExperienceValidate = async (context: IContext): Promise<ExperienceValidate> => {
-  try {
-    const columns = { _id: 1, firstName: 1, lastName: 1, experience: 1, userId: 1 }
-
-    const profile = await ProfileModel
-      .findOne({ idUser: context.userId! })
-      .select(columns)
-      .lean()
-
-    const { experience } = profile || { experience: [] }
-
-    // Primer trabajo
-    if(!experience || experience.length === 0)
-      return {
-        isMaxSixExp: false,
-        isFirstJob : true
-      }
-
-    const currentDate = new Date()
-    let currentsExperience: Experience[] = experience
-    let currentMonth = 0
-
-    // Actualmente trabaja, filtra teabajo
-    if(experience.some(e => e.workHere))
-      currentsExperience = experience.filter(e => e.workHere)
-
-    // Ver su ultima experiencia mayor
-    const experiencieMax = currentsExperience.reduce((experiencePrev, experiencieCurrent) =>
-      experiencePrev.endDate > experiencieCurrent.endDate ? experiencePrev : experiencieCurrent
-    )
-
-    const { endDate } = experiencieMax
-
-    const diff = currentDate.getTime() - endDate.getTime()
-    currentMonth = diff / (1000 * 60 * 60 * 24)
-
-    return {
-      isMaxSixExp: currentMonth > 6,
-      isFirstJob : false
-    }
-  } catch (error) {
-    throw error
-  }
-}
-
 export default {
   updateCV,
   getProfileExhaustive,
@@ -736,6 +690,5 @@ export default {
   updateReferents,
   updateEducation,
   updateAdditionalInformation,
-  getLocation,
-  getExperienceValidate
+  getLocation
 }

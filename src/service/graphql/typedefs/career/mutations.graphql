@@ -1,0 +1,5 @@
+type Mutation {
+  updateProfileCareer(
+    input: CareerInput!
+  ):Profile! @auth
+}

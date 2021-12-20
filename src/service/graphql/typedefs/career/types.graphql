@@ -23,11 +23,16 @@ type GroupOnetSuggestion {
   suggestedPositions: [OnetSuggestion]
 }
 
-type Carriers {
+type Career {
    _id: ID!
   code: String
   name: String
   search: String
   view: String
   updatedAt: Date
+}
+
+type DateOnetExpired {
+  isFirstJob: Boolean
+  isMaxSixExp: Boolean
 }

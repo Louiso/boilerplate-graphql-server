@@ -2,7 +2,7 @@ import { Schema, Document } from 'mongoose'
 import { ProfileDbObject } from 'interfaces/graphql'
 import { connection } from '../../../config/connections'
 import { NormalizeId } from 'interfaces/general'
-import { carrierSchema } from './carriers'
+import { careerSchema } from './career'
 
 export type ProfileDb = Document & NormalizeId<ProfileDbObject>
 
@@ -121,7 +121,7 @@ const ProfileSchema = new Schema<ProfileDb>({
   immigrationCard           : { type: String },
   docType                   : { type: String, 'default': 'dni' },
   firstProfileSubmissionDate: { type: Date },
-  carriers                  : carrierSchema
+  career                    : careerSchema
 }, { timestamps: true })
 
 ProfileSchema.index({
