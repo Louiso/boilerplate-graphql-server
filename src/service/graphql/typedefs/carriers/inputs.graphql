@@ -1,6 +1,0 @@
-input CarrierInput {
-  code: String
-  name: String
-  search: String
-  view: String
-}

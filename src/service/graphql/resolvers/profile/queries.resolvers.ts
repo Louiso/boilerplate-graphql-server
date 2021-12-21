@@ -18,10 +18,5 @@ export const Query: QueryResolvers<IContext> = {
     ProfileActuator.getLocation(args)
       .catch((error) => {
         throw new ApolloError(error)
-      }),
-  getExperienceValidate: (_, __, context: IContext) =>
-    ProfileActuator.getExperienceValidate(context)
-      .catch((error) => {
-        throw new ApolloError(error)
       })
 }

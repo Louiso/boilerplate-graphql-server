@@ -43,7 +43,7 @@ type Profile @entity {
   idUser: String! @column
   referents: [Referents!] @column
   firstProfileSubmissionDate: Date @column
-  carriers: Carriers @column
+  career: Career @column
 }
 
 type Referents {
@@ -167,9 +167,4 @@ input WebsitesInput {
 input AdditionalInformationInput {
   websites: [ WebsitesInput! ]
   knowledge: [ KnowledgeInput! ]
-}
-
-type ExperienceValidate {
-  isFirstJob: Boolean
-  isMaxSixExp: Boolean
 }

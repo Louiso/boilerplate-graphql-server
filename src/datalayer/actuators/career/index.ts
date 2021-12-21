@@ -1,17 +1,19 @@
 import { IContext } from 'interfaces/general'
 import ProfileModel from '../../models/mongo/profile'
-import CarrierModel from '../../models/mongo/carriers'
+import CareerModel from '../../models/mongo/career'
 import {
   Profile,
-  Carriers,
+  Career,
   GroupOnetSuggestion,
   OnetSuggestion,
   FindOnetSuggestion,
   QueryGetGroupOnetSuggestionsArgs,
-  MutationUpdateProfileCarrierArgs
+  MutationUpdateProfileCareerArgs,
+  DateOnetExpired
 } from 'interfaces/graphql'
 import { groupBy } from 'utils/groupBy'
 import { careerClusterIcons, careerClusterIconsSVG } from './icons'
+import { monthDiff } from 'utils/dateDiff'
 
 const getGroupOnetSuggestions = async (
   args: QueryGetGroupOnetSuggestionsArgs,
@@ -101,9 +103,9 @@ const getJobOnetSuggestions = async (
   }
 }
 
-const updateProfileCarrier = async ({ input }: MutationUpdateProfileCarrierArgs, context: IContext): Promise<Profile> => {
+const updateProfileCareer = async ({ input }: MutationUpdateProfileCareerArgs, context: IContext): Promise<Profile> => {
   try {
-    const columns = { _id: 1, carriers: 1, userId: 1 }
+    const columns = { _id: 1, career: 1, userId: 1 }
 
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
@@ -112,28 +114,34 @@ const updateProfileCarrier = async ({ input }: MutationUpdateProfileCarrierArgs,
 
     if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
 
-    const { carriers } = profile
+    const { career } = profile
 
-    const carriersUpdate: Carriers = {
-      ...carriers as Carriers,
-      code     : input.code,
-      name     : input.name,
-      search   : input.search,
-      view     : input.view,
-      updatedAt: Date.now()
+    const careerUpdate: Career = {
+      ...career as Career,
+      code       : input.code,
+      name       : input.name,
+      cluster    : input.cluster,
+      iconCluster: input.iconCluster,
+      description: input.description,
+      search     : input.search,
+      view       : input.view,
+      updatedAt  : Date.now()
     }
 
-    const update: { carriers: Carriers; } = { carriers: carriersUpdate }
+    const update: { career: Career; } = { career: careerUpdate }
 
-    const carriersSave = new CarrierModel({
-      profileId: profile._id,
-      code     : input.code,
-      name     : input.name,
-      search   : input.search,
-      view     : input.view
+    const careerSave = new CareerModel({
+      profileId  : profile._id,
+      code       : input.code,
+      name       : input.name,
+      cluster    : input.cluster,
+      iconCluster: input.iconCluster,
+      description: input.description,
+      search     : input.search,
+      view       : input.view
     })
 
-    carriersSave.save()
+    careerSave.save()
 
     const profileDb = await ProfileModel
       .findOneAndUpdate(
@@ -155,8 +163,71 @@ const updateProfileCarrier = async ({ input }: MutationUpdateProfileCarrierArgs,
   }
 }
 
+const getProfileDateOnetExpired = async (context: IContext): Promise<DateOnetExpired> => {
+  try {
+    const columns = { _id: 1, firstName: 1, lastName: 1, career: 1, userId: 1 }
+
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .select(columns)
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const { career } = profile
+
+    // Primer trabajo
+    if(!career)
+      return {
+        isMaxSixExp: false,
+        isFirstJob : true
+      }
+
+    const currentDate = new Date()
+    const { updatedAt } = career
+    const currentMonth = monthDiff(updatedAt, currentDate)
+
+    return {
+      isMaxSixExp: currentMonth > 6,
+      isFirstJob : false
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+const getCareer = async (context: IContext): Promise<Career> => {
+  try {
+    const columns = { _id: 1, firstName: 1, lastName: 1, career: 1, userId: 1 }
+
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .select(columns)
+      .lean()
+
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const { career } = profile
+
+    // Primer trabajo
+    if(!career)
+      throw new Error('Not found career.')
+
+    const iconCluster = careerClusterIconsSVG[career.cluster!] || 'https://cdn.krowdy.com/plantillas/icons/default.svg'
+
+    return {
+      ...career,
+      iconCluster: iconCluster
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getGroupOnetSuggestions,
   getJobOnetSuggestions,
-  updateProfileCarrier
+  updateProfileCareer,
+  getProfileDateOnetExpired,
+  getCareer
 }
