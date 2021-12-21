@@ -8,7 +8,7 @@ export type CareerDB = Document & NormalizeId<Career>
 const { ObjectId } = Types
 
 export const careerSchema = new Schema({
-  profileId  : { trim: true, type: ObjectId },
+  profileId  : { trim: true, type: ObjectId, ref: 'Profile' },
   code       : { trim: true, type: String },
   name       : { trim: true, type: String },
   cluster    : { type: String },

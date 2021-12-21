@@ -172,7 +172,9 @@ const getProfileDateOnetExpired = async (context: IContext): Promise<DateOnetExp
       .select(columns)
       .lean()
 
-    const { career } = profile as Profile
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const { career } = profile
 
     // Primer trabajo
     if(!career)
@@ -203,11 +205,13 @@ const getCareer = async (context: IContext): Promise<Career> => {
       .select(columns)
       .lean()
 
-    const { career } = profile as Profile
+    if(!profile) throw new Error(`Profile userId ${context.userId} NotFound`)
+
+    const { career } = profile
 
     // Primer trabajo
     if(!career)
-      throw 'Not found career.'
+      throw new Error('Not found career.')
 
     const iconCluster = careerClusterIconsSVG[career.cluster!] || 'https://cdn.krowdy.com/plantillas/icons/default.svg'
 
