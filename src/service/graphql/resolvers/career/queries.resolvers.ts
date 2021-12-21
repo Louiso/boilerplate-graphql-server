@@ -16,5 +16,9 @@ export const Query: QueryResolvers<IContext> = {
   getProfileDateOnetExpired: (_, __, context: IContext) => CareerActuator.getProfileDateOnetExpired(context)
     .catch((error) => {
       throw new ApolloError(error)
+    }),
+  getCareer: (_, __, context: IContext) => CareerActuator.getCareer(context)
+    .catch((error) => {
+      throw new ApolloError(error)
     })
 }

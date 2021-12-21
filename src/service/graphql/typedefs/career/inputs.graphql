@@ -1,6 +1,9 @@
 input CareerInput {
   code: String
   name: String
+  cluster: String
+  iconCluster: String
+  description: String
   search: String
   view: String
 }

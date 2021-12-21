@@ -118,21 +118,27 @@ const updateProfileCareer = async ({ input }: MutationUpdateProfileCareerArgs, c
 
     const careerUpdate: Career = {
       ...career as Career,
-      code     : input.code,
-      name     : input.name,
-      search   : input.search,
-      view     : input.view,
-      updatedAt: Date.now()
+      code       : input.code,
+      name       : input.name,
+      cluster    : input.cluster,
+      iconCluster: input.iconCluster,
+      description: input.description,
+      search     : input.search,
+      view       : input.view,
+      updatedAt  : Date.now()
     }
 
     const update: { career: Career; } = { career: careerUpdate }
 
     const careerSave = new CareerModel({
-      profileId: profile._id,
-      code     : input.code,
-      name     : input.name,
-      search   : input.search,
-      view     : input.view
+      profileId  : profile._id,
+      code       : input.code,
+      name       : input.name,
+      cluster    : input.cluster,
+      iconCluster: input.iconCluster,
+      description: input.description,
+      search     : input.search,
+      view       : input.view
     })
 
     careerSave.save()
@@ -166,7 +172,7 @@ const getProfileDateOnetExpired = async (context: IContext): Promise<DateOnetExp
       .select(columns)
       .lean()
 
-    const { career } = profile
+    const { career } = profile as Profile
 
     // Primer trabajo
     if(!career)
@@ -188,9 +194,36 @@ const getProfileDateOnetExpired = async (context: IContext): Promise<DateOnetExp
   }
 }
 
+const getCareer = async (context: IContext): Promise<Career> => {
+  try {
+    const columns = { _id: 1, firstName: 1, lastName: 1, career: 1, userId: 1 }
+
+    const profile = await ProfileModel
+      .findOne({ idUser: context.userId! })
+      .select(columns)
+      .lean()
+
+    const { career } = profile as Profile
+
+    // Primer trabajo
+    if(!career)
+      throw 'Not found career.'
+
+    const iconCluster = careerClusterIconsSVG[career.cluster!] || 'https://cdn.krowdy.com/plantillas/icons/default.svg'
+
+    return {
+      ...career,
+      iconCluster: iconCluster
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getGroupOnetSuggestions,
   getJobOnetSuggestions,
   updateProfileCareer,
-  getProfileDateOnetExpired
+  getProfileDateOnetExpired,
+  getCareer
 }
