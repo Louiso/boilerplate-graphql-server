@@ -20,7 +20,7 @@ import {
 import { groupBy, keyBy } from 'utils/by'
 import { createSearchRegexp } from 'utils/regex'
 import { sortBy } from 'utils/sort'
-const localLocations: GeocodingType [] = require('./locations.json')
+const localLocations: GeocodingType[] = require('./locations.json')
 // import ProfileProgressActuator from '../profileProgress'
 interface GeocodingType {
   geometry: {
@@ -74,9 +74,9 @@ const getProfileExhaustive = async (_: QueryGetProfileExhaustiveArgs, context: I
   }
 }
 
-const getAreas = async ({ input } : QueryGetAreasArgs, context: IContext): Promise<Array<Area>> => {
+const getAreas = async ({ input }: QueryGetAreasArgs, context: IContext): Promise<Array<Area>> => {
   try {
-    const { success, data } =  await context.dataSources.gatsAPI.getAreas(input) || {}
+    const { success, data } = await context.dataSources.gatsAPI.getAreas(input) || {}
     if(!success) return []
 
     return data
@@ -98,10 +98,10 @@ const updateProfileBasicInformation = async ({ input }: MutationUpdateProfileBas
     // genera un objeto q permite actualizar los datos hasta segunda capa, no admite array puede generar error
     for (const key in input)
       if(typeof input[key] !== 'object' || input[key] === null) update[key] = input[key]
-      else if(input[key] instanceof Date)  update[key] = input[key]
+      else if(input[key] instanceof Date) update[key] = input[key]
       else if(!Array.isArray(input[key]))
         for (const subKey in input[key])
-          if(typeof input[key][subKey]  !== 'object') update[`${key}.${subKey}`] = input[key][subKey]
+          if(typeof input[key][subKey] !== 'object') update[`${key}.${subKey}`] = input[key][subKey]
 
     if('docNumber' in input && !('docType' in input))
       update[profile.docType!] = input.docNumber!
@@ -178,7 +178,7 @@ const updateCV = async ({ input, fromMail, jobId }: MutationUpdateCvArgs, contex
   }
 }
 
-const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext) : Promise<Profile> =>  {
+const updateExperience = async ({ input = [] }: MutationUpdateExperienceArgs, context: IContext): Promise<Profile> => {
   try {
     const profile = await ProfileModel
       .findOne({ idUser: context.userId! })
@@ -531,7 +531,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
     const laborReferentInputs = (profile.referents || []).map((referent) => {
       const experienceId = referent.experienceId!
 
-      const experience = experienceId ?  experienceBy[experienceId] : null
+      const experience = experienceId ? experienceBy[experienceId] : null
 
       return ({
         candidateId : candidate?._id,
@@ -653,7 +653,10 @@ const updateAdditionalInformation = async ({ input }: MutationUpdateAdditionalIn
     const profileDb = await ProfileModel
       .findOneAndUpdate(
         { idUser: context.userId! },
-        { $set: { websites: websites!, knowledge: knowledge! } },
+        { $set: {
+          websites : websites?.filter(({ value }) => value),
+          knowledge: knowledge?.filter(({ knowledgeName }) => knowledgeName)
+        } },
         { 'new': true }
       )
       .lean()

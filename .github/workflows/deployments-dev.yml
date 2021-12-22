@@ -45,6 +45,7 @@ jobs:
         REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
         APP_URL: ${{ secrets.DEV_APP_URL }}
         NEWRELIC_ENABLED_SERVICE: ${{ secrets.DEV_NEWRELIC_ENABLED_SERVICE }}
+        APP_SCRAPPER_ONETS_URL: ${{ secrets.DEV_APP_SCRAPPER_ONETS_URL }}
 
       run: |
         # Build a docker container and push it to ECR
@@ -63,6 +64,7 @@ jobs:
         echo "REDIS_PORT=$REDIS_PORT" >> .env
         echo "APP_URL=$APP_URL" >> .env
         echo "NEWRELIC_ENABLED_SERVICE=$NEWRELIC_ENABLED_SERVICE" >> .env
+        echo "APP_SCRAPPER_ONETS_URL=$APP_SCRAPPER_ONETS_URL" >> .env
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
