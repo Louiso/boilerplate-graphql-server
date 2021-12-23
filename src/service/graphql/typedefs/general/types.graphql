@@ -19,4 +19,5 @@ type EmailsPhonesResponse {
 type KrowdyGeoCountryCode {
   range: [ Float! ]!
   countryCode: String!
+  location: String
 }

@@ -43,6 +43,7 @@ type Profile @entity {
   idUser: String! @column
   referents: [Referents!] @column
   firstProfileSubmissionDate: Date @column
+  career: Career @column
 }
 
 type Referents {
