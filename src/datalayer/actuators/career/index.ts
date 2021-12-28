@@ -75,9 +75,9 @@ const getJobOnetSuggestions = async (
         suggestedPositions.push({
           name        : internalElement?.name,
           url         : internalElement?.url,
-          cluster     : internalElement?.cluster,
+          cluster     : internalElement?.cluster || 'Otros',
           code        : internalElement?.code,
-          codeCluster : internalElement?.codeCluster,
+          codeCluster : internalElement?.codeCluster  || '__OTHER__',
           codePathway : internalElement?.codePathway,
           description : internalElement?.description,
           pathWay     : internalElement?.pathWay,
