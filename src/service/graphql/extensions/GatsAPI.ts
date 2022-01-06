@@ -220,7 +220,6 @@ interface CreateResultTaskResponse {
 
 interface SentRemainderEmailArgs {
   candidateId: string;
-  dateToUpd: string;
 }
 
 class GatsAPI extends DataSource {
@@ -463,9 +462,9 @@ class GatsAPI extends DataSource {
     }
   }
 
-  async sendPostulationReminderMail({ candidateId, dateToUpd }: SentRemainderEmailArgs): Promise<GetCandidateResponse>  {
+  async sendPostulationReminderMail({ candidateId }: SentRemainderEmailArgs): Promise<GetCandidateResponse>  {
     try {
-      return this.post('/candidates/sendPostulationReminderMail', { candidateId, dateToUpd })
+      return this.post('/candidates/sendPostulationReminderMail', { candidateId })
     } catch (error) {
       throw error
     }

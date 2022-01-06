@@ -43,6 +43,7 @@ type Candidate {
   oauthSocialToken: String
   userId: ID
   applyDate: Date
+  sendPostulationReminderMail: Date
 }
 
 type SuccessResponse {

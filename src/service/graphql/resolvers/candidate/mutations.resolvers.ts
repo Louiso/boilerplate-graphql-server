@@ -19,7 +19,7 @@ export const Mutation: MutationResolvers<IContext> = {
       .catch((error) => {
         throw new ApolloError(error)
       }),
-  sendPostulationReminderMail: async (_: any, args: { candidateId: string; dateToUpd: string; }, context: IContext) =>
+  sendPostulationReminderMail: async (_: any, args: { candidateId: string; }, context: IContext) =>
     CandidateActuator.sendPostulationReminderMail(args, context)
       .catch((error) => {
         throw new ApolloError(error)
