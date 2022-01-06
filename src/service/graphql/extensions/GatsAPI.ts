@@ -218,6 +218,11 @@ interface CreateResultTaskResponse {
   data: CandidateTask;
 }
 
+interface SentRemainderEmailArgs {
+  candidateId: string;
+  dateToUpd: string;
+}
+
 class GatsAPI extends DataSource {
   constructor(authorization: string) {
     super(process.env.ATS_RESTIFY_BASE as string, authorization)
@@ -453,6 +458,14 @@ class GatsAPI extends DataSource {
   async resetTask({ candidateTaskId }: ResetTaskArgs): Promise<ResetTaskResponse> {
     try {
       return this.post('/candidateTasks/resetTask', { candidateTaskId, userType: 'candidate' })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async sendPostulationReminderMail({ candidateId, dateToUpd }: SentRemainderEmailArgs): Promise<GetCandidateResponse>  {
+    try {
+      return this.post('/candidates/sendPostulationReminderMail', { candidateId, dateToUpd })
     } catch (error) {
       throw error
     }

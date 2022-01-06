@@ -116,10 +116,30 @@ const addUserOnMergeCandidate = async (
   }
 }
 
+const sendPostulationReminderMail = async (
+  params: {candidateId: string; dateToUpd: string;},
+  context: IContext
+): Promise<Candidate> => {
+  try {
+    const { dataSources: { gatsAPI } } = context
+    const { candidateId, dateToUpd } = params
+    const { data } = await gatsAPI.sendPostulationReminderMail({
+      candidateId,
+      dateToUpd
+    })
+
+    return data
+  } catch (error) {
+    console.log('🚀 ~ file: index.ts ~ line 123 ~ sendPostulationReminderMail ~ error', error)
+    throw error
+  }
+}
+
 export default {
   getCandidateByJob,
   leavePostulation,
   getCandidateById,
   addMergeTokenToCandidate,
-  addUserOnMergeCandidate
+  addUserOnMergeCandidate,
+  sendPostulationReminderMail
 }

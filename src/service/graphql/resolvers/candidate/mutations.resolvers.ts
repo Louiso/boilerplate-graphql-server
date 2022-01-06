@@ -18,5 +18,10 @@ export const Mutation: MutationResolvers<IContext> = {
     CandidateActuator.addUserOnMergeCandidate(args, context)
       .catch((error) => {
         throw new ApolloError(error)
+      }),
+  sendPostulationReminderMail: async (_: any, args: { candidateId: string; dateToUpd: string; }, context: IContext) =>
+    CandidateActuator.sendPostulationReminderMail(args, context)
+      .catch((error) => {
+        throw new ApolloError(error)
       })
 }
