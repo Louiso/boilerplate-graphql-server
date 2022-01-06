@@ -514,8 +514,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         amount  : profile.salaryExpectation?.amount ?? 0,
         currency: profile.salaryExpectation?.currency || 'S/'
       },
-      sendPostulationReminderMail: null,
-      socialNetworks             : profile.socialNetworks.map((socialNetwork) => ({
+      socialNetworks: profile.socialNetworks.map((socialNetwork) => ({
         socialNetwork: socialNetwork.socialNetwork,
         url          : socialNetwork.url
       })),
