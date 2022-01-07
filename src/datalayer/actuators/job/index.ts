@@ -55,7 +55,6 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
 const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, context: IContext): Promise<JobSimilar[]> => {
   try {
     const { data: { docs } } = await context.dataSources.portalesAPI.getSimilarJobs({ search, jobId, limit: 30, page: 1, slug })
-    console.log('🚀 ~ file: index.ts ~ line 58 ~ getSimilarJobs ~ docs', docs)
 
     return docs
       .filter((doc) => doc.__typename === 'Job')
