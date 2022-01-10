@@ -115,12 +115,15 @@ type Language {
   level: String
 }
 
+type Detail {
+  title: String
+  value: JSON
+}
+
 type JobDetail {
   _id: ID
-  area: String
   benefitsOfWork: [ Benefit ]
   description: String
-  location: String
   disability: Disability
   expirationDate: Date
   firstPublicationDate: Date
@@ -128,11 +131,8 @@ type JobDetail {
   title: String
   visibleInformation: Boolean
   basicEdition: [ BasicEdition ]
-  detailJob: [ JSON ]
-  requirements: [ JSON ]
-  hierarchy: String
-  journeyType: String
-  salary: Salary
+  detailJob: [ Detail ] 
+  requirements: [ Detail ]
 }
 
 type JobSimilar {
