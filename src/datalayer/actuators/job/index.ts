@@ -76,12 +76,8 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
           title               : doc.title,
           visibleInformation  : doc.visibleInformation,
           basicEdition        : doc.basicEdition,
-          detailJob           : doc.detailJob,
-          requirements        : doc.requirements,
-          journeyType         : doc.journeyType,
-          hierarchy           : doc.hierarchy,
-          area                : doc.area,
-          lcoation            : doc.location
+          detailJob           : doc?.detailJob,
+          requirements        : doc.requirements
         }
       }))
   } catch (error) {
