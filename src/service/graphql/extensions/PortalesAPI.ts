@@ -57,12 +57,33 @@ interface GetSimilarJobsResponse {
         company_logo: string;
         company_name: string;
       };
-      expirationDate: string;
       isLaborum: boolean;
       job_id: string;
       publishDate: string;
+      benefits: [ {
+        description: string;
+        title: string;
+      } ];
+      description: string;
+      disability: unknown;
+      expirationDate: string;
+      first_publication_date: string;
       title: string;
-      visibleInformation: boolean;
+      visibleInformation?: Maybe<boolean>;
+      basicEdition: [ {
+        _id: string;
+        description: string;
+        title: string;
+        visible: boolean;
+      } ];
+      detailJob: [ {
+        title?: string;
+        value?: Maybe<string>;
+      } ];
+      requirements: [ {
+        title?: string;
+        value?: Maybe<string>;
+      } ];
       __typename: string;
     }[];
   };

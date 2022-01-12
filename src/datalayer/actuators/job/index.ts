@@ -1,7 +1,7 @@
 import { Types } from 'mongoose'
 import { IContext } from 'interfaces/general'
 
-import { CategoryTask, Job, QueryGetJobArgs, QueryGetSimilarJobsArgs } from 'interfaces/graphql'
+import { CategoryTask, Job, JobSimilar, QueryGetJobArgs, QueryGetSimilarJobsArgs } from 'interfaces/graphql'
 
 type OldCategoryTask = CategoryTask & { pathContentForm: string; }
 
@@ -52,7 +52,7 @@ const getJob = async ({ jobId, publicationIndex }: QueryGetJobArgs, context: ICo
   }
 }
 
-const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, context: IContext): Promise<Job[]> => {
+const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, context: IContext): Promise<JobSimilar[]> => {
   try {
     const { data: { docs } } = await context.dataSources.portalesAPI.getSimilarJobs({ search, jobId, limit: 30, page: 1, slug })
 
@@ -65,8 +65,20 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
           _id : doc.detailCompany?.company_id,
           name: doc.detailCompany?.company_name
         },
-        stages      : [],
-        publications: []
+        jobDetail: {
+          _id                 : doc.job_id,
+          benefitsOfWork      : doc.benefits || [],
+          publishday          : doc.publishDate,
+          description         : doc.description,
+          disability          : doc.disability as {accepted: boolean; visible: boolean;},
+          expirationDate      : doc.expirationDate,
+          firstPublicationDate: doc.first_publication_date,
+          title               : doc.title,
+          visibleInformation  : doc.visibleInformation,
+          basicEdition        : doc.basicEdition,
+          detailJob           : doc?.detailJob,
+          requirements        : doc.requirements
+        }
       }))
   } catch (error) {
     throw error

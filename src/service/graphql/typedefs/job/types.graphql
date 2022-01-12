@@ -114,3 +114,30 @@ type Language {
   language: String
   level: String
 }
+
+type Detail {
+  title: String
+  value: JSON
+}
+
+type JobDetail {
+  _id: ID
+  benefitsOfWork: [ Benefit ]
+  description: String
+  disability: Disability
+  expirationDate: Date
+  firstPublicationDate: Date
+  publishday: Date
+  title: String
+  visibleInformation: Boolean
+  basicEdition: [ BasicEdition ]
+  detailJob: [ Detail ] 
+  requirements: [ Detail ]
+}
+
+type JobSimilar {
+  _id: ID!
+  title: String!,
+  companyPublished: Company
+  jobDetail: JobDetail
+}
