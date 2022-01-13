@@ -62,8 +62,12 @@ const getSimilarJobs = async ({ search, jobId, slug }: QueryGetSimilarJobsArgs, 
         _id             : doc.job_id,
         title           : doc.title,
         companyPublished: {
-          _id : doc.detailCompany?.company_id,
-          name: doc.detailCompany?.company_name
+          _id    : doc.detailCompany?.company_id,
+          name   : doc.detailCompany?.company_name,
+          profile: {
+            _id : doc.detailCompany?.company_id,
+            logo: doc.detailCompany?.company_logo
+          }
         },
         jobDetail: {
           _id                 : doc.job_id,
