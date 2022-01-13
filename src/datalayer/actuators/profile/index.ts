@@ -504,7 +504,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       })),
       lastName   : profile.lastName,
       location   : profile.location,
-      nationality: profile.nationality ? nationalitiesByCode[profile.nationality.toUpperCase()] : null,
+      nationality: profile.nationality ? (nationalitiesByCode[profile.nationality.toUpperCase()] ?? profile.nationality) : null,
       phones     : profile.phones.map((phone) => ({
         type : phone.type,
         value: phone.value
