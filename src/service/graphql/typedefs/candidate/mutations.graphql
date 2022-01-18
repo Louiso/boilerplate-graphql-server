@@ -12,4 +12,8 @@ type Mutation {
     token: String!
     trackId: ID!
   ): CandidateInfo @auth
+
+  sendPostulationReminderMail(
+    candidateId: ID!
+  ): Candidate
 }
