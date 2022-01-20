@@ -578,7 +578,9 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
             firstName: profile.firstName ?? '',
             lastName : profile.lastName ?? '',
             gender   : profile.sex,
-            userId   : context.userId
+            userId   : context.userId,
+            phone    : profile.phones[0]?.value ?? null,
+            location : profile.location ?? null
           }
         })
       } catch (error) {
