@@ -579,7 +579,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
             lastName : profile.lastName ?? '',
             gender   : profile.sex,
             userId   : context.userId,
-            phone    : profile.phones[0]?.value ?? null,
+            phone    : profile.phones[0]?.value,
             location : profile.location ?? null
           }
         })
