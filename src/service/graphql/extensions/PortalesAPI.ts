@@ -46,6 +46,8 @@ interface CreatePostulationLogArgs {
     firstName?: string;
     lastName?: string;
     userId?: Maybe<string>;
+    phone?: Maybe<string>;
+    location?: Maybe<string>;
   };
 }
 
