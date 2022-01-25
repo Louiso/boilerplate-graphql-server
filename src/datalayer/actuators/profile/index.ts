@@ -366,7 +366,8 @@ const checkProfile = async (context: IContext, jobId: string): Promise<{ errors:
 
 const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IContext): Promise<Profile> => {
   try {
-    const [ { errors, profile }, { data: getCandidateData, success } ] = await Promise.all([
+    // eslint-disable-next-line prefer-const
+    let [ { errors, profile }, { data: getCandidateData, success } ] = await Promise.all([
       checkProfile(context, jobId),
       context.dataSources.gatsAPI.getCandidate({ jobId }).catch(() => ({ success: false, data: null }))
     ])
@@ -552,19 +553,21 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
     ])
 
     if(!profile.firstProfileSubmissionDate) {
-      const profileDB = await ProfileModel.findByIdAndUpdate(
-        profile._id,
-        {
-          $set: {
-            firstProfileSubmissionDate: new Date() as any
+      const profileDB = await ProfileModel
+        .findByIdAndUpdate(
+          profile._id,
+          {
+            $set: {
+              firstProfileSubmissionDate: new Date() as any
+            }
+          },
+          {
+            'new': true
           }
-        },
-        {
-          'new': true
-        }
-      )
+        )
+        .lean()
 
-      return profileDB!
+      profile = profileDB!
     }
 
     if(slug)
@@ -578,7 +581,9 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
             firstName: profile.firstName ?? '',
             lastName : profile.lastName ?? '',
             gender   : profile.sex,
-            userId   : context.userId
+            userId   : context.userId,
+            phone    : profile.phones[0]?.value,
+            location : profile.location ?? null
           }
         })
       } catch (error) {
