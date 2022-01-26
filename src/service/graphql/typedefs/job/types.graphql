@@ -29,6 +29,7 @@ type Job {
   companyPublished: Company
   publications: [Publication!]!
   massApplication: MassApplication
+  similarOnets: [SimilarOnets]
 }
 
 type MassApplication {
@@ -140,4 +141,10 @@ type JobSimilar {
   title: String!,
   companyPublished: Company
   jobDetail: JobDetail
+}
+
+type SimilarOnets {
+ onetCode: String
+ jobPosition: String
+ principalCluster: String
 }

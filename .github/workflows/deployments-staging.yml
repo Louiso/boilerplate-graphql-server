@@ -70,3 +70,48 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         rm -rf .env
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    
+    - name: Configure AWS credentials to Access EKS
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_K8S_SERVICE_AUTH_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_K8S_SERVICE_AUTH_SECRET }}
+        aws-region: ${{ secrets.AWS_REGION}}
+
+    - name: Install and configure kubectl
+      env:
+        AUTH_KUBE_CONFIG_ENCODE: ${{ secrets.AUTH_KUBE_CONFIG }}
+      run: |
+        # Configure Kubectl to deploy on eks
+        echo "Download kubectl to get initial config..."
+        curl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl \
+            --progress-bar \
+            --location \
+            --remote-name
+        echo "Set plusX permissions to kubectl..."
+        chmod +x kubectl
+        echo "Move kubectl to localBin..."
+        sudo mv kubectl /usr/local/bin/
+        echo "Store kube config auth on file"
+        echo "$AUTH_KUBE_CONFIG_ENCODE" >> encodeeksfile.txt
+        echo "Decode and store kube config file"
+        cat encodeeksfile.txt | base64 --decode > krowdyeksconfig
+        echo "Create folder kube..."
+        mkdir ~/.kube/
+        echo "Move tmp decode file to .kube/config folder..."
+        mv krowdyeksconfig ~/.kube/config
+
+    - name: Deploy to Eks
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY_NAME }}
+        IMAGE_TAG: ${{ github.ref_name }}
+      run: |
+        # Setting image service
+        echo "Setting image to eks..."
+        kubectl set image -n staging deployment/applying-staging applying-staging=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "Finish set image to eks - $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        rm -rf ~/.kube/config
+        rm -rf ~/.kube
+        echo "Remove config eks file.."
+        echo "Finish set service..."
