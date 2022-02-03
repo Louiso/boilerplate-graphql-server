@@ -442,6 +442,7 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
 
     if(!profileDb) throw new Error(`Profile userId: ${context.userId} NotFound`)
 
+    console.log('profileDb.career', profileDb.career)
     const careerInput = { ...profileDb.career }
     delete careerInput._id
 
@@ -532,6 +533,8 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       career : careerInput
     }
 
+    console.log('careerInput', careerInput)
+
     const experienceBy = keyBy(profile.experience || [], '_id')
 
     const laborReferentInputs = (profile.referents || []).map((referent) => {
@@ -551,6 +554,8 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         position    : referent?.position
       })
     })
+
+    console.log('candidateInput', JSON.stringify(candidateInput, null, 2))
 
     await Promise.all([
       context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput }),
