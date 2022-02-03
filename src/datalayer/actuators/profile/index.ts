@@ -424,25 +424,30 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
     const sortedEducations = educationStudyingHereSortByStartDate.concat(resStudyingHereSortedByEndDateAndStartDate)
 
     const profileDb = await ProfileModel
-      .findByIdAndUpdate(profile._id, {
-        $set: {
-          education: sortedEducations.map((education) => ({
-            ...education,
-            endDate  : education.endDate ? new Date(education.endDate) : null,
-            startDate: education.startDate ? new Date(education.startDate) : null
-          })) as any[],
-          experience: sortedExperiences.map((exp) => ({
-            ...exp,
-            endDate  : exp.endDate ? new Date(exp.endDate) : null,
-            startDate: exp.startDate ? new Date(exp.startDate) : null
-          })) as any[]
+      .findByIdAndUpdate(
+        profile._id,
+        {
+          $set: {
+            education: sortedEducations.map((education) => ({
+              ...education,
+              endDate  : education.endDate ? new Date(education.endDate) : null,
+              startDate: education.startDate ? new Date(education.startDate) : null
+            })) as any[],
+            experience: sortedExperiences.map((exp) => ({
+              ...exp,
+              endDate  : exp.endDate ? new Date(exp.endDate) : null,
+              startDate: exp.startDate ? new Date(exp.startDate) : null
+            })) as any[]
+          }
+        },
+        {
+          'new': true
         }
-      })
+      )
       .lean()
 
     if(!profileDb) throw new Error(`Profile userId: ${context.userId} NotFound`)
 
-    console.log('profileDb.career', profileDb.career)
     const careerInput = { ...profileDb.career }
     delete careerInput._id
 
@@ -533,8 +538,6 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       career : careerInput
     }
 
-    console.log('careerInput', careerInput)
-
     const experienceBy = keyBy(profile.experience || [], '_id')
 
     const laborReferentInputs = (profile.referents || []).map((referent) => {
@@ -554,8 +557,6 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         position    : referent?.position
       })
     })
-
-    console.log('candidateInput', JSON.stringify(candidateInput, null, 2))
 
     await Promise.all([
       context.dataSources.gatsAPI.sendProfile({ jobId, userInfo: candidateInput }),
