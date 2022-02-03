@@ -441,6 +441,10 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
       .lean()
 
     if(!profileDb) throw new Error(`Profile userId: ${context.userId} NotFound`)
+
+    const careerInput = { ...profileDb.career }
+    delete careerInput._id
+
     const candidateInput: any = {
       birthDate : profile.birthDate,
       civilState: profile.civilState,
@@ -524,7 +528,8 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
         value: website.value
       })),
       gender : profile.sex,
-      docType: profile.docType
+      docType: profile.docType,
+      career : careerInput
     }
 
     const experienceBy = keyBy(profile.experience || [], '_id')
