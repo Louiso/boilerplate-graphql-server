@@ -88,7 +88,7 @@ const ProfileSchema = new Schema<ProfileDb>({
   curriculum       : fileSchema,
   cv_id            : { type: String },
   deleted          : { 'default': false, type: Boolean },
-  docNumber        : { trim: true, type: Number },
+  docNumber        : { trim: true, type: String },
   education        : [ educationSchema ],
   emails           : [ emailsPhonesSchema ],
   especialization  : [ especializationSchema ],

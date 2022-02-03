@@ -602,7 +602,10 @@ const sendProfile = async ({ jobId, slug }: MutationSendProfileArgs, context: IC
 
     return profile
   } catch (error) {
-    throw error
+    if(error?.response?.data?.message)
+      throw new Error(error?.response?.data?.message)
+    else
+      throw error
   }
 }
 
