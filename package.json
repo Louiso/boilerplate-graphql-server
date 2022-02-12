@@ -13,9 +13,13 @@
 		"lint": "eslint . --ext .js,.ts --fix",
 		"generate": "graphql-codegen --config codegen.yml",
 		"lint-staged": "lint-staged",
-		"prepare": "husky install",
-		"pre-commit": "lint-staged"
+		"prepare": "husky install"
 	},
+	"husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
 	"lint-staged": {
 		"{handler,src}/**/*.{js,ts}": [
 			"graphql-codegen --config codegen.yml",
