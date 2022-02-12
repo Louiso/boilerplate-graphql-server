@@ -1,5 +1,0 @@
-input UpdateTaskDateInput {
-  candidateTaskId: String
-  taskDate: String
-  timeZone: String
-}

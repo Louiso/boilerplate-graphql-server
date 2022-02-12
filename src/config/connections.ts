@@ -4,11 +4,11 @@ import aws from 'aws-sdk'
 const { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY } = process.env
 
 export const connection = mongoose.createConnection(
-  process.env.MONGO_CONNECTION as string, {
-    useUnifiedTopology: true,
-    socketTimeoutMS   : 0,
-    keepAlive         : true,
-    useNewUrlParser   : true
+  process.env.MONGO_CONNECTION!, {
+    // useUnifiedTopology: true,
+    socketTimeoutMS: 0,
+    keepAlive      : true
+    // useNewUrlParser: true
   }
 )
 

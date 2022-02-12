@@ -1,6 +1,0 @@
-type Stage {
-  _id: ID!
-  order: Int!
-  name: String!
-  tasks: [ Task! ]!
-}

@@ -30,7 +30,7 @@ interface logoutResponse {
 }
 class AccountAPI extends DataSource {
   constructor(authorization: string) {
-    super(process.env.ACCOUNTS_API as string, authorization)
+    super(process.env.AUTH_API as string, authorization)
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

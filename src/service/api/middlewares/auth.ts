@@ -17,7 +17,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction): Pro
       dataSources
     }
     next()
-  } catch (error) {
+  } catch (error: any) {
     console.log('error', error)
     res.json({
       error  : { message: error.message },

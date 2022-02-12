@@ -11,12 +11,14 @@ const typeDefsArray = loadFilesSync(path.join(__dirname, './**/*.graphql'))
 const resolvers =  mergeResolvers(resolversArray)
 const typeDefs =  mergeTypeDefs(typeDefsArray)
 
-const schemaDirectives: any = {
-  auth: Directives.AuthDirective
+export const schemaDirectives: any = {
+  auth: Directives.authorizedDirectiveTransformer
 }
 
-export default makeExecutableSchema({
+const schema = makeExecutableSchema({
   resolvers,
-  typeDefs: [ DIRECTIVES, typeDefs ],
-  schemaDirectives
+  typeDefs        : [ DIRECTIVES, typeDefs ],
+  schemaExtensions: schemaDirectives
 })
+
+export default Directives.authorizedDirectiveTransformer(schema, 'auth')

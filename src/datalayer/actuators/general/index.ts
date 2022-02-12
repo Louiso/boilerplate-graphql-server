@@ -1,5 +1,5 @@
 import { QueryGetCountryCodeArgs, KrowdyGeoCountryCode } from 'interfaces/graphql'
-import geoip from 'krowdy-geoip'
+// import geoip from 'krowdy-geoip'
 import { IP2Location } from 'ip2location-nodejs'
 import { Maybe } from 'graphql/jsutils/Maybe'
 
@@ -16,7 +16,7 @@ const formatLocation = ({ city, countryLong }: {countryLong: string; city: strin
 
 const getCountryCode = async ({ ip }: QueryGetCountryCodeArgs): Promise<KrowdyGeoCountryCode> => {
   try {
-    const data = geoip.lookup(ip)
+    const data = { range: [ 0, 0 ], country: '' }// geoip.lookup(ip)
     const geo = ip2location.getAll(ip)
 
     return {

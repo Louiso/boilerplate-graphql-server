@@ -1,6 +1,0 @@
-type Query {
-  getGroupOnetSuggestions(textSearch: String): [GroupOnetSuggestion] ! @auth
-  getJobOnetSuggestions(textSearch: String): [FindOnetSuggestion] ! @auth
-  getProfileDateOnetExpired: DateOnetExpired @auth
-  getCareer: Career ! @auth
-}
