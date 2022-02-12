@@ -12,7 +12,6 @@ import context from './service/graphql/context'
 const { PORT } = process.env
 
 signale.star('[SERVICE] GRAPHQL SERVICE INIT PROCESS')
-const a = 2
 
 const server = new ApolloServer({
   context,
