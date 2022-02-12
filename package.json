@@ -21,11 +21,6 @@
 			"eslint --ignore-path .gitignore --ext .js,.ts --fix"
 		]
 	},
-	"husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged"
-    }
-  },
 	"dependencies": {
 		"@graphql-codegen/cli": "2.6.1",
 		"@graphql-codegen/introspection": "2.1.1",
