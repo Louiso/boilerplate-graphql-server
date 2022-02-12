@@ -6,19 +6,19 @@ import { Resolvers } from 'interfaces/graphql'
 
 const resolvers: Resolvers<IContext> = {
   Date: new GraphQLScalarType({
-    description: 'Date custom scalar type',
     name       : 'Date',
+    description: 'Date custom scalar type',
+    serialize(value: any) {
+      return value.getTime() // Convert outgoing Date to integer for JSON
+    },
+    parseValue(value: any) {
+      return new Date(value) // Convert incoming integer to Date
+    },
     parseLiteral(ast) {
       if(ast.kind === Kind.INT)
-        return parseInt(ast.value, 10) // ast value is always in string format
+        return new Date(parseInt(ast.value, 10)) // Convert hard-coded AST string to integer and then to Date
 
-      return null
-    },
-    parseValue(value) {
-      return new Date(value) // value from the client
-    },
-    serialize(value) {
-      return new Date(value).getTime() // value sent to the client
+      return null // Invalid hard-coded value (not an integer)
     }
   }),
   JSON: GraphQLJSON

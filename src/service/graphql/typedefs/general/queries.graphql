@@ -1,5 +1,5 @@
 type Query {
-  holaMundo(name: String!): String
+  holaMundo(name: String!): String @auth
 
   getCountryCode(ip: String!): KrowdyGeoCountryCode @auth
 }
