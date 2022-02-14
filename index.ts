@@ -4,6 +4,7 @@ import 'dotenv/config'
 import path from 'path'
 
 const activeNewRelic = process.env.NEWRELIC_ENABLED_SERVICE
+
 if(activeNewRelic === 'active')
   require('newrelic')
 

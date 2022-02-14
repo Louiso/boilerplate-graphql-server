@@ -1,7 +1,8 @@
 import { Router } from 'express'
-// import walletPricingRouter  from './walletPricing'
+import authController  from './auth'
 
 const router = Router()
-// router.use('/walletPricing', walletPricingRouter)
+
+router.use('/auth', authController)
 
 export default router
