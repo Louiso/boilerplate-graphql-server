@@ -20,6 +20,6 @@ const UserSchema = new Schema({
   photo    : { type: String }
 }, { timestamps: true })
 
-const UserModel = connection.model('User', UserSchema)
+const UserModel = connection.model<User>('User', UserSchema)
 
 export default UserModel

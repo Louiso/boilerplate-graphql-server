@@ -4,6 +4,8 @@ import UserModel from 'models/mongo/user'
 import AuthorizationCodeModel from 'models/mongo/authorizationCode'
 import OAuth2Server from 'oauth2-server'
 import OauthExternalFactory from './OauthExternal'
+import bcrypt from 'bcrypt'
+import UserActuator from '../user'
 
 const Scopes = {
   AuthRead : 'auth:read',
@@ -26,6 +28,7 @@ const { CLIENT_ID: AUTH_CLIENT_ID } = process.env
 const OauthActuator = new OAuth2Server({
   model: {
     getAuthorizationCode: async (code: string) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 29 ~ getAuthorizationCode: ~ getAuthorizationCode')
       const [ service, serviceCode ] = code.split(':')
 
       let oauthToken: {
@@ -45,7 +48,7 @@ const OauthActuator = new OAuth2Server({
 
         const [ client, user ] = await Promise.all([
           ClientModel.findOne({ _id: AUTH_CLIENT_ID }).lean(),
-          UserModel.findOne({ email: tokenInfo.email }).lean()
+          UserActuator.getBasicUserInformation({ email: tokenInfo.email })
         ])
 
         if(!client) throw new Error('Client not found')
@@ -65,8 +68,10 @@ const OauthActuator = new OAuth2Server({
       if(!oauthToken) throw new Error('Invalid access token')
 
       return Promise.all([
-        ClientModel.findOne({ _id: oauthToken.clientId }).lean(),
-        UserModel.findOne({ _id: oauthToken.userId }).lean()
+        ClientModel
+          .findOne({ _id: oauthToken.clientId })
+          .lean(),
+        UserActuator.getBasicUserInformation({ email: oauthToken.userId })
       ]).then(([ client, user ]) => ({
         code             : oauthToken.authorizationCode,
         expiresAt        : oauthToken.expiresAt,
@@ -85,7 +90,7 @@ const OauthActuator = new OAuth2Server({
       }))
     },
     getRefreshToken: async (refreshToken) => {
-      console.log('Luis Sullca ~ file: index.ts ~ line 47 ~ getRefreshToken: ~ refreshToken', refreshToken)
+      console.log('Luis Sullca ~ file: index.ts ~ line 89 ~ getRefreshToken: ~ getRefreshToken')
       const oauthToken = await OauthTokenModel.findOne({ refreshToken }).lean()
 
       if(!oauthToken) throw new Error('Invalid refreshToken')
@@ -93,8 +98,10 @@ const OauthActuator = new OAuth2Server({
       const now = new Date().getTime()
 
       return Promise.all([
-        ClientModel.findOne({ _id: oauthToken.clientId }).lean(),
-        UserModel.findOne({ _id: oauthToken.userId }).lean()
+        ClientModel
+          .findOne({ _id: oauthToken.clientId })
+          .lean(),
+        UserActuator.getBasicUserInformation({ _id: oauthToken.userId })
       ]).then(([ client, user ]) => ({
         accessToken          : oauthToken.accessToken,
         accessTokenExpiresAt : oauthToken.accessTokenExpiresAt,
@@ -115,7 +122,7 @@ const OauthActuator = new OAuth2Server({
       }))
     },
     getAccessToken: async (accessToken: string) => {
-      console.log('Luis Sullca ~ file: index.ts ~ line 76 ~ getAccessToken: ~ accessToken', accessToken)
+      console.log('Luis Sullca ~ file: index.ts ~ line 119 ~ getAccessToken: ~ getAccessToken')
       const oauthToken = await OauthTokenModel.findOne({ accessToken }).lean()
 
       if(!oauthToken) throw new Error('Invalid access token')
@@ -124,7 +131,7 @@ const OauthActuator = new OAuth2Server({
 
       return Promise.all([
         ClientModel.findOne({ _id: oauthToken.clientId }).lean(),
-        UserModel.findOne({ _id: oauthToken.userId }).lean()
+        UserActuator.getBasicUserInformation({ _id: oauthToken.userId })
       ]).then(([ client, user ]) => ({
         accessToken          : oauthToken.accessToken,
         accessTokenExpiresAt : oauthToken.accessTokenExpiresAt,
@@ -160,10 +167,15 @@ const OauthActuator = new OAuth2Server({
         userId      : String(client.userId)
       })
     },
-    getUser: async (username, password) => {
-      const user = await UserModel.findOne({ email: username, password }).lean()
+    getUser: async (email, password) => {
+      const user = await UserModel.findOne({ email }).lean()
 
-      if(!user) throw new Error('User notfound')
+      if(!user) throw new Error('email or password incorrect')
+
+      const validationPassword = await bcrypt.compare(password, user.password)
+      if(!validationPassword) throw new Error('email or password incorrect')
+
+      delete(user as any).password
 
       return {
         id: String(user._id),
@@ -175,13 +187,14 @@ const OauthActuator = new OAuth2Server({
 
       if(!user) throw new Error('User notfound')
 
+      delete(user as any).password
+
       return {
         id: String(user._id),
         ...user
       }
     },
     saveToken: async (token, client, user) => {
-      console.log('Luis Sullca ~ file: index.ts ~ line 143 ~ saveToken: ~ token', token)
       const oauthToken = await OauthTokenModel
         .create({
           accessToken          : token.accessToken,

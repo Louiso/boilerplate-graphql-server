@@ -10,17 +10,18 @@ router.get('/authenticate', async (req, res) => {
     const response = new Response(res)
 
     const token = await OauthActuator.authenticate(request, response)
-    console.log('token', token)
 
     res.json({
       success: true,
-      data   : {}
+      data   : token
     })
   } catch (error: any) {
-    res.json({
-      error  : error.message,
-      success: false
-    })
+    res
+      .status(500)
+      .json({
+        error  : error.message,
+        success: false
+      })
   }
 })
 
@@ -37,16 +38,32 @@ router.get('/authorize', async (req, res) => {
       data   : token
     })
   } catch (error: any) {
-    res.json({
-      error  : error.message,
-      success: false
-    })
+    res
+      .status(500)
+      .json({
+        error  : error.message,
+        success: false
+      })
   }
 })
 
 // genera accessToken
 router.post('/token', async (req, res) => {
   try {
+    const { email, ...restProps } = req.body
+    req.body = {
+      ...restProps,
+      client_secret: req.body?.client_secret ?? process.env.CLIENT_SECRET,
+      username     : email
+    }
+
+    if(req.get('origin') === process.env.AUTH_APP)
+      req.body = {
+        ...req.body,
+        client_secret: process.env.CLIENT_SECRET,
+        client_id    : process.env.CLIENT_ID
+      }
+
     const request = new Request(req)
     const response = new Response(res)
 
@@ -57,11 +74,12 @@ router.post('/token', async (req, res) => {
       data   : token
     })
   } catch (error: any) {
-    console.log('error', error)
-    res.json({
-      error  : error.message,
-      success: false
-    })
+    res
+      .status(500)
+      .json({
+        error  : error.message,
+        success: false
+      })
   }
 })
 
