@@ -12,12 +12,19 @@ export interface User {
   updatedAt: Date;
 }
 
+const ProviderSchema = new Schema({
+  name         : { type: String, required: true },
+  emailVerified: { type: Boolean, required: true }
+}, { timestamps: true })
+
 const UserSchema = new Schema({
-  firstName: { type: String, required: true, trim: true },
-  lastName : { type: String, trim: true },
-  email    : { type: String, required: true, trim: true, unique: true },
-  password : { type: String, required: true, trim: true },
-  photo    : { type: String }
+  firstName    : { type: String, required: true, trim: true },
+  lastName     : { type: String, trim: true },
+  email        : { type: String, required: true, trim: true, unique: true },
+  password     : { type: String, trim: true },
+  photo        : { type: String },
+  emailVerified: { type: Boolean, 'default': false },
+  providers    : [ ProviderSchema ]
 }, { timestamps: true })
 
 const UserModel = connection.model<User>('User', UserSchema)

@@ -1,11 +1,9 @@
 interface TokenInfo {
-  //  aud: string;
+  firstName?: string;
+  lastName?: string;
+  photo?: string;
   userId?: string;
-  //  scopes: string[];
   expiresAt: number;
-  // sub?: string;
-  //  azp?: string;
-  accessType?: string;
   email?: string;
   emailVerified?: boolean;
 }

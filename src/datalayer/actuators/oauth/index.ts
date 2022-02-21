@@ -23,74 +23,96 @@ const { CLIENT_ID: AUTH_CLIENT_ID } = process.env
   flows:
     grant_type: authorization_code
       getAuthorizationCode
+      revokeAuthorizationCode
+    grant_type: password
+
 */
 
 const OauthActuator = new OAuth2Server({
   model: {
     getAuthorizationCode: async (code: string) => {
-      console.log('Luis Sullca ~ file: index.ts ~ line 29 ~ getAuthorizationCode: ~ getAuthorizationCode')
-      const [ service, serviceCode ] = code.split(':')
+      try {
+        console.log('Luis Sullca ~ file: index.ts ~ line 31 ~ getAuthorizationCode: ~ getAuthorizationCode')
+        const [ service, serviceCode ] = code.split(':')
 
-      let oauthToken: {
-        authorizationCode: string;
-        expiresAt        : Date;
-        scope            : string;
-        userId           : string;
-        clientId         : string;
-      }
-
-      if(!serviceCode) {
-        oauthToken = await AuthorizationCodeModel.findOne({ authorizationCode: code }).lean()
-      } else {
-        const oauthExternalController = OauthExternalFactory.getInstance(service)
-
-        const tokenInfo = await oauthExternalController.getTokenInfo(serviceCode)
-
-        const [ client, user ] = await Promise.all([
-          ClientModel.findOne({ _id: AUTH_CLIENT_ID }).lean(),
-          UserActuator.getBasicUserInformation({ email: tokenInfo.email })
-        ])
-
-        if(!client) throw new Error('Client not found')
-        if(!user) throw new Error('User not found')
-
-        oauthToken = {
-          authorizationCode: code,
-          expiresAt        : new Date(tokenInfo.expiresAt),
-          scope            : Object.values(Scopes).filter((scope) => scope.includes('auth')).join(' '),
-          userId           : String(user._id),
-          clientId         : String(client._id)
+        let oauthToken: {
+          authorizationCode: string;
+          expiresAt        : Date;
+          scope            : string;
+          userId           : string;
+          clientId         : string;
         }
-      }
 
-      /* recibir el accessToken del servicio externo y validar */
+        if(!serviceCode) {
+          oauthToken = await AuthorizationCodeModel.findOne({ authorizationCode: code }).lean()
+        } else {
+          const oauthExternalController = OauthExternalFactory.getInstance(service)
 
-      if(!oauthToken) throw new Error('Invalid access token')
+          const tokenInfo = await oauthExternalController.getTokenInfo(serviceCode)
 
-      return Promise.all([
-        ClientModel
-          .findOne({ _id: oauthToken.clientId })
-          .lean(),
-        UserActuator.getBasicUserInformation({ email: oauthToken.userId })
-      ]).then(([ client, user ]) => ({
-        code             : oauthToken.authorizationCode,
-        expiresAt        : oauthToken.expiresAt,
-        scope            : oauthToken.scope,
-        authorizationCode: oauthToken.authorizationCode,
-        redirectUri      : client!.redirectUris[0],
-        client           : {
-          id          : String(client!._id),
-          grants      : client!.grants,
-          redirectUris: client!.redirectUris
-        },
-        user: {
-          id: String(user!._id),
-          ...user
+          const [ client, _user ] = await Promise.all([
+            ClientModel.findOne({ _id: AUTH_CLIENT_ID }).lean(),
+            UserActuator.getBasicUserInformation({ email: tokenInfo.email })
+          ])
+
+          let user = _user
+
+          if(!client) throw new Error('Client not found')
+          if(!user)
+            user = await UserModel.create({
+              email        : tokenInfo.email,
+              firstName    : tokenInfo.firstName,
+              lastName     : tokenInfo.lastName,
+              photo        : tokenInfo.photo,
+              emailVerified: tokenInfo.emailVerified,
+              providers    : [ {
+                name         : service,
+                emailVerified: tokenInfo.emailVerified
+              } ]
+            })
+
+          oauthToken = {
+            authorizationCode: code,
+            expiresAt        : new Date(tokenInfo.expiresAt),
+            scope            : Object.values(Scopes).filter((scope) => scope.includes('auth')).join(' '),
+            userId           : String(user._id),
+            clientId         : String(client._id)
+          }
         }
-      }))
+
+        /* recibir el accessToken del servicio externo y validar */
+
+        if(!oauthToken) throw new Error('Invalid access token')
+
+        const results = await Promise.all([
+          ClientModel
+            .findOne({ _id: oauthToken.clientId })
+            .lean(),
+          UserActuator.getBasicUserInformation({ _id: oauthToken.userId })
+        ]).then(([ client, user ]) => ({
+          code             : oauthToken.authorizationCode,
+          expiresAt        : oauthToken.expiresAt,
+          scope            : oauthToken.scope,
+          authorizationCode: oauthToken.authorizationCode,
+          redirectUri      : client!.redirectUris[0],
+          client           : {
+            id          : String(client!._id),
+            grants      : client!.grants,
+            redirectUris: client!.redirectUris
+          },
+          user: {
+            id: String(user!._id),
+            ...user
+          }
+        }))
+
+        return results
+      } catch (error) {
+        throw error
+      }
     },
     getRefreshToken: async (refreshToken) => {
-      console.log('Luis Sullca ~ file: index.ts ~ line 89 ~ getRefreshToken: ~ getRefreshToken')
+      console.log('Luis Sullca ~ file: index.ts ~ line 115 ~ getRefreshToken: ~ getRefreshToken')
       const oauthToken = await OauthTokenModel.findOne({ refreshToken }).lean()
 
       if(!oauthToken) throw new Error('Invalid refreshToken')
@@ -152,6 +174,8 @@ const OauthActuator = new OAuth2Server({
       }))
     },
     getClient: async (clientId, clientSecret) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 187 ~ getClient: ~ getClient')
+
       const params: any = { _id: clientId }
       if(clientSecret)
         params.secret = clientSecret
@@ -168,6 +192,7 @@ const OauthActuator = new OAuth2Server({
       })
     },
     getUser: async (email, password) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 190 ~ getUser: ~ getUser')
       const user = await UserModel.findOne({ email }).lean()
 
       if(!user) throw new Error('email or password incorrect')
@@ -183,6 +208,7 @@ const OauthActuator = new OAuth2Server({
       }
     },
     getUserFromClient: async (client) => { // para grant_type: client_credentials
+      console.log('Luis Sullca ~ file: index.ts ~ line 206 ~ getUserFromClient: ~ client')
       const user = await UserModel.findOne({ _id: client.userId }).lean()
 
       if(!user) throw new Error('User notfound')
@@ -195,6 +221,7 @@ const OauthActuator = new OAuth2Server({
       }
     },
     saveToken: async (token, client, user) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 219 ~ saveToken: ~ saveToken')
       const oauthToken = await OauthTokenModel
         .create({
           accessToken          : token.accessToken,
@@ -209,16 +236,17 @@ const OauthActuator = new OAuth2Server({
       if(!oauthToken) throw new Error("Can't save token")
 
       return ({
-        accessToken         : oauthToken.accessToken,
-        accessTokenExpiresAt: oauthToken.accessTokenExpiresAt,
-        refreshToken        : oauthToken.refreshToken,
-        oauthTokenExpiresAt : oauthToken.refreshTokenExpiresAt,
-        scope               : oauthToken.scope,
+        accessToken          : oauthToken.accessToken,
+        accessTokenExpiresAt : oauthToken.accessTokenExpiresAt,
+        refreshToken         : oauthToken.refreshToken,
+        refreshTokenExpiresAt: oauthToken.refreshTokenExpiresAt,
+        scope                : oauthToken.scope,
         client,
         user
       })
     },
     saveAuthorizationCode: async (code, client, user) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 244 ~ saveAuthorizationCode: ~ saveAuthorizationCode')
       const authorizationCode = await AuthorizationCodeModel
         .create({
           authorizationCode: code.authorizationCode,
@@ -241,22 +269,31 @@ const OauthActuator = new OAuth2Server({
       })
     },
     revokeAuthorizationCode: async (code) => {
-      const oauthToken = await AuthorizationCodeModel.deleteOne({ authorization_code: code.authorizationCode }).lean()
+      const [ , serviceCode ] = code.authorizationCode.split(':')
 
-      return oauthToken.deletedCount > 0
+      if(serviceCode) {
+        return true
+      } else {
+        const oauthToken = await AuthorizationCodeModel.deleteOne({ authorizationCode: code.authorizationCode }).lean()
+
+        return oauthToken.deletedCount > 0
+      }
     },
     revokeToken: async (token) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 273 ~ revokeToken: ~ revokeToken')
       const oauthToken = await OauthTokenModel.deleteOne({ refreshToken: token.refreshToken }).lean()
 
       return oauthToken.deletedCount > 0
     },
     validateScope: async (user, client, scope) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 279 ~ validateScope: ~ validateScope')
       if(!(Array.isArray(scope)  ? scope : (scope ?? '').split(' ')).every(s => VALID_SCOPES.indexOf(s) >= 0))
         return false
 
       return scope
     },
     verifyScope: async (token, scope) => {
+      console.log('Luis Sullca ~ file: index.ts ~ line 286 ~ verifyScope: ~ verifyScope')
       if(!token.scope)
         return false
 
